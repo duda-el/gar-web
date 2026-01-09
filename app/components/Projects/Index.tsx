@@ -97,13 +97,13 @@ const Projects = () => {
             </h2>
           </div>
 
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-10 py-4 border border-white/10 rounded-full text-xs font-bold tracking-widest text-white hover:bg-primary hover:border-primary transition-colors duration-200 uppercase font-georgian"
           >
             ყველა პროექტი
-          </motion.button>
+          </motion.button> */}
         </motion.div>
 
         <motion.div

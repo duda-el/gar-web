@@ -24,9 +24,8 @@ interface ServiceDetail {
 const servicesData: Record<string, ServiceDetail> = {
   landing: {
     title: "Landing Page",
-    price: "1500₾",
-    description:
-      "იდეალურია პროდუქტის პრეზენტაციისთვის და გაყიდვების სტიმულირებისთვის.",
+    price: "1200₾-დან",
+    description: "ერთგვერდიანი საიტი თქვენი პროდუქტის პრეზენტაციისთვის.",
     includes: [
       "UI/UX პროტოტიპირება",
       "სრული ადაპტაცია (Mobile)",
@@ -37,7 +36,7 @@ const servicesData: Record<string, ServiceDetail> = {
   },
   ecommerce: {
     title: "E-Commerce",
-    price: "3500₾",
+    price: "3500₾-დან",
     description:
       "სრული ფუნქციონალი თქვენი ონლაინ მაღაზიისთვის, გადახდების სისტემით.",
     includes: [
@@ -49,21 +48,33 @@ const servicesData: Record<string, ServiceDetail> = {
     ],
     techStack: ["Next.js", "Payload CMS", "Stripe/Local Pay"],
   },
-  custom: {
-    title: "Custom App",
-    price: "5000₾",
+  calculator: {
+    title: "კალკულატორი",
+    price: "Custom",
     description:
-      "რთული ბიზნეს ლოგიკის მქონე პლატფორმები ინდივიდუალური მოთხოვნებით.",
-    includes: [
-      "API დოკუმენტაცია",
-      "მომხმარებლების როლები",
-      "Real-time მონაცემები",
-      "Cloud ჰოსტინგი",
-      "2-თვიანი მხარდაჭერა",
-    ],
-    techStack: ["React/Next", "Node.js", "PostgreSQL", "Redis"],
+      "შეადგინეთ თქვენი პაკეტი ინდივიდუალურად და გაიგეთ ზუსტი ღირებულება.",
+    includes: [],
+    techStack: ["Custom Solutions", "Architecture Design"],
   },
 };
+
+const CALC_OPTIONS = [
+  { id: "landing", label: "ბაზისური ვებსაიტი", price: 1000, complex: false },
+  {
+    id: "multi_page",
+    label: "მრავალგვერდიანი საიტი",
+    price: 600,
+    complex: true,
+  },
+  { id: "design", label: "პრემიუმ UI/UX დიზაინი", price: 500, complex: false },
+  { id: "cms", label: "მართვის პანელი (CMS)", price: 800, complex: true },
+  { id: "ecommerce", label: "მაღაზიის სისტემა", price: 1200, complex: true },
+  { id: "payment", label: "ბანკების ინტეგრაცია", price: 400, complex: true },
+  { id: "auth", label: "ავტორიზაცია/პროფილი", price: 700, complex: true },
+  { id: "multilang", label: "მრავალენოვანი საიტი", price: 400, complex: false },
+  { id: "booking", label: "დაჯავშნის სისტემა", price: 900, complex: true },
+  { id: "seo", label: "SEO ოპტიმიზაცია", price: 400, complex: false },
+];
 
 const FAQ = [
   {
@@ -80,11 +91,35 @@ const Services = () => {
   const [activeTab, setActiveTab] =
     useState<keyof typeof servicesData>("landing");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([
+    "landing",
+  ]);
+
+  const totalPrice = selectedFeatures.reduce((acc, curr) => {
+    const option = CALC_OPTIONS.find((o) => o.id === curr);
+    return acc + (option?.price || 0);
+  }, 0);
+
+  const toggleFeature = (id: string) => {
+    setSelectedFeatures((prev) => {
+      const isSelected = prev.includes(id);
+      const option = CALC_OPTIONS.find((o) => o.id === id);
+      let newList = isSelected
+        ? prev.filter((item) => item !== id)
+        : [...prev, id];
+      if (!isSelected && option?.complex)
+        newList = newList.filter((item) => item !== "landing");
+      if (!isSelected && id === "landing")
+        newList = newList.filter(
+          (item) => !CALC_OPTIONS.find((o) => o.id === item)?.complex
+        );
+      return newList;
+    });
+  };
 
   return (
     <section className="relative py-24 px-6 bg-[#121212]" id="services">
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
         <div className="mb-16">
           <p className="text-primary font-georgian tracking-widest uppercase text-sm mb-4">
             ტარიფები და სერვისები
@@ -95,9 +130,7 @@ const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left Side: Service Navigation & Details */}
           <div className="lg:col-span-8 space-y-8">
-            {/* Tabs */}
             <div className="flex flex-wrap gap-4 border-b border-white/10 pb-6">
               {Object.keys(servicesData).map((key) => (
                 <button
@@ -114,16 +147,14 @@ const Services = () => {
               ))}
             </div>
 
-            {/* Tab Content */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-[#1c1c1c] p-8 md:p-12 border border-white/5 shadow-2xl"
-                style={{ borderRadius: "var(--radius-4xl)" }}
+                className="bg-[#1c1c1c] p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
+                style={{ borderRadius: "2.5rem" }}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6">
                   <div>
@@ -136,61 +167,91 @@ const Services = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-zinc-500 text-sm font-georgian uppercase">
-                      საწყისი ფასი
+                      ფასი
                     </p>
                     <p className="text-5xl font-bold text-primary">
-                      {servicesData[activeTab].price}
+                      {activeTab === "calculator"
+                        ? `${totalPrice}₾`
+                        : servicesData[activeTab].price}
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-4">
-                    <h4 className="text-white font-bold font-georgian flex items-center gap-2">
-                      <Zap className="size-4 text-primary" /> რა შედის ფასში?
-                    </h4>
-                    <ul className="space-y-3">
-                      {servicesData[activeTab].includes.map((item, i) => (
-                        <li
-                          key={i}
-                          className="flex items-center gap-3 text-zinc-400 text-sm font-georgian"
-                        >
-                          <CheckCircle2 className="size-4 text-primary" />{" "}
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="space-y-4">
-                    <h4 className="text-white font-bold font-georgian flex items-center gap-2">
-                      <Code2 className="size-4 text-primary" /> ტექნოლოგიები
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {servicesData[activeTab].techStack.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] text-zinc-300 uppercase tracking-widest font-bold"
-                        >
-                          {tech}
+                {activeTab === "calculator" ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {CALC_OPTIONS.map((opt) => (
+                      <div
+                        key={opt.id}
+                        onClick={() => toggleFeature(opt.id)}
+                        className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
+                          selectedFeatures.includes(opt.id)
+                            ? "bg-primary/10 border-primary text-white"
+                            : "bg-white/5 border-white/10 text-zinc-400 hover:border-white/30"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`size-4 rounded border flex items-center justify-center transition-colors ${
+                              selectedFeatures.includes(opt.id)
+                                ? "bg-primary border-primary"
+                                : "border-white/20"
+                            }`}
+                          >
+                            {selectedFeatures.includes(opt.id)}
+                          </div>
+                          <span className="font-georgian text-xs">
+                            {opt.label}
+                          </span>
+                        </div>
+                        <span className="text-xs font-bold text-primary">
+                          +{opt.price}₾
                         </span>
-                      ))}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <h4 className="text-white font-bold font-georgian flex items-center gap-2">
+                        <Zap className="size-4 text-primary" /> რა შედის ფასში?
+                      </h4>
+                      <ul className="space-y-3">
+                        {servicesData[activeTab].includes.map((item, i) => (
+                          <li
+                            key={i}
+                            className="flex items-center gap-3 text-zinc-400 text-sm font-georgian"
+                          >
+                            <CheckCircle2 className="size-4 text-primary" />{" "}
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="space-y-4">
+                      <h4 className="text-white font-bold font-georgian flex items-center gap-2">
+                        <Code2 className="size-4 text-primary" /> ტექნოლოგიები
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {servicesData[activeTab].techStack.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] text-zinc-300 uppercase tracking-widest font-bold"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <button className="mt-12 group flex items-center gap-4 bg-white text-black px-8 py-4 rounded-xl font-bold font-georgian hover:bg-primary transition-colors">
-                  პროექტის დაწყება{" "}
-                  <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
-                </button>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Right Side: FAQ & Benefits */}
           <div className="lg:col-span-4 space-y-6">
             <div
               className="bg-primary/5 p-8 border border-primary/20"
-              style={{ borderRadius: "var(--radius-3xl)" }}
+              style={{ borderRadius: "2rem" }}
             >
               <h4 className="text-white font-bold font-georgian mb-6 text-xl">
                 რატომ ჩვენ?
@@ -223,7 +284,7 @@ const Services = () => {
               </div>
             </div>
 
-            {/* Simple FAQ Accordion */}
+            {/* FAQ ბლოკი */}
             <div className="space-y-4">
               <h4 className="text-white font-bold font-georgian px-2">
                 ხშირად დასმული
@@ -244,21 +305,38 @@ const Services = () => {
                       <Plus className="size-4" />
                     )}
                   </button>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0 }}
-                      animate={{ height: "auto" }}
-                      className="px-4 pb-4 text-zinc-500 text-xs font-georgian"
-                    >
-                      {faq.a}
-                    </motion.div>
-                  )}
+                  <AnimatePresence>
+                    {openFaq === i && (
+                      <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: "auto" }}
+                        exit={{ height: 0 }}
+                        className="px-4 pb-4 text-zinc-500 text-xs font-georgian overflow-hidden"
+                      >
+                        {faq.a}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: var(--color-primary, #f19035);
+          border-radius: 10px;
+        }
+      `}</style>
     </section>
   );
 };

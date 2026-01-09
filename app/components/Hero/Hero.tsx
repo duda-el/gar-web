@@ -22,7 +22,7 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-[14vw] sm:text-[10vw] lg:text-[110px] font-black text-white leading-[1.2] lg:leading-[1.1] tracking-tighter">
+            <h1 className="text-[14vw] sm:text-[10vw] lg:text-[80px] font-black text-white leading-[1.2] lg:leading-[1.1] tracking-tighter">
               შექმენი <br />
               <span className="text-primary italic inline-block hover:translate-x-2 transition-transform duration-500">
                 მომავალი
