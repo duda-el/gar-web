@@ -1,18 +1,13 @@
 import Header from "../app/components/Header/Header";
+import Hero from "../app/components/Hero/Hero";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Your custom Header with the orange ticker */}
+    <div className="min-h-screen bg-[#191919]">
       <Header />
-
-      <main className="pt-[140px] px-6 md:px-12">
-        <div className="max-w-7xl mx-auto">
-          {/* This is where your Hero Section will go next */}
-          <h1 className="text-white text-5xl font-bold">
-            Welcome to Garagaris
-          </h1>
-        </div>
+      <main>
+        <Hero />
+        {/* Next sections (Services, Projects) go here */}
       </main>
     </div>
   );
