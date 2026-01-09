@@ -1,5 +1,8 @@
 import Header from "../app/components/Header/Header";
 import Hero from "../app/components/Hero/Hero";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Projects from "./components/Projects/Index";
 
 export default function Home() {
   return (
@@ -7,7 +10,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        {/* Next sections (Services, Projects) go here */}
+        <Projects />
+        <About />
+        <Contact />
       </main>
     </div>
   );
