@@ -104,7 +104,7 @@ export default function Hero() {
             </h1>
 
             <div className="mt-8 lg:mt-12 max-w-[480px]">
-              <p className="text-white/70 text-base sm:text-lg leading-[1.7] font-medium border-l-2 border-primary/40 pl-6 bg-gradient-to-r from-primary/5 to-transparent py-4 rounded-r-xl">
+              <p className="text-zinc-400 text-[14px] sm:text-lg leading-[1.7] font-medium border-l-2 border-primary/40 pl-6 bg-gradient-to-r from-primary/5 to-transparent py-4 rounded-r-xl">
                 ჩვენ ვთავაზობთ კოპმანიებს გამორჩეული ციფრული სივრცის შექმნას.
                 დიზაინი, დეველოპმენტი და სტრატეგია.
               </p>
@@ -147,7 +147,7 @@ export default function Hero() {
                     <div className="size-2.5 rounded-full bg-[#ffbd2e]/30 border border-[#ffbd2e]/40" />
                     <div className="size-2.5 rounded-full bg-[#27c93f]/30 border border-[#27c93f]/40" />
                   </div>
-                  <div className="flex items-center gap-2 text-[9px] font-bold text-white/30 tracking-[0.2em] uppercase">
+                  <div className="flex items-center gap-2 text-[9px] font-bold text-zinc-400 tracking-[0.2em] uppercase">
                     <Globe
                       size={10}
                       className="animate-spin-slow text-primary/60"
@@ -216,7 +216,7 @@ export default function Hero() {
                   {/* 4. FACEBOOK REVIEWS SECTION */}
                   <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
                     <div className="flex flex-col gap-3">
-                      <span className="text-[9px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
                         Verified Reviews
                       </span>
                       <div className="flex -space-x-3">
@@ -253,7 +253,7 @@ export default function Hero() {
                           href="https://www.facebook.com/profile.php?id=61559932766757&sk=reviews"
                           target="_blank"
                           whileHover={{ scale: 1.1 }}
-                          className="size-10 rounded-full border-2 border-dashed border-white/10 bg-white/5 flex items-center justify-center text-white/40 hover:text-primary hover:border-primary/40 transition-all cursor-pointer"
+                          className="size-10 rounded-full border-2 border-dashed border-white/10 bg-white/5 flex items-center justify-center text-zinc-400 hover:text-primary hover:border-primary/40 transition-all cursor-pointer"
                         >
                           <span className="text-[10px] font-bold">+12</span>
                         </motion.a>

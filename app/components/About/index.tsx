@@ -57,7 +57,7 @@ const About = () => {
 
   return (
     <section
-      className="relative py-32 px-6 overflow-hidden bg-[#0a0a0a]"
+      className="relative pb-8 py-10 sm:py-24 sm:py-32 px-6 overflow-hidden bg-[#0a0a0a]"
       id="about"
     >
       <div className="absolute inset-0 pointer-events-none">
@@ -149,7 +149,7 @@ const About = () => {
                 </div>
                 <div>
                   <p className="text-white font-bold text-2xl">100%</p>
-                  <p className="text-white/40 text-[10px] uppercase tracking-widest font-mono">
+                  <p className="text-zinc-400 text-[10px] uppercase tracking-widest font-mono">
                     Quality Assurance
                   </p>
                 </div>
@@ -177,7 +177,7 @@ const About = () => {
                 ეკოსისტემებს
               </h2>
 
-              <p className="text-zinc-300 leading-relaxed text-lg max-w-xl">
+              <p className="text-zinc-300 leading-relaxed text-sm sm:text-lg max-w-xl">
                 ჩვენი გუნდი უზრუნველყოფს სრულ ტექნიკურ მხარდაჭერას:
                 ვებ-გვერდების დეველოპმენტს, გრაფიკულ დიზაინს და UI/UX
                 არქიტექტურას. ჩვენ ვქმნით პროდუქტს, რომლებიც თქვენს ბიზნესს

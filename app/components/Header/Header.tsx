@@ -71,7 +71,7 @@ export default function Header() {
         </div>
       </div>
 
-      <nav className="bg-[#191919] px-4 md:px-12 py-6 flex md:grid md:grid-cols-[1fr_2fr_1fr] justify-between items-center border-b border-white/5 relative z-[110]">
+      <nav className="bg-[#191919] px-4 md:px-8 lg:px-12 py-6 flex md:grid md:grid-cols-[1fr_2fr_1fr] justify-between items-center border-b border-white/5 relative z-[110]">
         <div className="flex justify-start">
           <Link href="/" onClick={() => setIsOpen(false)} aria-label="Logo">
             <Image
@@ -86,7 +86,7 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex justify-center px-4">
-          <ul className="flex gap-10 text-white/95 text-[15px] font-semibold tracking-wide whitespace-nowrap">
+          <ul className="flex md:gap-6 lg:gap-10 text-white/95 md:text-[12px] lg:text-[15px] font-semibold tracking-wide whitespace-nowrap">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <button
@@ -103,9 +103,9 @@ export default function Header() {
 
         <div className="flex items-center justify-end gap-6">
           <div className="hidden md:flex items-center gap-4 font-mono text-xs tracking-widest">
-            <div className="flex flex-col items-end text-white/70">
+            <div className="flex flex-col items-end text-zinc-400">
               <span className="text-primary font-bold">{timeString}</span>
-              <span className="text-[10px] opacity-60">{dateString}</span>
+              <span className="text-[10px] text-gray-300">{dateString}</span>
             </div>
 
             <div className="w-[1px] h-8 bg-white/10" />
@@ -194,11 +194,11 @@ export default function Header() {
                 <span className="text-white font-bold text-3xl tracking-tighter">
                   {timeString}
                 </span>
-                <span className="text-white/40 text-[10px] tracking-widest uppercase">
+                <span className="text-zinc-400 text-[10px] tracking-widest uppercase">
                   {dateString}
                 </span>
               </div>
-              <span className="text-white/20 text-xs tracking-widest italic">
+              <span className="text-white/70 text-xs tracking-widest italic">
                 © 2026
               </span>
             </div>

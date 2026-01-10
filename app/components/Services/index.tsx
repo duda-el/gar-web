@@ -123,7 +123,10 @@ const Services = () => {
   };
 
   return (
-    <section className="relative py-24 px-6 bg-[#121212]" id="services">
+    <section
+      className="relative py-10 sm:py-24 px-6 bg-[#121212]"
+      id="services"
+    >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16">
           <div className="flex items-center gap-3">
@@ -133,11 +136,11 @@ const Services = () => {
               transition={{ duration: 0.2 }}
               className="h-[1px] bg-primary mb-4 "
             />
-            <p className="text-sm pb-4 uppercase tracking-[0.2em] text-primary font-medium font-georgian">
+            <p className="text-xs sm:text-sm pb-4 uppercase tracking-[0.2em] text-primary font-medium font-georgian">
               ტარიფები და სერვისები
             </p>
           </div>
-          <h2 className="text-5xl md:text-7xl font-bold text-white font-georgian uppercase">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white font-georgian uppercase">
             რას გთავაზობთ
           </h2>
         </div>
@@ -178,19 +181,17 @@ const Services = () => {
                       {servicesData[activeTab].description}
                     </p>
                   </div>
-                  {/* CHANGED: text-right to text-left md:text-right */}
                   <div className="text-left md:text-right w-full md:w-auto">
                     <p className="text-zinc-300 text-sm font-georgian uppercase">
                       ფასი
                     </p>
-                    <p className="text-5xl font-bold text-primary">
+                    <p className="text-4xl lg:text-5xl font-bold text-primary">
                       {activeTab === "calculator"
                         ? `${totalPrice}₾`
                         : servicesData[activeTab].price}
                     </p>
                     {activeTab === "calculator" && (
-                      /* CHANGED: ml-auto to md:ml-auto */
-                      <p className="text-[10px] text-zinc-500 font-georgian mt-2 max-w-[200px] md:ml-auto leading-tight">
+                      <p className="text-[10px] text-zinc-400 font-georgian mt-2 max-w-[200px] md:ml-auto leading-tight">
                         * ფასი შეიძლება გაიზარდოს ან შემცირდეს ტექნიკური
                         დეტალების დაზუსტების შემდეგ.
                       </p>

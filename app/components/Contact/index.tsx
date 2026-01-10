@@ -49,7 +49,7 @@ const Contact = () => {
 
   return (
     <section
-      className="relative py-24 px-6 overflow-hidden bg-[#121212]"
+      className="relative py-10 sm:py-24 px-4 sm:px-6 overflow-hidden bg-[#121212]"
       id="contact"
     >
       <div className="absolute inset-0 bg-grid-white pointer-events-none opacity-10" />
@@ -70,11 +70,11 @@ const Contact = () => {
                   transition={{ duration: 0.2 }}
                   className="h-[1px] bg-primary"
                 />
-                <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium font-georgian">
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-primary font-medium font-georgian">
                   კონტაქტი
                 </p>
               </div>
-              <h2 className="text-5xl md:text-7xl max-[450px]:text-4xl font-bold tracking-tighter leading-none text-white font-georgian">
+              <h2 className="text-3xl sm:text-5xl md:text-7xl max-[450px]:text-4xl font-bold tracking-tighter leading-none text-white font-georgian">
                 დაგვიკავშირდი
               </h2>
             </div>
@@ -200,7 +200,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.2 }}
-            className="bg-[#1c1c1c]/80 backdrop-blur-sm p-8 md:p-12 border border-white/5 relative"
+            className="bg-[#1c1c1c]/80 backdrop-blur-sm p-4 sm:p-8 md:p-12 border border-white/5 relative"
             style={{ borderRadius: "var(--radius-4xl)" }}
           >
             <form ref={form} onSubmit={sendEmail} className="space-y-6">
@@ -245,7 +245,7 @@ const Contact = () => {
                   } rounded-2xl mt-2 px-6 py-4 text-white font-georgian text-sm cursor-pointer flex justify-between items-center transition-all`}
                 >
                   <span
-                    className={selectedService ? "text-white" : "text-zinc-500"}
+                    className={selectedService ? "text-white" : "text-zinc-400"}
                   >
                     {selectedService || "აირჩიეთ სერვისი"}
                   </span>
