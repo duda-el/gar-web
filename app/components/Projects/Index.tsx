@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -10,7 +10,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-// შემოგვაქვს მონაცემები და ტიპები ცალკე ფაილიდან
 import { projects, Project } from "./ProjectData";
 
 const Projects = () => {
@@ -18,19 +17,80 @@ const Projects = () => {
   const [filter, setFilter] = useState<"website" | "design" | "uiux">(
     "website"
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [modalImgIndex, setModalImgIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const swiperRef = useRef<any>(null);
+  const [swiper, setSwiper] = useState<any>(null);
 
-  // ეკრანის ზომის მონიტორინგი
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const loadSwiper = async () => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href =
+        "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
+      document.head.appendChild(link);
+
+      const script = document.createElement("script");
+      script.src =
+        "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js";
+      script.async = true;
+
+      script.onload = () => {
+        initSwiper();
+      };
+
+      document.body.appendChild(script);
+
+      return () => {
+        document.head.removeChild(link);
+        document.body.removeChild(script);
+      };
+    };
+
+    loadSwiper();
   }, []);
 
-  // სქროლის ბლოკირება მოდალის დროს
+  const initSwiper = () => {
+    if (
+      typeof window !== "undefined" &&
+      (window as any).Swiper &&
+      swiperRef.current
+    ) {
+      const swiperInstance = new (window as any).Swiper(swiperRef.current, {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        navigation: {
+          nextEl: ".swiper-button-next-custom",
+          prevEl: ".swiper-button-prev-custom",
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 24,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+          },
+          1330: {
+            slidesPerView: 4,
+            spaceBetween: 24,
+          },
+        },
+      });
+
+      setSwiper(swiperInstance);
+    }
+  };
+
+  useEffect(() => {
+    if (swiper) {
+      setTimeout(() => {
+        swiper.update();
+        swiper.slideTo(0);
+      }, 100);
+    }
+  }, [filter, swiper]);
+
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -45,35 +105,6 @@ const Projects = () => {
 
   const filteredProjects = projects.filter((p) => p.type === filter);
 
-  // სლაიდერი ჩაირთვება თუ 4-ზე მეტია ან ეკრანი < 1330px
-  const isSlider = filteredProjects.length > 4 || windowWidth < 1330;
-
-  // სლაიდერის გადაწევის პროცენტული გათვლა
-  const getTranslateX = () => {
-    if (!isSlider) return 0;
-    if (windowWidth < 640) return currentIndex * 100; // 1 ქარდი
-    if (windowWidth < 1024) return currentIndex * 50; // 2 ქარდი
-    if (windowWidth < 1330) return currentIndex * (100 / 3); // 3 ქარდი
-    return currentIndex * 25; // 4 ქარდი
-  };
-
-  const nextSlide = () => {
-    let maxIndex = filteredProjects.length - 4;
-    if (windowWidth < 640) maxIndex = filteredProjects.length - 1;
-    else if (windowWidth < 1024) maxIndex = filteredProjects.length - 2;
-    else if (windowWidth < 1330) maxIndex = filteredProjects.length - 3;
-
-    if (currentIndex < maxIndex) {
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
-
   const nextModalImg = () => {
     if (selectedProject && modalImgIndex < selectedProject.images.length - 1) {
       setModalImgIndex((prev) => prev + 1);
@@ -85,10 +116,6 @@ const Projects = () => {
       setModalImgIndex((prev) => prev - 1);
     }
   };
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [filter]);
 
   return (
     <section
@@ -138,79 +165,61 @@ const Projects = () => {
             </div>
           </div>
         </motion.div>
-        {isSlider && (
-          <div className="flex justify-end gap-2 ml-4">
-            <button
-              onClick={prevSlide}
-              disabled={currentIndex === 0}
-              className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-default"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-default"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        )}
-        <div className="relative pt-4 overflow-hidden -mx-4 px-4">
-          <motion.div
-            key={filter}
-            animate={{ x: `-${getTranslateX()}%` }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`flex gap-6 ${
-              !isSlider ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : ""
-            }`}
-          >
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                onClick={() => setSelectedProject(project)}
-                className={`group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] shrink-0 cursor-pointer 
-                  ${
-                    isSlider
-                      ? "w-full sm:w-[calc(50%-0.75rem)] lg:max-[1329px]:w-[calc(33.33%-1rem)] lg:w-[calc(25%-1.13rem)]"
-                      : "w-full"
-                  }`}
-                style={{ borderRadius: "2rem" }}
-              >
-                <div
-                  className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center"
-                  style={{ borderRadius: "1.5rem" }}
-                >
-                  <img
-                    src={project.images[0]?.src || project.images[0]}
-                    alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-                  />
-                  <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
-                    <Sparkles className="size-6 text-[#f19035] animate-pulse" />
-                  </div>
-                </div>
 
-                <div className="mt-auto px-2 relative">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#f19035] animate-pulse"></div>
-                    <span className="text-[10px] tracking-[0.2em] text-zinc-300 font-bold uppercase font-georgian">
-                      {project.category}
-                    </span>
+        <div className="flex justify-end gap-2 mb-6">
+          <button className="swiper-button-prev-custom p-2 border border-white/10 rounded-full text-white hover:bg-white/5 transition-all cursor-pointer">
+            <ChevronLeft size={20} />
+          </button>
+          <button className="swiper-button-next-custom p-2 border border-white/10 rounded-full text-white hover:bg-white/5 transition-all cursor-pointer">
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        <div className="swiper" ref={swiperRef}>
+          <div className="swiper-wrapper">
+            {filteredProjects.map((project) => (
+              <div key={project.id} className="swiper-slide">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                  onClick={() => setSelectedProject(project)}
+                  className="group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] cursor-pointer"
+                  style={{ borderRadius: "2rem" }}
+                >
+                  <div
+                    className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center"
+                    style={{ borderRadius: "1.5rem" }}
+                  >
+                    <img
+                      src={project.images[0]?.src || project.images[0]}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    />
+                    <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
+                      <Sparkles className="size-6 text-[#f19035] animate-pulse" />
+                    </div>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold leading-tight tracking-tight text-white group-hover:text-[#f19035] transition-colors duration-200 font-georgian mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-4 italic">
-                    {project.description}
-                  </p>
-                </div>
-              </motion.div>
+
+                  <div className="mt-auto px-2 relative">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#f19035] animate-pulse"></div>
+                      <span className="text-[10px] tracking-[0.2em] text-zinc-300 font-bold uppercase font-georgian">
+                        {project.category}
+                      </span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold leading-tight tracking-tight text-white group-hover:text-[#f19035] transition-colors duration-200 font-georgian mb-3">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-4 italic">
+                      {project.description}
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -231,6 +240,7 @@ const Projects = () => {
               exit={{ opacity: 0, y: 20 }}
               className="relative w-full max-w-4xl max-h-[90vh] bg-[#1c1c1c] border border-white/10 overflow-hidden z-[151] flex flex-col"
               style={{ borderRadius: "24px" }}
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedProject(null)}
@@ -352,6 +362,12 @@ const Projects = () => {
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: #f19035;
           border-radius: 10px;
+        }
+
+        .swiper-button-prev-custom.swiper-button-disabled,
+        .swiper-button-next-custom.swiper-button-disabled {
+          opacity: 0.2;
+          pointer-events: none;
         }
       `}</style>
     </section>
