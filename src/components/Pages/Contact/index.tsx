@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { Facebook } from "lucide-react";
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -10,6 +11,21 @@ const Contact = () => {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
+
+  const TikTokIcon = ({ size = 18 }: { size?: number }) => (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
 
   const services = [
     "ვებ დიზაინი",
@@ -100,16 +116,16 @@ const Contact = () => {
                     მოგვწერეთ
                   </p>
                   <p className="text-white text-sm font-medium">
-                    hello@gargari.ge
+                    gargariinfo@gmail.com
                   </p>
                 </div>
               </div>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.tiktok.com/@gargari_"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow us on LinkedIn"
+                aria-label="Follow us on TikTok"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -118,45 +134,37 @@ const Contact = () => {
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.617a8.171 8.171 0 0 0 4.773 1.574V6.747a4.364 4.364 0 0 1-1.003-.061z" />
                   </svg>
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
-                    LinkedIn
+                    TikTok
                   </p>
-                  <p className="text-white text-sm font-medium">
-                    Gargari Studio
-                  </p>
+                  <p className="text-white text-sm font-medium">Gargari_</p>
                 </div>
               </a>
 
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61559932766757"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
+                  <Facebook stroke="#f19035" />
                 </div>
                 <div>
                   <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Facebook
                   </p>
-                  <p className="text-white text-sm font-medium">Gargari Page</p>
+                  <p className="text-white text-sm font-medium">Gargari</p>
                 </div>
               </a>
 
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/_gargari/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
@@ -186,9 +194,7 @@ const Contact = () => {
                   <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Instagram
                   </p>
-                  <p className="text-white text-sm font-medium">
-                    @gargari.studio
-                  </p>
+                  <p className="text-white text-sm font-medium">@_gargari</p>
                 </div>
               </a>
             </div>
@@ -225,7 +231,7 @@ const Contact = () => {
                     name="email"
                     required
                     className="w-full bg-[#252525] border border-white/5 rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm"
-                    placeholder="email@example.com"
+                    placeholder="თქვენი მეილი"
                   />
                 </div>
               </div>

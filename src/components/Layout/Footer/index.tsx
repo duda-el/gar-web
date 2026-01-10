@@ -3,8 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Facebook, Instagram, ArrowUpRight, Locate } from "lucide-react";
-import PolicyModal from "./PolicyModal"; // დარწმუნდი რომ სწორი გზაა
-import { label } from "framer-motion/client";
+import PolicyModal from "../../ui/Modal/PolicyModal";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -214,7 +213,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Policy Modal Implementation */}
       <PolicyModal
         isOpen={!!modalType}
         onClose={() => setModalType(null)}

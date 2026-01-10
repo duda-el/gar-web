@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -10,7 +11,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { projects, Project } from "./ProjectData";
+import { projects, Project } from "../../../constants/projects";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -20,6 +21,7 @@ const Projects = () => {
   const [modalImgIndex, setModalImgIndex] = useState(0);
   const swiperRef = useRef<any>(null);
   const [swiper, setSwiper] = useState<any>(null);
+  const MotionImage = motion(Image);
 
   useEffect(() => {
     const loadSwiper = async () => {
@@ -192,10 +194,13 @@ const Projects = () => {
                     className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center"
                     style={{ borderRadius: "1.5rem" }}
                   >
-                    <img
-                      src={project.images[0]?.src || project.images[0]}
+                    <Image
+                      src={project.images[0]}
                       alt={project.alt}
-                      className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                      fill
+                      priority={project.id <= 2}
+                      className="object-cover pointer-events-none"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
                       <Sparkles className="size-6 text-[#f19035] animate-pulse" />
@@ -251,7 +256,7 @@ const Projects = () => {
 
               <div className="w-full h-[300px] md:h-[450px] bg-black relative flex items-center justify-center shrink-0 border-b border-white/5 group/modal">
                 <AnimatePresence mode="wait">
-                  <motion.img
+                  <MotionImage
                     key={modalImgIndex}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -265,7 +270,7 @@ const Projects = () => {
                   />
                 </AnimatePresence>
 
-                <img
+                <Image
                   src={
                     selectedProject.images[modalImgIndex]?.src ||
                     selectedProject.images[modalImgIndex]

@@ -12,7 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import Image from "next/image";
-import groupPhoto from "../../Assets/images/garagari-boys.jpg";
+import groupPhoto from "@/Assets/images/garagari-boys.jpg";
 
 const features = [
   {

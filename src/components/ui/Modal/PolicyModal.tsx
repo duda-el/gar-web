@@ -16,7 +16,6 @@ const PolicyModal = ({ isOpen, onClose, title, content }: PolicyModalProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -24,8 +23,7 @@ const PolicyModal = ({ isOpen, onClose, title, content }: PolicyModalProps) => {
             onClick={onClose}
             className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] cursor-pointer"
           />
-          
-          {/* Modal Content */}
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -36,20 +34,20 @@ const PolicyModal = ({ isOpen, onClose, title, content }: PolicyModalProps) => {
               <h2 className="text-xl font-bold text-white font-georgian uppercase tracking-wider">
                 {title}
               </h2>
-              <button 
+              <button
                 onClick={onClose}
                 className="p-2 hover:bg-white/5 rounded-full transition-colors text-zinc-400 hover:text-white"
               >
                 <X size={24} />
               </button>
             </div>
-            
+
             <div className="p-8 overflow-y-auto custom-scrollbar text-zinc-300 font-georgian leading-relaxed space-y-6">
               {content}
             </div>
 
             <div className="p-6 border-t border-white/5 bg-[#1c1c1c] flex justify-end">
-              <button 
+              <button
                 onClick={onClose}
                 className="px-6 py-2 bg-primary text-black font-bold rounded-xl font-georgian text-sm hover:scale-105 transition-transform"
               >
