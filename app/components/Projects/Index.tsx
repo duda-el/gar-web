@@ -176,7 +176,7 @@ const Projects = () => {
         </div>
 
         <div className="swiper" ref={swiperRef}>
-          <div className="swiper-wrapper">
+          <div className="swiper-wrapper pt-4">
             {filteredProjects.map((project) => (
               <div key={project.id} className="swiper-slide">
                 <motion.div
@@ -194,7 +194,7 @@ const Projects = () => {
                   >
                     <img
                       src={project.images[0]?.src || project.images[0]}
-                      alt={project.title}
+                      alt={project.alt}
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                     />
                     <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
@@ -260,7 +260,7 @@ const Projects = () => {
                       selectedProject.images[modalImgIndex]?.src ||
                       selectedProject.images[modalImgIndex]
                     }
-                    alt={selectedProject.title}
+                    alt={`${selectedProject.alt}`}
                     className="w-full h-full object-contain p-4 relative z-10"
                   />
                 </AnimatePresence>

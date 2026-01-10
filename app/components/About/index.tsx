@@ -95,7 +95,7 @@ const About = () => {
                 <div className="absolute inset-0 z-0">
                   <Image
                     src={groupPhoto}
-                    alt="Gargari Team"
+                    alt="Gargari"
                     fill
                     className="object-cover opacity-30 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
                     placeholder="blur"
@@ -213,7 +213,6 @@ const About = () => {
                 </motion.div>
               ))}
             </div>
-            {/* ----------------------------------- */}
 
             <motion.button
               whileHover={{ scale: 1.02 }}

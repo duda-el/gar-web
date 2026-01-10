@@ -10,10 +10,36 @@ const notoGeorgian = Noto_Sans_Georgian({
 });
 
 export const metadata: Metadata = {
-  title: "Garagari",
-  description: "Creative Design Agency",
+  title: "Gargari",
+  description:
+    "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
   icons: {
     icon: "/gargari.ico",
+  },
+
+  openGraph: {
+    title: "Gargari",
+    description:
+      "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
+    url: "https://gargari.ge", 
+    siteName: "Gargari",
+    images: [
+      {
+        url: "/og-image.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "Gargari",
+      },
+    ],
+    locale: "ka_GE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gargari",
+    description:
+      "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
+    images: ["/og-image.jpg"],
   },
 };
 
