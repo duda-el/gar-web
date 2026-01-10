@@ -9,7 +9,7 @@ import Image from "next/image";
 const stats = [
   {
     label: "დასრულებული პროექტი",
-    value: "50+",
+    value: "10+",
     icon: <Zap className="size-5 text-primary" />,
   },
   {
@@ -19,7 +19,7 @@ const stats = [
   },
   {
     label: "წელი ბაზარზე",
-    value: "3+",
+    value: "2+",
     icon: <Rocket className="size-5 text-primary" />,
   },
 ];
@@ -159,7 +159,7 @@ const About = () => {
               <div className="inline-flex items-center gap-4 px-4 py-2 rounded-full bg-primary/5 border border-primary/10">
                 <div className="size-2 bg-primary rounded-full animate-pulse" />
                 <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold">
-                  About the studio
+                  About the GarGari
                 </p>
               </div>
 
