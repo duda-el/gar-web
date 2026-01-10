@@ -6,10 +6,25 @@ import {
   Mail,
   Facebook,
   Instagram,
-  Linkedin,
   ArrowUpRight,
   Locate,
 } from "lucide-react";
+
+// TikTok-ის აიქონი იმავე სტილში
+const TikTokIcon = ({ size = 18 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,7 +40,11 @@ const Footer = () => {
       href: "https://www.instagram.com/_gargari/",
       label: "Instagram",
     },
-    { icon: <Linkedin size={18} />, href: "#", label: "LinkedIn" },
+    {
+      icon: <TikTokIcon size={18} />,
+      href: "https://www.tiktok.com/@gargari_?is_from_webapp=1&sender_device=pc",
+      label: "TikTok",
+    },
   ];
 
   const quickLinks = [
@@ -61,7 +80,7 @@ const Footer = () => {
               GAR<span className="text-primary italic">GARI</span>
             </h2>
             <p className="text-zinc-300 text-sm font-georgian leading-relaxed max-w-xs">
-              ჩვენ ვქმნით ციფრულ გამოცდილებას, რომელიც ეხმარება ბიზნესს ზრდასა
+              ჩვენ ვქმნით ციფრულ სამყაროს, რომელიც ეხმარება ბიზნესს ზრდასა
               და განვითარებაში თანამედროვე სამყაროში.
             </p>
             <div className="flex gap-4">
@@ -109,7 +128,7 @@ const Footer = () => {
             </h3>
             <div className="space-y-4">
               <a
-                href="mailto:info@gargari.com"
+                href="mailto:gargariinfo@gmail.com"
                 aria-label="Contact us on Email"
                 className="flex items-center gap-3 text-zinc-300 hover:text-white transition-colors group"
               >
