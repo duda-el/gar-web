@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Rocket, Target, Zap, Cpu, ShieldCheck, Globe } from "lucide-react";
 import Image from "next/image";
-// import groupPhoto from "../../Assets/images/group.jpg";
+import groupPhoto from "../../Assets/images/garagari-boys.jpg";
 
 const stats = [
   {
@@ -85,13 +85,13 @@ const About = () => {
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#141414] p-3 shadow-2xl">
               <div className="bg-[#1c1c1c] rounded-[2rem] aspect-square flex items-center justify-center relative overflow-hidden group">
                 <div className="absolute inset-0 z-0">
-                  {/* <Image
+                  <Image
                     src={groupPhoto}
                     alt="Gargari Team"
                     fill
                     className="object-cover opacity-30 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
                     placeholder="blur"
-                  /> */}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
                 </div>
 

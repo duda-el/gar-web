@@ -1,17 +1,38 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  
+  // ერორების სთეითი
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    const formData = new FormData(form.current!);
+    
+    if (!formData.get("from_name")) newErrors.from_name = "გთხოვთ მიუთითოთ სახელი";
+    if (!formData.get("reply_to")) {
+      newErrors.reply_to = "ელ-ფოსტა აუცილებელია";
+    } else if (!/\S+@\S+\.\S+/.test(formData.get("reply_to") as string)) {
+      newErrors.reply_to = "არასწორი ელ-ფოსტის ფორმატი";
+    }
+    if (!formData.get("message")) newErrors.message = "შეტყობინების ველი ცარიელია";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
+
+    if (!validateForm()) return; // თუ ვალიდაცია ვერ გაიარა, არ გაიგზავნოს
 
     setIsSending(true);
 
@@ -24,6 +45,7 @@ const Contact = () => {
       )
       .then(() => {
         setStatus("success");
+        setErrors({});
         form.current?.reset();
       })
       .catch(() => {
@@ -35,11 +57,20 @@ const Contact = () => {
       });
   };
 
-  return (
-    <section
-      className="relative py-24 px-6 overflow-hidden bg-[#121212]"
-      id="contact"
+  // ერორის კომპონენტი სისუფთავისთვის
+  const ErrorMsg = ({ msg }: { msg: string }) => (
+    <motion.p
+      initial={{ opacity: 0, y: -5 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      className="text-red-400 text-[10px] mt-1 ml-1 font-georgian italic"
     >
+      {msg}
+    </motion.p>
+  );
+
+  return (
+    <section className="relative py-24 px-6 overflow-hidden bg-[#121212]" id="contact">
       <div className="absolute inset-0 bg-grid-white pointer-events-none opacity-10" />
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -68,113 +99,57 @@ const Contact = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8">
+              {/* Email Card */}
               <div className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
-                    მოგვწერეთ
-                  </p>
-                  <p className="text-white text-sm font-medium">
-                    hello@gargari.ge
-                  </p>
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">მოგვწერეთ</p>
+                  <p className="text-white text-sm font-medium">gargariinfo@gmail.com</p>
                 </div>
               </div>
 
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                aria-label="Follow us on LinkedIn"
-                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
-              >
+              {/* TikTok Card */}
+              <a href="https://www.tiktok.com/@gargari_?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 448 512">
+                    <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
-                    LinkedIn
-                  </p>
-                  <p className="text-white text-sm font-medium">
-                    Gargari Studio
-                  </p>
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">TikTok</p>
+                  <p className="text-white text-sm font-medium">gargari_</p>
                 </div>
               </a>
 
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                aria-label="Follow us on Facebook"
-                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
-              >
+              {/* Facebook Card */}
+              <a href="https://www.facebook.com/profile.php?id=61559932766757" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
-                    Facebook
-                  </p>
-                  <p className="text-white text-sm font-medium">Gargari Page</p>
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">Facebook</p>
+                  <p className="text-white text-sm font-medium">გარგარი • GarGari</p>
                 </div>
               </a>
 
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                aria-label="Follow us on Instagram"
-                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
-              >
+              {/* Instagram Card */}
+              <a href="https://www.instagram.com/_gargari/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <svg
-                    className="w-5 h-5 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <rect
-                      x="2"
-                      y="2"
-                      width="20"
-                      height="20"
-                      rx="5"
-                      ry="5"
-                    ></rect>
+                  <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
-                    Instagram
-                  </p>
-                  <p className="text-white text-sm font-medium">
-                    @gargari.studio
-                  </p>
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">Instagram</p>
+                  <p className="text-white text-sm font-medium">_gargari</p>
                 </div>
               </a>
             </div>
@@ -186,47 +161,41 @@ const Contact = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.2 }}
             className="bg-[#1c1c1c]/80 backdrop-blur-sm p-8 md:p-12 border border-white/5 relative"
-            style={{ borderRadius: "var(--radius-4xl)" }}
+            style={{ borderRadius: "32px" }}
           >
-            <form ref={form} onSubmit={sendEmail} className="space-y-6">
+            <form ref={form} onSubmit={sendEmail} className="space-y-6" noValidate>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
-                    სახელი
-                  </label>
+                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">სახელი</label>
                   <input
                     type="text"
                     name="from_name"
-                    required
-                    className="w-full bg-[#252525] border border-white/5 rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm"
+                    className={`w-full bg-[#252525] border ${errors.from_name ? 'border-red-500/50' : 'border-white/5'} rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm`}
                     placeholder="თქვენი სახელი"
                   />
+                  <AnimatePresence>{errors.from_name && <ErrorMsg msg={errors.from_name} />}</AnimatePresence>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
-                    ელ-ფოსტა
-                  </label>
+                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">ელ-ფოსტა</label>
                   <input
                     type="email"
                     name="reply_to"
-                    required
-                    className="w-full bg-[#252525] border border-white/5 rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm"
+                    className={`w-full bg-[#252525] border ${errors.reply_to ? 'border-red-500/50' : 'border-white/5'} rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm`}
                     placeholder="email@example.com"
                   />
+                  <AnimatePresence>{errors.reply_to && <ErrorMsg msg={errors.reply_to} />}</AnimatePresence>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
-                  შეტყობინება
-                </label>
+                <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">შეტყობინება</label>
                 <textarea
                   name="message"
-                  required
                   rows={4}
-                  className="w-full bg-[#252525] border border-white/5 rounded-3xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian resize-none text-sm"
-                  placeholder="მოგვიყევით პროექტის შესახებ..."
+                  className={`w-full bg-[#252525] border ${errors.message ? 'border-red-500/50' : 'border-white/5'} rounded-3xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian resize-none text-sm`}
+                  placeholder="დაწერეთ შეტყობინება..."
                 ></textarea>
+                <AnimatePresence>{errors.message && <ErrorMsg msg={errors.message} />}</AnimatePresence>
               </div>
 
               <motion.button
@@ -234,21 +203,13 @@ const Contact = () => {
                 whileTap={{ scale: 0.98 }}
                 disabled={isSending}
                 type="submit"
-                className={`w-full py-5 ${
-                  status === "success" ? "bg-green-600" : "bg-primary"
-                } text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200`}
+                className={`w-full py-5 ${status === "success" ? "bg-green-600" : "bg-primary"} text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200`}
               >
-                {isSending
-                  ? "იგზავნება..."
-                  : status === "success"
-                  ? "გაიგზავნა! ✓"
-                  : "გაგზავნა"}
+                {isSending ? "იგზავნება..." : status === "success" ? "გაიგზავნა! ✓" : "გაგზავნა"}
               </motion.button>
 
               {status === "error" && (
-                <p className="text-red-500 text-xs text-center font-georgian">
-                  შეცდომაა, სცადეთ მოგვიანებით.
-                </p>
+                <p className="text-red-500 text-xs text-center font-georgian">შეცდომაა, სცადეთ მოგვიანებით.</p>
               )}
             </form>
           </motion.div>
