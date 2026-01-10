@@ -144,7 +144,7 @@ const Services = () => {
                 <button
                   key={key}
                   onClick={() => setActiveTab(key as keyof typeof servicesData)}
-                  className={`px-6 py-3 rounded-full text-sm font-bold font-georgian transition-all ${
+                  className={`px-6 py-3 rounded-full cursor-pointer text-sm font-bold font-georgian transition-all ${
                     activeTab === key
                       ? "bg-primary text-black"
                       : "text-zinc-300 hover:text-white border border-white/10"
@@ -304,7 +304,7 @@ const Services = () => {
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-4 text-left text-zinc-300 font-georgian text-sm"
+                    className="w-full flex items-center justify-between p-4 cursor-pointer text-left text-zinc-300 font-georgian text-sm"
                   >
                     {faq.q}
                     {openFaq === i ? (
@@ -316,12 +316,31 @@ const Services = () => {
                   <AnimatePresence>
                     {openFaq === i && (
                       <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: "auto" }}
-                        exit={{ height: 0 }}
-                        className="px-4 pb-4 text-zinc-300 text-xs font-georgian overflow-hidden"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{
+                          height: "auto",
+                          opacity: 1,
+                          transition: {
+                            height: {
+                              duration: 0.3,
+                              ease: [0.4, 0, 0.2, 1], // Custom "Standard Easing"
+                            },
+                            opacity: { duration: 0.2, delay: 0.1 },
+                          },
+                        }}
+                        exit={{
+                          height: 0,
+                          opacity: 0,
+                          transition: {
+                            height: { duration: 0.3, ease: [0.4, 0, 1, 1] },
+                            opacity: { duration: 0.2 },
+                          },
+                        }}
+                        className="overflow-hidden"
                       >
-                        {faq.a}
+                        <div className="px-4 pb-4 text-zinc-300 text-xs font-georgian">
+                          {faq.a}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

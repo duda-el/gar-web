@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import ZmnaImg from "../../Assets/images/zmna.png";
 
 interface Project {
   id: number;
   title: string;
   category: string;
   description: string;
+  image: any;
 }
 
 const projects: Project[] = [
@@ -18,6 +20,7 @@ const projects: Project[] = [
     category: "კატეგორია: News",
     description:
       "თანამედროვე საინფორმაციო პორტალი, რომელიც ორიენტირებულია მომხმარებლისთვის სწრაფ და მოქნილ კონტენტის მიწოდებაზე.",
+    image: ZmnaImg,
   },
   {
     id: 2,
@@ -25,6 +28,8 @@ const projects: Project[] = [
     category: "კატეგორია: ინფორმაციული",
     description:
       "ფინანსური ტექნოლოგიების პლატფორმა, რომელიც ამარტივებს ონლაინ გადახდების პროცესს და მონაცემთა მართვას.",
+    image:
+      "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 3,
@@ -32,6 +37,8 @@ const projects: Project[] = [
     category: "კატეგორია: Rental",
     description:
       "მძიმე ტექნიკის გაქირავების ინოვაციური მარკეტპლეისი, გამართული ძიებისა და დაჯავშნის სისტემით.",
+    image:
+      "https://images.unsplash.com/photo-1581094288338-2314dddb7edd?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: 4,
@@ -39,6 +46,8 @@ const projects: Project[] = [
     category: "კატეგორია: ინფორმაციული",
     description:
       "ციფრული სივრცე, რომელიც აერთიანებს სხვადასხვა სერვისებს და სთავაზობს მომხმარებელს საჭირო ინფორმაციას.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
   },
 ];
 
@@ -96,14 +105,6 @@ const Projects = () => {
               პროექტები
             </h2>
           </div>
-
-          {/* <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 border border-white/10 rounded-full text-xs font-bold tracking-widest text-white hover:bg-primary hover:border-primary transition-colors duration-200 uppercase font-georgian"
-          >
-            ყველა პროექტი
-          </motion.button> */}
         </motion.div>
 
         <motion.div
@@ -125,14 +126,21 @@ const Projects = () => {
                 className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center"
                 style={{ borderRadius: "var(--radius-3xl)" }}
               >
+                {/* --- IMAGE ADDED HERE --- */}
+                <img
+                  src={project.image.src || project.image}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+
                 <motion.div
                   whileHover={{ rotate: 90, scale: 1.2 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute bottom-6 left-6 w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center border border-primary/20 transition-colors group-hover:bg-primary/20"
+                  className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 transition-colors group-hover:bg-primary/20 z-10"
                 >
                   <Sparkles className="size-6 text-primary animate-pulse" />
                 </motion.div>
-                <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.3)]" />
+                <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.3)] pointer-events-none" />
               </div>
 
               <div className="mt-auto px-2 relative">
