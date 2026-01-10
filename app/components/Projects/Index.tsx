@@ -1,86 +1,22 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
-import ZmnaImg from "../../Assets/images/zmna.png";
-import PayImg from "../../Assets/images/PayNety.jpg";
-import BizonImg from "../../Assets/images/Bizon.png";
-import GreeImg from "../../Assets/images/gree.png";
 
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  status: string;
-  description: string;
-  image: any;
-  services: string[];
-  type: "website" | "design";
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Zmna.ge",
-    category: "კატეგორია: News",
-    status: "აქტიური",
-    type: "website",
-    description: "თანამედროვე საინფორმაციო პორტალი, რომელიც ორიენტირებულია მომხმარებლისთვის სწრაფ და მოქნილ კონტენტის მიწოდებაზე.",
-    image: ZmnaImg,
-    services: ["UI/UX დიზაინი", "Web Development", "Content Management System", "SEO ოპტიმიზაცია"],
-  },
-  {
-    id: 2,
-    title: "PayNety",
-    category: "კატეგორია: ინფორმაციული",
-    status: "შეჩერებული",
-    type: "website",
-    description: "ფინანსური ტექნოლოგიების პლატფორმა, რომელიც ამარტივებს ონლაინ გადახდების პროცესს და მონაცემთა მართვას.",
-    image: PayImg,
-    services: ["Branding", "Frontend Development", "API Integration", "Security Consulting"],
-  },
-  {
-    id: 3,
-    title: "Bizon.ge",
-    category: "კატეგორია: Rental",
-    status: "დასრულებული",
-    type: "website",
-    description: "მძიმე ტექნიკის გაქირავების ინოვაციური მარკეტპლეისი, გამართული ძიებისა და დაჯავშნის სისტემით.",
-    image: BizonImg,
-    services: ["Marketplace Architecture", "Mobile First Design", "Search Engine Optimization"],
-  },
-  {
-    id: 4,
-    title: "SADME",
-    category: "კატეგორია: ბრენდინგი",
-    status: "გაუქმებული",
-    type: "website",
-    description: "ლოგოს დიზაინი და კორპორატიული სტილის შექმნა საგანმანათლებლო პლატფორმისთვის.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-    services: ["Strategy", "Graphic Design", "Brand Identity"],
-  },
-  {
-    id: 5,
-    title: "Gree",
-    category: "კატეგორია: Poster",
-    status: "დასრულებული",
-    type: "website",
-    description: "სარეკლამო მასალების და სოციალური მედიის ვიზუალური კომუნიკაციის დიზაინი.",
-    image: GreeImg,
-    services: ["Poster Design", "Social Media Kit"],
-  },
-];
+// შემოგვაქვს მონაცემები და ტიპები ცალკე ფაილიდან
+import { projects, Project } from "./ProjectData";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [filter, setFilter] = useState<"website" | "design">("website");
+  const [filter, setFilter] = useState<"website" | "design" | "uiux">("website");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [modalImgIndex, setModalImgIndex] = useState(0);
 
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
+      setModalImgIndex(0);
     } else {
       document.body.style.overflow = "unset";
     }
@@ -99,6 +35,18 @@ const Projects = () => {
   const prevSlide = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
+    }
+  };
+
+  const nextModalImg = () => {
+    if (selectedProject && modalImgIndex < selectedProject.images.length - 1) {
+      setModalImgIndex(prev => prev + 1);
+    }
+  };
+
+  const prevModalImg = () => {
+    if (modalImgIndex > 0) {
+      setModalImgIndex(prev => prev - 1);
     }
   };
 
@@ -130,19 +78,20 @@ const Projects = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex gap-2">
-              <button
-                onClick={() => setFilter("website")}
-                className={`px-6 py-2 rounded-full border text-sm font-georgian transition-all ${filter === "website" ? "bg-[#f19035] border-[#f19035] text-black font-bold" : "border-white/10 text-white hover:border-[#f19035]/50"}`}
-              >
-                ვებსაიტი
-              </button>
-              <button
-                onClick={() => setFilter("design")}
-                className={`px-6 py-2 rounded-full border text-sm font-georgian transition-all ${filter === "design" ? "bg-[#f19035] border-[#f19035] text-black font-bold" : "border-white/10 text-white hover:border-[#f19035]/50"}`}
-              >
-                გრაფიკული დიზაინი
-              </button>
+            <div className="flex flex-wrap gap-2">
+              {["website", "uiux", "design"].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setFilter(type as any)}
+                  className={`px-6 py-2 rounded-full border text-sm font-georgian transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+                    filter === type 
+                    ? "bg-[#f19035] border-[#f19035] text-black font-bold" 
+                    : "border-white/10 text-white hover:border-[#f19035]/50"
+                  }`}
+                >
+                  {type === "website" ? "ვებსაიტი" : type === "uiux" ? "UI/UX დიზაინი" : "გრაფიკული დიზაინი"}
+                </button>
+              ))}
             </div>
             
             {isSlider && (
@@ -150,14 +99,14 @@ const Projects = () => {
                 <button 
                   onClick={prevSlide}
                   disabled={currentIndex === 0}
-                  className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all"
+                  className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-default"
                 >
                   <ChevronLeft size={20} />
                 </button>
                 <button 
                   onClick={nextSlide}
                   disabled={currentIndex >= filteredProjects.length - 4}
-                  className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all"
+                  className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-default"
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -170,7 +119,7 @@ const Projects = () => {
           <motion.div
             key={filter}
             drag={isSlider ? "x" : false}
-            dragConstraints={{ right: 0, left: -((filteredProjects.length - 4) * 320) }} // დინამიური ლიმიტი დრაგისთვის
+            dragConstraints={{ right: 0, left: -((filteredProjects.length - 4) * 320) }}
             animate={{ x: isSlider ? `calc(-${currentIndex * 25}% - ${currentIndex * 1.5}rem)` : 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`flex ${!isSlider ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : ""} gap-6 active:cursor-grabbing`}
@@ -183,17 +132,17 @@ const Projects = () => {
                 viewport={{ once: true }}
                 whileHover={{ y: -10 }}
                 onClick={() => setSelectedProject(project)}
-                className={`group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] shrink-0 ${isSlider ? "w-[calc(25%-1.13rem)] min-w-[280px]" : "w-full"}`}
+                className={`group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] shrink-0 cursor-pointer ${isSlider ? "w-[calc(25%-1.13rem)] min-w-[280px]" : "w-full"}`}
                 style={{ borderRadius: "2rem" }}
               >
-                <div className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center pointer-events-none" style={{ borderRadius: "1.5rem" }}>
-                  <img src={project.image.src || project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover" />
+                <div className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center" style={{ borderRadius: "1.5rem" }}>
+                  <img src={project.images[0]?.src || project.images[0]} alt={project.title} className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
                   <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
                     <Sparkles className="size-6 text-[#f19035] animate-pulse" />
                   </div>
                 </div>
 
-                <div className="mt-auto px-2 relative pointer-events-none">
+                <div className="mt-auto px-2 relative">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#f19035] animate-pulse"></div>
                     <span className="text-[10px] tracking-[0.2em] text-zinc-300 font-bold uppercase font-georgian">{project.category}</span>
@@ -210,15 +159,65 @@ const Projects = () => {
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }} 
+              onClick={() => setSelectedProject(null)} 
+              className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-zoom-out" 
+            />
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="relative w-full max-w-4xl max-h-[90vh] bg-[#1c1c1c] border border-white/10 overflow-hidden z-[151] flex flex-col" style={{ borderRadius: "24px" }}>
-              <button onClick={() => setSelectedProject(null)} className="absolute top-6 right-6 p-2 bg-black/50 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all z-30 backdrop-blur-md">
+              <button 
+                onClick={() => setSelectedProject(null)} 
+                className="absolute top-6 right-6 p-2 bg-black/50 hover:bg-white/10 rounded-full text-white/50 hover:text-white transition-all z-40 backdrop-blur-md cursor-pointer"
+              >
                 <X size={20} />
               </button>
-              <div className="w-full h-[300px] md:h-[400px] bg-black relative flex items-center justify-center shrink-0 border-b border-white/5">
-                <img src={selectedProject.image.src || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-contain p-4 relative z-10" />
-                <img src={selectedProject.image.src || selectedProject.image} className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl" alt="" />
+
+              <div className="w-full h-[300px] md:h-[450px] bg-black relative flex items-center justify-center shrink-0 border-b border-white/5 group/modal">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={modalImgIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    src={selectedProject.images[modalImgIndex]?.src || selectedProject.images[modalImgIndex]} 
+                    alt={selectedProject.title} 
+                    className="w-full h-full object-contain p-4 relative z-10" 
+                  />
+                </AnimatePresence>
+                
+                <img src={selectedProject.images[modalImgIndex]?.src || selectedProject.images[modalImgIndex]} className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl" alt="" />
+
+                {selectedProject.images.length > 1 && (
+                  <>
+                    <button 
+                      onClick={prevModalImg}
+                      disabled={modalImgIndex === 0}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-[#f19035] rounded-full text-white z-20 transition-all disabled:opacity-0 cursor-pointer disabled:cursor-default"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button 
+                      onClick={nextModalImg}
+                      disabled={modalImgIndex === selectedProject.images.length - 1}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-[#f19035] rounded-full text-white z-20 transition-all disabled:opacity-0 cursor-pointer disabled:cursor-default"
+                    >
+                      <ChevronRight size={24} />
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+                      {selectedProject.images.map((_, idx) => (
+                        <div 
+                          key={idx} 
+                          onClick={() => setModalImgIndex(idx)}
+                          className={`h-1.5 w-1.5 rounded-full transition-all cursor-pointer ${idx === modalImgIndex ? "bg-[#f19035] w-4" : "bg-white/30 hover:bg-white/60"}`} 
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
+
               <div className="flex-1 overflow-y-auto p-8 md:p-12 bg-[#1c1c1c] custom-scrollbar">
                 <div className="max-w-3xl mx-auto space-y-8">
                   <div>
