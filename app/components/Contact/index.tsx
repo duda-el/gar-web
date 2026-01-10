@@ -8,25 +8,17 @@ const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  
-  // ერორების სთეითი
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-    const formData = new FormData(form.current!);
-    
-    if (!formData.get("from_name")) newErrors.from_name = "გთხოვთ მიუთითოთ სახელი";
-    if (!formData.get("reply_to")) {
-      newErrors.reply_to = "ელ-ფოსტა აუცილებელია";
-    } else if (!/\S+@\S+\.\S+/.test(formData.get("reply_to") as string)) {
-      newErrors.reply_to = "არასწორი ელ-ფოსტის ფორმატი";
-    }
-    if (!formData.get("message")) newErrors.message = "შეტყობინების ველი ცარიელია";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const services = [
+    "ვებ დიზაინი",
+    "მობაილ აპლიკაცია",
+    "ბრენდინგი",
+    "UI/UX დიზაინი",
+    "გრაფიკული დიზაინი",
+    "სხვა",
+  ];
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,15 +30,16 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         form.current,
-        "YOUR_PUBLIC_KEY"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
       .then(() => {
         setStatus("success");
         setErrors({});
         form.current?.reset();
+        setSelectedService("");
       })
       .catch(() => {
         setStatus("error");
@@ -112,8 +105,13 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* TikTok Card */}
-              <a href="https://www.tiktok.com/@gargari_?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on LinkedIn"
+                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
+              >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 448 512">
                     <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" />
@@ -125,8 +123,13 @@ const Contact = () => {
                 </div>
               </a>
 
-              {/* Facebook Card */}
-              <a href="https://www.facebook.com/profile.php?id=61559932766757" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
+                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
+              >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -138,8 +141,13 @@ const Contact = () => {
                 </div>
               </a>
 
-              {/* Instagram Card */}
-              <a href="https://www.instagram.com/_gargari/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on Instagram"
+                className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
+              >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -179,12 +187,71 @@ const Contact = () => {
                   <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">ელ-ფოსტა</label>
                   <input
                     type="email"
-                    name="reply_to"
-                    className={`w-full bg-[#252525] border ${errors.reply_to ? 'border-red-500/50' : 'border-white/5'} rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm`}
+                    name="email"
+                    required
+                    className="w-full bg-[#252525] border border-white/5 rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm"
                     placeholder="email@example.com"
                   />
                   <AnimatePresence>{errors.reply_to && <ErrorMsg msg={errors.reply_to} />}</AnimatePresence>
                 </div>
+              </div>
+
+              <div className="space-y-2 relative">
+                <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
+                  სერვისი
+                </label>
+
+                <input type="hidden" name="service" value={selectedService} />
+
+                <div
+                  onClick={() => setIsOpen(!isOpen)}
+                  className={`w-full bg-[#252525] border ${
+                    isOpen ? "border-primary/50" : "border-white/5"
+                  } rounded-2xl mt-2 px-6 py-4 text-white font-georgian text-sm cursor-pointer flex justify-between items-center transition-all`}
+                >
+                  <span
+                    className={selectedService ? "text-white" : "text-zinc-500"}
+                  >
+                    {selectedService || "აირჩიეთ სერვისი"}
+                  </span>
+                  <svg
+                    className={`w-4 h-4 text-primary transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {isOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-50 w-full mt-2 bg-[#252525] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+                  >
+                    {services.map((service) => (
+                      <div
+                        key={service}
+                        onClick={() => {
+                          setSelectedService(service);
+                          setIsOpen(false);
+                        }}
+                        className="px-6 py-3 hover:bg-primary/10 cursor-pointer transition-colors text-white font-georgian text-sm border-b border-white/5 last:border-b-0"
+                      >
+                        {service}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -203,7 +270,9 @@ const Contact = () => {
                 whileTap={{ scale: 0.98 }}
                 disabled={isSending}
                 type="submit"
-                className={`w-full py-5 ${status === "success" ? "bg-green-600" : "bg-primary"} text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200`}
+                className={`w-full py-5 ${
+                  status === "success" ? "bg-green-600" : "bg-primary"
+                } text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {isSending ? "იგზავნება..." : status === "success" ? "გაიგზავნა! ✓" : "გაგზავნა"}
               </motion.button>
