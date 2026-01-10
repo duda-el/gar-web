@@ -105,5 +105,5 @@ export const projects: Project[] = [
     description: "სათამაშო პლატფორმის ინტერფეისის დიზაინი, რომელიც მორგებულია გეიმერების ინტერესებსა და დინამიკურ მომხმარებლის გამოცდილებაზე.",
     images: [MafiaImg, MafiaImg1],
     services: ["Gaming Interface Design", "User Experience Research", "Dark Mode UI", "Interactive Elements"],
-  },
+  }
 ];

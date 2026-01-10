@@ -171,14 +171,15 @@ const Services = () => {
               >
                 <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6">
                   <div>
-                    <h3 className="text-4xl font-bold text-white mb-4 font-georgian">
+                    <h3 className="text-2xl min-[403px]:text-3xl md:text-4xl font-bold text-white mb-4 font-georgian">
                       {servicesData[activeTab].title}
                     </h3>
-                    <p className="text-zinc-300 font-georgian text-lg max-w-md italic">
+                    <p className="text-zinc-300 font-georgian text-lg max-[402px]:text-sm max-w-md italic">
                       {servicesData[activeTab].description}
                     </p>
                   </div>
-                  <div className="text-right">
+                  {/* CHANGED: text-right to text-left md:text-right */}
+                  <div className="text-left md:text-right w-full md:w-auto">
                     <p className="text-zinc-300 text-sm font-georgian uppercase">
                       ფასი
                     </p>
@@ -188,7 +189,8 @@ const Services = () => {
                         : servicesData[activeTab].price}
                     </p>
                     {activeTab === "calculator" && (
-                      <p className="text-[10px] text-zinc-500 font-georgian mt-2 max-w-[200px] ml-auto leading-tight">
+                      /* CHANGED: ml-auto to md:ml-auto */
+                      <p className="text-[10px] text-zinc-500 font-georgian mt-2 max-w-[200px] md:ml-auto leading-tight">
                         * ფასი შეიძლება გაიზარდოს ან შემცირდეს ტექნიკური
                         დეტალების დაზუსტების შემდეგ.
                       </p>
@@ -303,7 +305,6 @@ const Services = () => {
               </div>
             </div>
 
-            {/* FAQ ბლოკი */}
             <div className="space-y-4">
               <h4 className="text-white font-bold font-georgian px-2">
                 ხშირად დასმული კითხვები

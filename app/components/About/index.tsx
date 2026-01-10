@@ -163,7 +163,7 @@ const About = () => {
                 </p>
               </div>
 
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[1.1] text-white">
+              <h2 className="text-5xl md:text-7xl max-[400px]:text-3xl font-bold tracking-tighter leading-[1.1] text-white">
                 ჩვენ ვქმნით <span className="text-primary italic">ციფრულ</span>
                 <br />
                 ეკოსისტემებს
