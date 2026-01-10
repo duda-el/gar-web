@@ -120,8 +120,8 @@ export default function Hero() {
 
             <div className="mt-8 lg:mt-12 max-w-[480px]">
               <p className="text-white/70 text-base sm:text-lg leading-[1.7] font-medium border-l-2 border-primary/40 pl-6 bg-gradient-to-r from-primary/5 to-transparent py-4 rounded-r-xl">
-                ჩვენ ვეხმარებით ბრენდებს გამორჩეული ციფრული გამოცდილების
-                შექმნაში. დიზაინი, დეველოპმენტი და სტრატეგია.
+                ჩვენ ვთავაზობთ კოპმანიებს გამორჩეული ციფრული სივრცის შექმნას.
+                დიზაინი, დეველოპმენტი და სტრატეგია.
               </p>
             </div>
 
@@ -130,7 +130,7 @@ export default function Hero() {
                 onClick={() => scrollToSection("projects")}
                 className="group flex items-center justify-center gap-3 bg-primary text-black px-10 py-5 rounded-full font-bold transition-all hover:bg-white active:scale-95 text-base shadow-[0_0_30px_rgba(241,144,53,0.3)] cursor-pointer"
               >
-                ნახე პროექტები
+                იხილე პროექტები
                 <ArrowUpRight
                   className="size-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                   aria-hidden="true"
@@ -167,14 +167,6 @@ export default function Hero() {
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="text-right">
-                      <p className="text-primary font-mono text-[10px] tracking-widest">
-                        UNIT_01
-                      </p>
-                      <p className="text-white/20 font-mono text-[8px]">
-                        GARGARI_LABS
-                      </p>
-                    </div>
                   </div>
 
                   <div className="space-y-6">
@@ -185,9 +177,7 @@ export default function Hero() {
                           className="text-primary/60"
                           aria-hidden="true"
                         />
-                        <p className="text-white/40 text-[10px] uppercase tracking-[0.2em] font-bold">
-                          Latency: 12ms
-                        </p>
+                        
                       </div>
                       <div
                         className="w-full h-[1px] bg-white/10 relative overflow-hidden"
@@ -221,20 +211,6 @@ export default function Hero() {
             </motion.div>
           </div>
         </div>
-      </div>
-
-      <div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 opacity-30"
-        aria-hidden="true"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"
-        />
-        <span className="text-[10px] text-white uppercase tracking-[0.4em]">
-          Initialize Scroll
-        </span>
       </div>
     </section>
   );

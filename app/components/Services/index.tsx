@@ -27,32 +27,37 @@ const servicesData: Record<string, ServiceDetail> = {
     price: "1200₾-დან",
     description: "ერთგვერდიანი საიტი თქვენი პროდუქტის პრეზენტაციისთვის.",
     includes: [
-      "UI/UX პროტოტიპირება",
-      "სრული ადაპტაცია (Mobile)",
-      "SEO ბაზისური გამართვა",
+      "UI/UX დიზაინი",
+      "ყველა მოწყობილობასთან თავსებადი დიზაინი",
+      "საბაზისო SEO ოპტიმიზაცია",
       "კონტაქტის ფორმის ინტეგრაცია",
     ],
-    techStack: ["Next.js", "Tailwind CSS", "Framer Motion"],
+    techStack: ["React", "TailwindCSS/CSS/SCSS"],
   },
   ecommerce: {
     title: "E-Commerce",
-    price: "3500₾-დან",
+    price: "4500₾-დან",
     description:
-      "სრული ფუნქციონალი თქვენი ონლაინ მაღაზიისთვის, გადახდების სისტემით.",
+      "სრული ფუნქციონალი თქვენი ონლაინ მაღაზიისთვის, გადახდის სისტემით.",
     includes: [
       "პროდუქტების კატალოგი",
-      "ონლაინ გადახდები (BOG/TBC)",
+      "ონლაინ გადახდა (BOG/TBC/CREDO)",
       "ადმინ პანელი",
       "ინვენტარის მართვა",
       "SMS შეტყობინებები",
     ],
-    techStack: ["Next.js", "Payload CMS", "Stripe/Local Pay"],
+    techStack: [
+      "Next.js/React/Angular",
+      "Django/Laravel/C#",
+      "Payload CMS",
+      "Stripe/PayPal/Local Pay",
+    ],
   },
   calculator: {
     title: "კალკულატორი",
     price: "Custom",
     description:
-      "შეადგინეთ თქვენი პაკეტი ინდივიდუალურად და გაიგეთ ზუსტი ღირებულება.",
+      "შეადგინეთ თქვენი პაკეტი ინდივიდუალურად და გაიგეთ მიახლოვებული ღირებულება.",
     includes: [],
     techStack: ["Custom Solutions", "Architecture Design"],
   },
@@ -62,8 +67,8 @@ const CALC_OPTIONS = [
   { id: "landing", label: "ბაზისური ვებსაიტი", price: 1000, complex: false },
   {
     id: "multi_page",
-    label: "მრავალგვერდიანი საიტი",
-    price: 600,
+    label: "კომპლექსური საიტი",
+    price: 1500,
     complex: true,
   },
   { id: "design", label: "პრემიუმ UI/UX დიზაინი", price: 500, complex: false },
@@ -82,8 +87,8 @@ const FAQ = [
     a: "ლენდინგ გვერდს საშუალოდ 7-10 დღე, ხოლო რთულ სისტემებს 1-3 თვე.",
   },
   {
-    q: "შესაძლებელია თუ არა განვადება?",
-    a: "დიახ, გვაქვს შიდა განვადების სისტემა და ეტაპობრივი გადახდა.",
+    q: "შესაძლებელია ნაწილ-ნაწილ გადახდა?",
+    a: "დიახ, გვაქვს ნაწილ-ნაწილ გადახდის სისტემა.",
   },
 ];
 
@@ -126,14 +131,14 @@ const Services = () => {
               initial={{ width: 0 }}
               whileInView={{ width: 48 }}
               transition={{ duration: 0.2 }}
-              className="h-[1px] bg-primary "
+              className="h-[1px] bg-primary mb-4 "
             />
-            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium font-georgian">
+            <p className="text-sm pb-4 uppercase tracking-[0.2em] text-primary font-medium font-georgian">
               ტარიფები და სერვისები
             </p>
           </div>
           <h2 className="text-5xl md:text-7xl font-bold text-white font-georgian uppercase">
-            როგორ ვმუშაობთ
+            რას გთავაზობთ
           </h2>
         </div>
 
@@ -182,6 +187,12 @@ const Services = () => {
                         ? `${totalPrice}₾`
                         : servicesData[activeTab].price}
                     </p>
+                    {activeTab === "calculator" && (
+                      <p className="text-[10px] text-zinc-500 font-georgian mt-2 max-w-[200px] ml-auto leading-tight">
+                        * ფასი შეიძლება გაიზარდოს ან შემცირდეს ტექნიკური
+                        დეტალების დაზუსტების შემდეგ.
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -295,7 +306,7 @@ const Services = () => {
             {/* FAQ ბლოკი */}
             <div className="space-y-4">
               <h4 className="text-white font-bold font-georgian px-2">
-                ხშირად დასმული
+                ხშირად დასმული კითხვები
               </h4>
               {FAQ.map((faq, i) => (
                 <div
@@ -323,7 +334,7 @@ const Services = () => {
                           transition: {
                             height: {
                               duration: 0.3,
-                              ease: [0.4, 0, 0.2, 1], // Custom "Standard Easing"
+                              ease: [0.4, 0, 0.2, 1],
                             },
                             opacity: { duration: 0.2, delay: 0.1 },
                           },
