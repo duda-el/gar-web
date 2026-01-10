@@ -41,8 +41,6 @@ const Contact = () => {
       id="contact"
     >
       <div className="absolute inset-0 bg-grid-white pointer-events-none opacity-10" />
-      <div className="absolute bottom-0 left-[-10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] ambient-glow animate-pulse" />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div

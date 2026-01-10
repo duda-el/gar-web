@@ -2,6 +2,7 @@ import Header from "../app/components/Header/Header";
 import Hero from "../app/components/Hero/Hero";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 import Projects from "./components/Projects/Index";
 import Services from "./components/Services";
 
@@ -15,6 +16,7 @@ export default function Home() {
         <Projects />
         <About />
         <Contact />
+        <Footer />
       </main>
     </div>
   );

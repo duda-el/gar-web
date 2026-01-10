@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/gargari-logo.svg";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,6 @@ export default function Header() {
       {/* 2. Main Navigation Bar */}
       {/* Change: Used flex on mobile to push logo and burger to edges, grid on desktop */}
       <nav className="bg-[#191919] px-4 md:px-12 py-6 flex md:grid md:grid-cols-[1fr_2fr_1fr] justify-between items-center border-b border-white/5 relative z-[110]">
-        
         {/* LEFT: Logo */}
         <div className="flex justify-start">
           <Link href="/" onClick={() => setIsOpen(false)}>
@@ -109,7 +109,7 @@ export default function Header() {
       >
         <div className="flex flex-col h-full justify-between">
           {/* Menu links are now text-2xl and font-semibold for a smaller look */}
-          <ul className="flex flex-col gap-6 mt-20">
+          <ul className="flex flex-col gap-6 mt-30">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link
@@ -122,6 +122,100 @@ export default function Header() {
               </li>
             ))}
           </ul>
+
+          <div className="absolute bottom-0 left-0 w-full h-[70%] pointer-events-none overflow-hidden">
+            {/* 1. Subtle Background Grid (Tech vibe-ისთვის) */}
+            {/* <div
+              className="absolute inset-0 opacity-[0.05]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(#f19035 1px, transparent 1px), linear-gradient(90deg, #f19035 1px, transparent 1px)",
+                // size: "20px 20px",
+                backgroundSize: "30px 30px",
+              }}
+            /> */}
+
+            {/* 2. Vertical Complex Columns */}
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={`col-group-${i}`}
+                className="absolute bottom-0"
+                style={{ left: `${i * 7 + 3}%` }}
+              >
+                {/* მთავარი სვეტი */}
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{
+                    height: [40, 220, 120, 280, 60],
+                    opacity: [0, 0.6, 0.3, 0.7, 0],
+                  }}
+                  transition={{
+                    duration: Math.random() * 3 + 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.1,
+                  }}
+                  className="w-[1.5px] bg-gradient-to-t from-primary/60 via-primary to-transparent"
+                />
+
+                {/* Bit-Particles (ხაზზე მოძრავი პატარა კვადრატები) */}
+                <motion.div
+                  animate={{ y: [0, -300], opacity: [0, 1, 0] }}
+                  transition={{
+                    duration: Math.random() * 2 + 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                  }}
+                  className="size-1 bg-primary absolute left-[-1.25px] blur-[1px]"
+                />
+              </div>
+            ))}
+
+            {/* 3. Data Horizontal Scanners (უფრო მეტი და სხვადასხვა სისქის) */}
+            {[...Array(10)].map((_, i) => (
+              <motion.div
+                key={`scanner-${i}`}
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%", opacity: [0, 0.4, 0] }}
+                transition={{
+                  duration: Math.random() * 4 + 4,
+                  repeat: Infinity,
+                  delay: i * 0.8,
+                  ease: "linear",
+                }}
+                style={{ bottom: `${i * 10}%` }}
+                className={`absolute w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent ${
+                  i % 3 === 0 ? "h-[2px] blur-[1px]" : "h-[0.5px]"
+                }`}
+              />
+            ))}
+
+            {/* 4. Floating Tech Dust (პატარა წერტილები ჰაერში) */}
+            {/* {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={`dust-${i}`}
+                initial={{ opacity: 0, y: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  y: -100,
+                  x: Math.random() * 20 - 10,
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 5,
+                }}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  bottom: `${Math.random() * 40}%`,
+                }}
+                className="absolute size-[2px] bg-primary rounded-full blur-[0.5px]"
+              />
+            ))} */}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
+            <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b to-transparent" />
+          </div>
 
           <div className="flex justify-between items-center text-white/40 text-xs tracking-widest pb-4">
             <span>© 2026</span>

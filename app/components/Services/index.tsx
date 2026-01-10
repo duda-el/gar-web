@@ -121,9 +121,17 @@ const Services = () => {
     <section className="relative py-24 px-6 bg-[#121212]" id="services">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16">
-          <p className="text-primary font-georgian tracking-widest uppercase text-sm mb-4">
-            ტარიფები და სერვისები
-          </p>
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: 48 }}
+              transition={{ duration: 0.2 }}
+              className="h-[1px] bg-primary "
+            />
+            <p className="text-sm uppercase tracking-[0.2em] text-primary font-medium font-georgian">
+              ტარიფები და სერვისები
+            </p>
+          </div>
           <h2 className="text-5xl md:text-7xl font-bold text-white font-georgian uppercase">
             როგორ ვმუშაობთ
           </h2>

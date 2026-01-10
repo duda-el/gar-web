@@ -70,7 +70,7 @@ const Projects = () => {
       id="projects"
     >
       <div className="absolute inset-0 bg-grid-white pointer-events-none opacity-20" />
-      <div className="absolute top-0 right-[-5%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] ambient-glow animate-pulse" />
+      <div className="absolute top-20 right-[-5%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] ambient-glow animate-pulse" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
