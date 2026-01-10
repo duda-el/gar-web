@@ -152,7 +152,7 @@ export default function Hero() {
                       size={10}
                       className="animate-spin-slow text-primary/60"
                     />
-                    Global Edge Protocol
+                    Gargari Protocol
                   </div>
                 </div>
 
@@ -205,9 +205,9 @@ export default function Hero() {
                       </span>
                     </div>
 
-                    <h2 className="text-white text-[44px] font-black tracking-tighter leading-[0.9] uppercase italic">
+                    <h2 className="text-white text-[44px] font-black tracking-tighter leading-none uppercase italic overflow-visible">
                       Digital <br />
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/30">
+                      <span className="relative inline-block pb-2 pr-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/30">
                         Mastery
                       </span>
                     </h2>
