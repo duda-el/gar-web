@@ -153,7 +153,7 @@ const About = () => {
                 ეკოსისტემებს
               </h2>
 
-              <p className="text-zinc-400 leading-relaxed text-lg max-w-xl">
+              <p className="text-zinc-300 leading-relaxed text-lg max-w-xl">
                 გარგარი სტუდია არ არის უბრალოდ სააგენტო — ეს არის ტექნოლოგიური
                 ლაბორატორია, სადაც რთული იდეები იქცევა დახვეწილ ციფრულ
                 გადაწყვეტილებებად. ჩვენი კოდი არის ხიდი თქვენს ხედვასა და
@@ -168,13 +168,11 @@ const About = () => {
                   whileHover={{ y: -5 }}
                   className="p-6 bg-[#141414] border border-white/5 rounded-[2rem] hover:border-primary/30 transition-all duration-300 relative group overflow-hidden"
                 >
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    {stat.icon}
-                  </div>
-                  <h4 className="text-4xl font-bold text-white mb-2">
+                  <div className="absolute top-0 right-0 p-4">{stat.icon}</div>
+                  <h2 className="text-4xl font-bold text-white mb-2">
                     {stat.value}
-                  </h4>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold leading-tight">
+                  </h2>
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-bold leading-tight">
                     {stat.label}
                   </p>
                 </motion.div>

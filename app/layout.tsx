@@ -6,6 +6,7 @@ const notoGeorgian = Noto_Sans_Georgian({
   subsets: ["georgian"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-noto-georgian",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

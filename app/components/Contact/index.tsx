@@ -85,7 +85,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-georgian font-bold">
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     მოგვწერეთ
                   </p>
                   <p className="text-white text-sm font-medium">
@@ -97,6 +97,7 @@ const Contact = () => {
               <a
                 href="https://linkedin.com"
                 target="_blank"
+                aria-label="Follow us on LinkedIn"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -109,7 +110,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-georgian font-bold">
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     LinkedIn
                   </p>
                   <p className="text-white text-sm font-medium">
@@ -121,6 +122,7 @@ const Contact = () => {
               <a
                 href="https://facebook.com"
                 target="_blank"
+                aria-label="Follow us on Facebook"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -133,7 +135,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-georgian font-bold">
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Facebook
                   </p>
                   <p className="text-white text-sm font-medium">Gargari Page</p>
@@ -143,6 +145,7 @@ const Contact = () => {
               <a
                 href="https://instagram.com"
                 target="_blank"
+                aria-label="Follow us on Instagram"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#1c1c1c] border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -166,7 +169,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-georgian font-bold">
+                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Instagram
                   </p>
                   <p className="text-white text-sm font-medium">
@@ -188,7 +191,7 @@ const Contact = () => {
             <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-georgian ml-1 font-bold">
+                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
                     სახელი
                   </label>
                   <input
@@ -200,7 +203,7 @@ const Contact = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-georgian ml-1 font-bold">
+                  <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
                     ელ-ფოსტა
                   </label>
                   <input
@@ -214,7 +217,7 @@ const Contact = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-georgian ml-1 font-bold">
+                <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
                   შეტყობინება
                 </label>
                 <textarea

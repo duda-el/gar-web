@@ -138,7 +138,7 @@ const Projects = () => {
               <div className="mt-auto px-2 relative">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
-                  <span className="text-[10px] tracking-[0.2em] text-zinc-500 font-bold uppercase font-georgian">
+                  <span className="text-[10px] tracking-[0.2em] text-zinc-300 font-bold uppercase font-georgian">
                     {project.category}
                   </span>
                 </div>
@@ -152,7 +152,7 @@ const Projects = () => {
                   onMouseEnter={() => setHoveredDescriptionId(project.id)}
                   onMouseLeave={() => setHoveredDescriptionId(null)}
                 >
-                  <p className="text-sm text-zinc-400 font-georgian leading-relaxed line-clamp-4 italic">
+                  <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-4 italic">
                     {project.description}
                   </p>
                 </div>

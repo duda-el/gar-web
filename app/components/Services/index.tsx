@@ -147,7 +147,7 @@ const Services = () => {
                   className={`px-6 py-3 rounded-full text-sm font-bold font-georgian transition-all ${
                     activeTab === key
                       ? "bg-primary text-black"
-                      : "text-zinc-500 hover:text-white border border-white/10"
+                      : "text-zinc-300 hover:text-white border border-white/10"
                   }`}
                 >
                   {servicesData[key].title}
@@ -169,12 +169,12 @@ const Services = () => {
                     <h3 className="text-4xl font-bold text-white mb-4 font-georgian">
                       {servicesData[activeTab].title}
                     </h3>
-                    <p className="text-zinc-400 font-georgian text-lg max-w-md italic">
+                    <p className="text-zinc-300 font-georgian text-lg max-w-md italic">
                       {servicesData[activeTab].description}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-zinc-500 text-sm font-georgian uppercase">
+                    <p className="text-zinc-300 text-sm font-georgian uppercase">
                       ფასი
                     </p>
                     <p className="text-5xl font-bold text-primary">
@@ -194,7 +194,7 @@ const Services = () => {
                         className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
                           selectedFeatures.includes(opt.id)
                             ? "bg-primary/10 border-primary text-white"
-                            : "bg-white/5 border-white/10 text-zinc-400 hover:border-white/30"
+                            : "bg-white/5 border-white/10 text-zinc-300 hover:border-white/30"
                         }`}
                       >
                         <div className="flex items-center gap-3">
@@ -227,7 +227,7 @@ const Services = () => {
                         {servicesData[activeTab].includes.map((item, i) => (
                           <li
                             key={i}
-                            className="flex items-center gap-3 text-zinc-400 text-sm font-georgian"
+                            className="flex items-center gap-3 text-zinc-300 text-sm font-georgian"
                           >
                             <CheckCircle2 className="size-4 text-primary" />{" "}
                             {item}
@@ -283,7 +283,7 @@ const Services = () => {
                       <p className="text-white font-bold text-sm font-georgian">
                         {item.t}
                       </p>
-                      <p className="text-zinc-500 text-xs font-georgian">
+                      <p className="text-zinc-300 text-xs font-georgian">
                         {item.d}
                       </p>
                     </div>
@@ -319,7 +319,7 @@ const Services = () => {
                         initial={{ height: 0 }}
                         animate={{ height: "auto" }}
                         exit={{ height: 0 }}
-                        className="px-4 pb-4 text-zinc-500 text-xs font-georgian overflow-hidden"
+                        className="px-4 pb-4 text-zinc-300 text-xs font-georgian overflow-hidden"
                       >
                         {faq.a}
                       </motion.div>

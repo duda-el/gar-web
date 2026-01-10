@@ -5,15 +5,16 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/gargari-logo.svg";
 import { motion } from "framer-motion";
+import { label } from "framer-motion/client";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: "სერვისები", href: "#services" },
-    { name: "პროექტები", href: "#projects" },
-    { name: "ჩვენს შესახებ", href: "#about" },
-    { name: "დაგვიკავშირდით", href: "#contact" },
+    { name: "სერვისები", href: "#services", label: "Services" },
+    { name: "პროექტები", href: "#projects", label: "Projects" },
+    { name: "ჩვენს შესახებ", href: "#about", label: "About Us" },
+    { name: "დაგვიკავშირდით", href: "#contact", label: "Contact Us" },
   ];
 
   return (
@@ -32,12 +33,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* 2. Main Navigation Bar */}
-      {/* Change: Used flex on mobile to push logo and burger to edges, grid on desktop */}
       <nav className="bg-[#191919] px-4 md:px-12 py-6 flex md:grid md:grid-cols-[1fr_2fr_1fr] justify-between items-center border-b border-white/5 relative z-[110]">
-        {/* LEFT: Logo */}
         <div className="flex justify-start">
-          <Link href="/" onClick={() => setIsOpen(false)}>
+          <Link href="/" onClick={() => setIsOpen(false)} aria-label="Logo">
             <Image
               src={Logo}
               alt="Garagaris Logo"
@@ -49,13 +47,13 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* MIDDLE: Desktop Links */}
         <div className="hidden md:flex justify-center px-4">
           <ul className="flex gap-10 text-white/95 text-[15px] font-semibold tracking-wide whitespace-nowrap">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link
                   href={link.href}
+                  aria-label={link.label}
                   className="hover:text-[#F19035] transition-all"
                 >
                   {link.name}
@@ -65,11 +63,9 @@ export default function Header() {
           </ul>
         </div>
 
-        {/* RIGHT: GB + Burger */}
         <div className="flex items-center justify-end gap-6">
-          <div className="hidden md:block font-bold text-white text-sm">GB</div>
+          <div className="hidden md:block font-bold text-white text-sm">EN</div>
 
-          {/* Burger icon now pushed to the far right via justify-between on parent */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 z-[120] relative"
@@ -94,7 +90,6 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* 3. Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[105] transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -108,7 +103,6 @@ export default function Header() {
         }`}
       >
         <div className="flex flex-col h-full justify-between">
-          {/* Menu links are now text-2xl and font-semibold for a smaller look */}
           <ul className="flex flex-col gap-6 mt-30">
             {navLinks.map((link) => (
               <li key={link.name}>
@@ -135,14 +129,12 @@ export default function Header() {
               }}
             /> */}
 
-            {/* 2. Vertical Complex Columns */}
             {[...Array(15)].map((_, i) => (
               <div
                 key={`col-group-${i}`}
                 className="absolute bottom-0"
                 style={{ left: `${i * 7 + 3}%` }}
               >
-                {/* მთავარი სვეტი */}
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{
@@ -158,7 +150,6 @@ export default function Header() {
                   className="w-[1.5px] bg-gradient-to-t from-primary/60 via-primary to-transparent"
                 />
 
-                {/* Bit-Particles (ხაზზე მოძრავი პატარა კვადრატები) */}
                 <motion.div
                   animate={{ y: [0, -300], opacity: [0, 1, 0] }}
                   transition={{
@@ -171,7 +162,6 @@ export default function Header() {
               </div>
             ))}
 
-            {/* 3. Data Horizontal Scanners (უფრო მეტი და სხვადასხვა სისქის) */}
             {[...Array(10)].map((_, i) => (
               <motion.div
                 key={`scanner-${i}`}
@@ -219,7 +209,7 @@ export default function Header() {
 
           <div className="flex justify-between items-center text-white/40 text-xs tracking-widest pb-4">
             <span>© 2026</span>
-            <span className="text-white font-bold text-base">GB</span>
+            <span className="text-white font-bold text-base">EN</span>
           </div>
         </div>
       </div>

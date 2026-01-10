@@ -33,7 +33,7 @@ const Footer = () => {
             <h2 className="text-3xl font-bold text-white tracking-tighter font-georgian italic">
               GAR<span className="text-primary italic">GARI</span>
             </h2>
-            <p className="text-zinc-500 text-sm font-georgian leading-relaxed max-w-xs">
+            <p className="text-zinc-300 text-sm font-georgian leading-relaxed max-w-xs">
               ჩვენ ვქმნით ციფრულ გამოცდილებას, რომელიც ეხმარება ბიზნესს ზრდასა
               და განვითარებაში თანამედროვე სამყაროში.
             </p>
@@ -42,8 +42,9 @@ const Footer = () => {
                 <motion.a
                   key={i}
                   href={social.href}
+                  aria-label={social.label}
                   whileHover={{ y: -3, color: "#f19035" }}
-                  className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 transition-colors border border-white/5"
+                  className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-300 transition-colors border border-white/5"
                 >
                   {social.icon}
                 </motion.a>
@@ -52,15 +53,16 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
+            <h3 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
               ნავიგაცია
-            </h4>
+            </h3>
             <ul className="space-y-4">
               {quickLinks.map((link, i) => (
                 <li key={i}>
                   <a
                     href={`#${link}`}
-                    className="text-zinc-500 hover:text-primary transition-colors text-sm font-georgian flex items-center group"
+                    aria-label={`Go to ${link}`}
+                    className="text-zinc-300 hover:text-primary transition-colors text-sm font-georgian flex items-center group"
                   >
                     {link}
                     <ArrowUpRight
@@ -74,20 +76,21 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
+            <h3 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
               კონტაქტი
-            </h4>
+            </h3>
             <div className="space-y-4">
               <a
                 href="mailto:hello@gargari.ge"
-                className="flex items-center gap-3 text-zinc-500 hover:text-white transition-colors group"
+                aria-label="Contact us on Email"
+                className="flex items-center gap-3 text-zinc-300 hover:text-white transition-colors group"
               >
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
                   <Mail size={14} />
                 </div>
                 <span className="text-sm font-medium">info@gargari.com</span>
               </a>
-              <div className="flex items-center gap-3 text-zinc-500">
+              <div className="flex items-center gap-3 text-zinc-300">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
                   <Locate size={14} />
                 </div>
@@ -97,10 +100,10 @@ const Footer = () => {
           </div>
 
           <div className="space-y-6">
-            <h4 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
+            <h3 className="text-white font-bold font-georgian mb-6 uppercase tracking-widest text-xs">
               დაგვიკავშირდით
-            </h4>
-            <p className="text-zinc-500 text-xs font-georgian italic leading-relaxed">
+            </h3>
+            <p className="text-zinc-300 text-xs font-georgian italic leading-relaxed">
               გაქვთ იდეა? მოდით, ერთად ვაქციოთ ის რეალობად.
             </p>
             {/* <motion.button
@@ -114,19 +117,21 @@ const Footer = () => {
         </div>
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-zinc-600 text-[10px] uppercase tracking-[0.2em] font-bold">
+          <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] font-bold">
             © {currentYear} GARGARI STUDIO. ყველა უფლება დაცულია.
           </p>
           <div className="flex gap-8">
             <a
               href="#"
-              className="text-zinc-600 hover:text-zinc-400 text-[10px] uppercase tracking-widest font-bold transition-colors"
+              aria-label="Privacy Policy"
+              className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
             >
               Privacy Policy
             </a>
             <a
               href="#"
-              className="text-zinc-600 hover:text-zinc-400 text-[10px] uppercase tracking-widest font-bold transition-colors"
+              aria-label="Terms of Service"
+              className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
             >
               Terms of Service
             </a>
