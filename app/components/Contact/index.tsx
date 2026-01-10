@@ -309,7 +309,7 @@ const Contact = () => {
                 type="submit"
                 className={`w-full py-5 ${
                   status === "success" ? "bg-green-600" : "bg-primary"
-                } text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed`}
+                } text-black font-bold rounded-2xl cursor-pointer font-georgian tracking-widest uppercase transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {isSending
                   ? "იგზავნება..."

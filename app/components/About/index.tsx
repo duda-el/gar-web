@@ -2,25 +2,33 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Rocket, Target, Zap, Cpu, ShieldCheck, Globe } from "lucide-react";
+import {
+  Rocket,
+  Target,
+  Zap,
+  Cpu,
+  ShieldCheck,
+  Globe,
+  CheckCircle2,
+} from "lucide-react";
 import Image from "next/image";
 import groupPhoto from "../../Assets/images/garagari-boys.jpg";
 
-const stats = [
+const features = [
   {
-    label: "დასრულებული პროექტი",
-    value: "10+",
-    icon: <Zap className="size-5 text-primary" />,
+    title: "მომხმარებელზე ორიენტირებული UI/UX",
+    description:
+      "თანამედროვე დიზაინი, რომელიც მაქსიმალურად ზრდის მომხმარებლის ჩართულობას.",
   },
   {
-    label: "კმაყოფილი კლიენტი",
-    value: "10+",
-    icon: <Target className="size-5 text-primary" />,
+    title: "ინოვაციური არქიტექტურა",
+    description:
+      "ვქმნით მასშტაბირებად სისტემებს, რომლებიც მზად არიან მომავლის გამოწვევებისთვის.",
   },
   {
-    label: "წელი ბაზარზე",
-    value: "2+",
-    icon: <Rocket className="size-5 text-primary" />,
+    title: "ინდივიდუალური მიდგომა",
+    description:
+      "არ ვიყენებთ შაბლონებს — ყველა ფუნქციონალი იქმნება სპეციალურად თქვენი ბიზნეს საჭიროებებისთვის.",
   },
 ];
 
@@ -170,35 +178,47 @@ const About = () => {
               </h2>
 
               <p className="text-zinc-300 leading-relaxed text-lg max-w-xl">
-                გარგარი სტუდია არ არის უბრალოდ სააგენტო — ეს არის ტექნოლოგიური
-                ლაბორატორია, სადაც რთული იდეები იქცევა დახვეწილ ციფრულ
-                გადაწყვეტილებებად. ჩვენი კოდი არის ხიდი თქვენს ხედვასა და
-                რეალობას შორის.
+                ჩვენი გუნდი უზრუნველყოფს სრულ ტექნიკურ მხარდაჭერას:
+                ვებ-გვერდების დეველოპმენტს, გრაფიკულ დიზაინს და UI/UX
+                არქიტექტურას. ჩვენ ვქმნით პროდუქტს, რომლებიც თქვენს ბიზნესს
+                რეალურ შედეგებს მოუტანს.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {stats.map((stat, idx) => (
+            {/* --- New Interactive Feature List --- */}
+            <div className="space-y-8 relative">
+              <div className="absolute left-[11px] top-2 bottom-2 w-[1px] bg-gradient-to-b from-primary/50 via-primary/10 to-transparent" />
+
+              {features.map((feature, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ y: -5 }}
-                  className="p-6 bg-[#141414] border border-white/5 rounded-[2rem] hover:border-primary/30 transition-all duration-300 relative group overflow-hidden"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex gap-6 group"
                 >
-                  <div className="absolute top-0 right-0 p-4">{stat.icon}</div>
-                  <h2 className="text-4xl font-bold text-white mb-2">
-                    {stat.value}
-                  </h2>
-                  <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-bold leading-tight">
-                    {stat.label}
-                  </p>
+                  <div className="relative z-10">
+                    <div className="size-[22px] rounded-full bg-[#0a0a0a] border border-primary/50 flex items-center justify-center group-hover:border-primary transition-colors">
+                      <div className="size-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform" />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-white font-bold text-lg group-hover:text-primary transition-colors">
+                      {feature.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed max-w-md">
+                      {feature.description}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
+            {/* ----------------------------------- */}
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative px-10 py-5 bg-primary text-black font-bold rounded-2xl overflow-hidden transition-all"
+              className="group relative cursor-pointer px-10 py-5 bg-primary text-black font-bold rounded-2xl overflow-hidden transition-all"
               onClick={() => scrollToSection("contact")}
             >
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />

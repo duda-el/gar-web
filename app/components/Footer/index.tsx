@@ -123,13 +123,13 @@ const Footer = () => {
           <div className="flex gap-8">
             <button 
               onClick={() => setModalType("privacy")}
-              className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
+              className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase cursor-pointer tracking-widest font-bold transition-colors"
             >
               Privacy Policy
             </button>
             <button 
               onClick={() => setModalType("terms")}
-              className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
+              className="text-zinc-400 hover:text-zinc-300 text-[10px] cursor-pointer uppercase tracking-widest font-bold transition-colors"
             >
               Terms of Service
             </button>
