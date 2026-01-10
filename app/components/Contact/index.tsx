@@ -8,6 +8,17 @@ const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
+
+  const services = [
+    "ვებ დიზაინი",
+    "მობაილ აპლიკაცია",
+    "ბრენდინგი",
+    "UI/UX დიზაინი",
+    "გრაფიკული დიზაინი",
+    "სხვა",
+  ];
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,14 +28,15 @@ const Contact = () => {
 
     emailjs
       .sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         form.current,
-        "YOUR_PUBLIC_KEY"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       )
       .then(() => {
         setStatus("success");
         form.current?.reset();
+        setSelectedService("");
       })
       .catch(() => {
         setStatus("error");
@@ -97,6 +109,7 @@ const Contact = () => {
               <a
                 href="https://linkedin.com"
                 target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Follow us on LinkedIn"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
@@ -122,6 +135,7 @@ const Contact = () => {
               <a
                 href="https://facebook.com"
                 target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
@@ -145,6 +159,7 @@ const Contact = () => {
               <a
                 href="https://instagram.com"
                 target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
                 className="flex items-center gap-4 group cursor-pointer p-4 bg-[#1c1c1c]/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors duration-200"
               >
@@ -208,12 +223,70 @@ const Contact = () => {
                   </label>
                   <input
                     type="email"
-                    name="reply_to"
+                    name="email"
                     required
                     className="w-full bg-[#252525] border border-white/5 rounded-2xl px-6 py-4 mt-2 text-white focus:outline-none focus:border-primary/50 transition-colors font-georgian text-sm"
                     placeholder="email@example.com"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2 relative">
+                <label className="text-[10px] uppercase tracking-widest text-zinc-300 font-georgian ml-1 font-bold">
+                  სერვისი
+                </label>
+
+                <input type="hidden" name="service" value={selectedService} />
+
+                <div
+                  onClick={() => setIsOpen(!isOpen)}
+                  className={`w-full bg-[#252525] border ${
+                    isOpen ? "border-primary/50" : "border-white/5"
+                  } rounded-2xl mt-2 px-6 py-4 text-white font-georgian text-sm cursor-pointer flex justify-between items-center transition-all`}
+                >
+                  <span
+                    className={selectedService ? "text-white" : "text-zinc-500"}
+                  >
+                    {selectedService || "აირჩიეთ სერვისი"}
+                  </span>
+                  <svg
+                    className={`w-4 h-4 text-primary transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+
+                {isOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute z-50 w-full mt-2 bg-[#252525] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+                  >
+                    {services.map((service) => (
+                      <div
+                        key={service}
+                        onClick={() => {
+                          setSelectedService(service);
+                          setIsOpen(false);
+                        }}
+                        className="px-6 py-3 hover:bg-primary/10 cursor-pointer transition-colors text-white font-georgian text-sm border-b border-white/5 last:border-b-0"
+                      >
+                        {service}
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -236,7 +309,7 @@ const Contact = () => {
                 type="submit"
                 className={`w-full py-5 ${
                   status === "success" ? "bg-green-600" : "bg-primary"
-                } text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200`}
+                } text-black font-bold rounded-2xl font-georgian tracking-widest uppercase transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {isSending
                   ? "იგზავნება..."
