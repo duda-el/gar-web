@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/gargari-logo.svg";
@@ -8,6 +8,28 @@ import { motion } from "framer-motion";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const hours = currentTime.getHours();
+  // Online 10:00-დან 00:00-მდე, სხვა დროს Standby
+  const isOnline = hours >= 10 && hours < 24;
+
+  const timeString = currentTime.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const dateString = currentTime.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+  }).toUpperCase();
 
   const navLinks = [
     { name: "სერვისები", id: "services", label: "Services" },
@@ -43,7 +65,7 @@ export default function Header() {
               key={i}
               className="text-[#191919] font-bold text-[13px] uppercase tracking-wider mx-4 whitespace-nowrap"
             >
-              თქვენი თანამგზავრი ციფრულ სამყაროში ✦
+              ✦ თქვენი თანამგზავრი ციფრულ სამყაროში ✦
             </span>
           ))}
         </div>
@@ -58,7 +80,7 @@ export default function Header() {
               width={100}
               height={28}
               priority
-              className="h-auto w-32 md:w-40"
+              className="h-auto w-32 md:w-40 cursor-pointer"
             />
           </Link>
         </div>
@@ -70,7 +92,7 @@ export default function Header() {
                 <button
                   onClick={() => scrollToSection(link.id)}
                   aria-label={link.label}
-                  className="hover:text-[#F19035] transition-all cursor-pointer bg-transparent border-none"
+                  className="hover:text-primary transition-all cursor-pointer bg-transparent border-none"
                 >
                   {link.name}
                 </button>
@@ -80,51 +102,45 @@ export default function Header() {
         </div>
 
         <div className="flex items-center justify-end gap-6">
-          <div className="hidden md:block font-bold text-white text-sm">EN</div>
+          {/* დესკტოპ დროის და სტატუსის ვიჯეტი */}
+          <div className="hidden md:flex items-center gap-4 font-mono text-xs tracking-widest">
+            <div className="flex flex-col items-end text-white/70">
+              <span className="text-primary font-bold">{timeString}</span>
+              <span className="text-[10px] opacity-60">{dateString}</span>
+            </div>
+            
+            <div className="w-[1px] h-8 bg-white/10" />
+
+            {/* Status Capsule */}
+            <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+              <div className={`size-1.5 rounded-full animate-pulse ${isOnline ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-primary shadow-[0_0_8px_rgba(241,144,53,0.6)]'}`} />
+              <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isOnline ? 'text-green-500' : 'text-primary'}`}>
+                {isOnline ? 'Online' : 'Standby'}
+              </span>
+            </div>
+          </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8 z-[120] relative"
+            className="md:hidden flex flex-col justify-center items-center w-8 h-8 z-[120] relative cursor-pointer"
             aria-label="Toggle Menu"
           >
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 my-1 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"
-              }`}
-            />
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"}`} />
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 my-1 ${isOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"}`} />
           </button>
         </div>
       </nav>
 
-      <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[105] transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setIsOpen(false)}
-      />
-
-      <div
-        className={`fixed right-0 top-0 h-full w-[80%] max-w-[320px] bg-[#191919] z-[106] p-8 transition-transform duration-500 ease-in-out border-l border-white/5 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
+      {/* Mobile Menu Sidebar */}
+      <div className={`fixed right-0 top-0 h-full w-[80%] max-w-[320px] bg-[#191919] z-[106] p-8 transition-transform duration-500 ease-in-out border-l border-white/5 ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
         <div className="flex flex-col h-full justify-between">
           <ul className="flex flex-col gap-6 mt-32">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <button
                   onClick={() => scrollToSection(link.id)}
-                  className="text-white text-xl font-semibold hover:text-[#F19035] transition-colors text-left w-full"
+                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left w-full cursor-pointer"
                 >
                   {link.name}
                 </button>
@@ -132,65 +148,23 @@ export default function Header() {
             ))}
           </ul>
 
-          <div className="absolute bottom-0 left-0 w-full h-[70%] pointer-events-none overflow-hidden">
-            {[...Array(15)].map((_, i) => (
-              <div
-                key={`col-group-${i}`}
-                className="absolute bottom-0"
-                style={{ left: `${i * 7 + 3}%` }}
-              >
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{
-                    height: [40, 220, 120, 280, 60],
-                    opacity: [0, 0.6, 0.3, 0.7, 0],
-                  }}
-                  transition={{
-                    duration: Math.random() * 3 + 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: i * 0.1,
-                  }}
-                  className="w-[1.5px] bg-gradient-to-t from-primary/60 via-primary to-transparent"
-                />
+          <div className="relative z-10 flex flex-col gap-1 pb-4">
+             <div className="w-full h-[1px] bg-white/5 mb-6" />
+             
+             <div className="flex items-center gap-2 mb-4">
+                <div className={`size-2 rounded-full ${isOnline ? 'bg-green-500' : 'bg-primary'}`} />
+                <span className={`text-xs font-bold uppercase tracking-widest ${isOnline ? 'text-green-500' : 'text-primary'}`}>
+                  System {isOnline ? 'Online' : 'Standby'}
+                </span>
+             </div>
 
-                <motion.div
-                  animate={{ y: [0, -300], opacity: [0, 1, 0] }}
-                  transition={{
-                    duration: Math.random() * 2 + 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                  }}
-                  className="size-1 bg-primary absolute left-[-1.25px] blur-[1px]"
-                />
-              </div>
-            ))}
-
-            {[...Array(10)].map((_, i) => (
-              <motion.div
-                key={`scanner-${i}`}
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%", opacity: [0, 0.4, 0] }}
-                transition={{
-                  duration: Math.random() * 4 + 4,
-                  repeat: Infinity,
-                  delay: i * 0.8,
-                  ease: "linear",
-                }}
-                style={{ bottom: `${i * 10}%` }}
-                className={`absolute w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent ${
-                  i % 3 === 0 ? "h-[2px] blur-[1px]" : "h-[0.5px]"
-                }`}
-              />
-            ))}
-
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
-            <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b to-transparent" />
-          </div>
-
-          <div className="flex justify-between items-center text-white/40 text-xs tracking-widest pb-4">
-            <span>© 2026</span>
-            <span className="text-white font-bold text-base">EN</span>
+             <div className="flex justify-between items-end">
+                <div className="flex flex-col">
+                  <span className="text-white font-bold text-3xl tracking-tighter">{timeString}</span>
+                  <span className="text-white/40 text-[10px] tracking-widest uppercase">{dateString}</span>
+                </div>
+                <span className="text-white/20 text-xs tracking-widest italic">© 2026</span>
+             </div>
           </div>
         </div>
       </div>
