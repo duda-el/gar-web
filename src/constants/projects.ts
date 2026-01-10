@@ -1,20 +1,20 @@
 import { StaticImageData } from "next/image";
 
-import ZmnaImg from "@/assets/images/zmna.png";
-import PayImg from "@/assets/images/PayNety.jpg";
-import BizonImg from "@/assets/images/Bizon.png";
-import GreeImg from "@/assets/images/gree.png";
-import FreezerImg from "@/assets/images/freezer.jpg";
-import CoffeeonImg from "@/assets/images/coffeeon-Untitled-2.jpg";
-import CoffeeonImg1 from "@/assets/images/coffeeon-Mockup.jpg";
-import CoffeeonImg2 from "@/assets/images/coffeeon-page1.jpg";
-import CoffeeonImg3 from "@/assets/images/coffeon-juice.jpeg";
-import CoffeeonImg4 from "@/assets/images/coffeeon-Untitled-22.jpg";
-import UnistatImg from "@/assets/images/unistat.jpg";
-import UnistatImg1 from "@/assets/images/unistat1.jpg";
-import UnistatImg2 from "@/assets/images/unistat2.jpg";
-import MafiaImg from "@/assets/images/mafia.jpg";
-import MafiaImg1 from "@/assets/images/mafia1.jpg";
+import ZmnaImg from "@/Assets/images/zmna.png";
+import PayImg from "@/Assets/images/PayNety.jpg";
+import BizonImg from "@/Assets/images/Bizon.png";
+import GreeImg from "@/Assets/images/gree.png";
+import FreezerImg from "@/Assets/images/freezer.jpg";
+import CoffeeonImg from "@/Assets/images/coffeeon-Untitled-2.jpg";
+import CoffeeonImg1 from "@/Assets/images/coffeeon-Mockup.jpg";
+import CoffeeonImg2 from "@/Assets/images/coffeeon-page1.jpg";
+import CoffeeonImg3 from "@/Assets/images/coffeon-juice.jpeg";
+import CoffeeonImg4 from "@/Assets/images/coffeeon-Untitled-22.jpg";
+import UnistatImg from "@/Assets/images/unistat.jpg";
+import UnistatImg1 from "@/Assets/images/unistat1.jpg";
+import UnistatImg2 from "@/Assets/images/unistat2.jpg";
+import MafiaImg from "@/Assets/images/mafia.jpg";
+import MafiaImg1 from "@/Assets/images/mafia1.jpg";
 
 export interface Project {
   id: number;

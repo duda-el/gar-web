@@ -12,21 +12,6 @@ const Contact = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
 
-  const TikTokIcon = ({ size = 18 }: { size?: number }) => (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-    </svg>
-  );
-
   const services = [
     "ვებ დიზაინი",
     "ბრენდინგი",
@@ -41,19 +26,28 @@ const Contact = () => {
 
     setIsSending(true);
 
-    emailjs
-      .sendForm(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        form.current,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      )
+    const adminEmail = emailjs.sendForm(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      form.current,
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+    );
+
+    const clientEmail = emailjs.sendForm(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID!,
+      form.current,
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+    );
+
+    Promise.all([adminEmail, clientEmail])
       .then(() => {
         setStatus("success");
         form.current?.reset();
         setSelectedService("");
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
         setStatus("error");
       })
       .finally(() => {
