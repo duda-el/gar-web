@@ -74,7 +74,7 @@ const Contact = () => {
                   კონტაქტი
                 </p>
               </div>
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none text-white font-georgian">
+              <h2 className="text-5xl md:text-7xl max-[450px]:text-4xl font-bold tracking-tighter leading-none text-white font-georgian">
                 დაგვიკავშირდი
               </h2>
             </div>

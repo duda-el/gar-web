@@ -12,7 +12,17 @@ const Projects = () => {
   const [filter, setFilter] = useState<"website" | "design" | "uiux">("website");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modalImgIndex, setModalImgIndex] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(0);
 
+  // ეკრანის ზომის მონიტორინგი
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // სქროლის ბლოკირება მოდალის დროს
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -24,10 +34,26 @@ const Projects = () => {
   }, [selectedProject]);
 
   const filteredProjects = projects.filter((p) => p.type === filter);
-  const isSlider = filteredProjects.length > 4;
+  
+  // სლაიდერი ჩაირთვება თუ 4-ზე მეტია ან ეკრანი < 1330px
+  const isSlider = filteredProjects.length > 4 || windowWidth < 1330;
+
+  // სლაიდერის გადაწევის პროცენტული გათვლა
+  const getTranslateX = () => {
+    if (!isSlider) return 0;
+    if (windowWidth < 640) return currentIndex * 100; // 1 ქარდი
+    if (windowWidth < 1024) return currentIndex * 50;  // 2 ქარდი
+    if (windowWidth < 1330) return currentIndex * (100 / 3); // 3 ქარდი
+    return currentIndex * 25; // 4 ქარდი
+  };
 
   const nextSlide = () => {
-    if (currentIndex < filteredProjects.length - 4) {
+    let maxIndex = filteredProjects.length - 4;
+    if (windowWidth < 640) maxIndex = filteredProjects.length - 1;
+    else if (windowWidth < 1024) maxIndex = filteredProjects.length - 2;
+    else if (windowWidth < 1330) maxIndex = filteredProjects.length - 3;
+
+    if (currentIndex < maxIndex) {
       setCurrentIndex(prev => prev + 1);
     }
   };
@@ -105,7 +131,6 @@ const Projects = () => {
                 </button>
                 <button 
                   onClick={nextSlide}
-                  disabled={currentIndex >= filteredProjects.length - 4}
                   className="p-2 border border-white/10 rounded-full text-white disabled:opacity-20 hover:bg-white/5 transition-all cursor-pointer disabled:cursor-default"
                 >
                   <ChevronRight size={20} />
@@ -118,11 +143,9 @@ const Projects = () => {
         <div className="relative pt-4 overflow-hidden -mx-4 px-4">
           <motion.div
             key={filter}
-            drag={isSlider ? "x" : false}
-            dragConstraints={{ right: 0, left: -((filteredProjects.length - 4) * 320) }}
-            animate={{ x: isSlider ? `calc(-${currentIndex * 25}% - ${currentIndex * 1.5}rem)` : 0 }}
+            animate={{ x: `-${getTranslateX()}%` }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className={`flex ${!isSlider ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : ""} gap-6 active:cursor-grabbing`}
+            className={`flex gap-6 ${!isSlider ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" : ""}`}
           >
             {filteredProjects.map((project) => (
               <motion.div
@@ -132,7 +155,11 @@ const Projects = () => {
                 viewport={{ once: true }}
                 whileHover={{ y: -10 }}
                 onClick={() => setSelectedProject(project)}
-                className={`group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] shrink-0 cursor-pointer ${isSlider ? "w-[calc(25%-1.13rem)] min-w-[280px]" : "w-full"}`}
+                className={`group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] shrink-0 cursor-pointer 
+                  ${isSlider 
+                    ? "w-full sm:w-[calc(50%-0.75rem)] lg:max-[1329px]:w-[calc(33.33%-1rem)] lg:w-[calc(25%-1.13rem)]" 
+                    : "w-full"
+                  }`}
                 style={{ borderRadius: "2rem" }}
               >
                 <div className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center" style={{ borderRadius: "1.5rem" }}>
@@ -156,6 +183,7 @@ const Projects = () => {
         </div>
       </div>
 
+      {/* Modal Section */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
@@ -245,6 +273,12 @@ const Projects = () => {
           </div>
         )}
       </AnimatePresence>
+
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #f19035; border-radius: 10px; }
+      `}</style>
     </section>
   );
 };
