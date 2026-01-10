@@ -2,11 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Activity, Terminal, Sparkles, Globe, Zap, Box, Cpu } from "lucide-react";
+import {
+  ArrowUpRight,
+  Activity,
+  Terminal,
+  Sparkles,
+  Globe,
+  Zap,
+  Box,
+  Cpu,
+} from "lucide-react";
 
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
-  const [randomPositions, setRandomPositions] = useState<{ left: string; delay: number }[]>([]);
+  const [randomPositions, setRandomPositions] = useState<
+    { left: string; delay: number }[]
+  >([]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -36,7 +47,10 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen w-full bg-[#0a0a0a] flex items-center overflow-hidden pt-[140px] pb-16">
       {/* --- BACKGROUND ANIMATIONS --- */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(#f19035_0.5px,transparent_0.5px)] [background-size:40px_40px] opacity-[0.05]" />
 
         {[...Array(10)].map((_, i) => (
@@ -67,7 +81,6 @@ export default function Hero() {
 
       <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
           {/* --- LEFT CONTENT SECTION --- */}
           <div className="lg:col-span-7 flex flex-col items-start">
             <motion.div
@@ -83,7 +96,10 @@ export default function Hero() {
 
             <h1 className="text-[14vw] sm:text-[10vw] lg:text-[80px] font-black text-white leading-[1.2] lg:leading-[1.1] tracking-tighter">
               შეცვალე <br />
-              <span className="text-primary italic inline-block relative group">მომავალი</span> <br />
+              <span className="text-primary italic inline-block relative group">
+                მომავალი
+              </span>{" "}
+              <br />
               ჩვენთან ერთად
             </h1>
 
@@ -121,21 +137,23 @@ export default function Hero() {
             >
               {/* Outer Ambient Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-orange-500/40 rounded-[3.5rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700" />
-              
+
               {/* Card Container */}
-              <div className="absolute inset-0 bg-[#0d0d0d] rounded-[3rem] border border-white/10 overflow-hidden z-20 shadow-2xl flex flex-col transition-all duration-500 group-hover:border-primary/30 group-hover:translate-y-[-8px]">
-                
+              <div className="absolute inset-0 bg-[#0d0d0d] rounded-[2rem] border border-white/10 overflow-hidden z-20 shadow-2xl flex flex-col transition-all duration-500 group-hover:border-primary/30 group-hover:translate-y-[-8px]">
                 {/* 1. Header Area */}
                 <div className="h-14 border-b border-white/5 flex items-center justify-between px-8 bg-white/[0.02] backdrop-blur-md">
-                   <div className="flex gap-1.5">
-                      <div className="size-2.5 rounded-full bg-[#ff5f56]/30 border border-[#ff5f56]/40" />
-                      <div className="size-2.5 rounded-full bg-[#ffbd2e]/30 border border-[#ffbd2e]/40" />
-                      <div className="size-2.5 rounded-full bg-[#27c93f]/30 border border-[#27c93f]/40" />
-                   </div>
-                   <div className="flex items-center gap-2 text-[9px] font-bold text-white/30 tracking-[0.2em] uppercase">
-                      <Globe size={10} className="animate-spin-slow text-primary/60" />
-                      Global Edge Protocol
-                   </div>
+                  <div className="flex gap-1.5">
+                    <div className="size-2.5 rounded-full bg-[#ff5f56]/30 border border-[#ff5f56]/40" />
+                    <div className="size-2.5 rounded-full bg-[#ffbd2e]/30 border border-[#ffbd2e]/40" />
+                    <div className="size-2.5 rounded-full bg-[#27c93f]/30 border border-[#27c93f]/40" />
+                  </div>
+                  <div className="flex items-center gap-2 text-[9px] font-bold text-white/30 tracking-[0.2em] uppercase">
+                    <Globe
+                      size={10}
+                      className="animate-spin-slow text-primary/60"
+                    />
+                    Global Edge Protocol
+                  </div>
                 </div>
 
                 <div className="flex-1 p-10 flex flex-col relative overflow-hidden">
@@ -145,39 +163,53 @@ export default function Hero() {
                   {/* 2. Dynamic Central Visual */}
                   <div className="relative mb-8 flex justify-center">
                     <div className="relative size-24">
-                       <motion.div 
+                      <motion.div
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full" 
-                       />
-                       <motion.div 
+                        transition={{
+                          duration: 12,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full"
+                      />
+                      <motion.div
                         animate={{ rotate: -360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute -inset-3 border border-white/5 rounded-full" 
-                       />
-                       <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="size-16 rounded-2xl bg-gradient-to-br from-primary to-[#ff6b00] flex items-center justify-center shadow-[0_0_40px_rgba(241,144,53,0.3)]">
-                             <Sparkles className="size-8 text-black" />
-                          </div>
-                       </div>
+                        transition={{
+                          duration: 20,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="absolute -inset-3 border border-white/5 rounded-full"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="size-16 rounded-2xl bg-gradient-to-br from-primary to-[#ff6b00] flex items-center justify-center shadow-[0_0_40px_rgba(241,144,53,0.3)]">
+                          <Sparkles className="size-8 text-black" />
+                        </div>
+                      </div>
                     </div>
 
                     <div className="absolute -right-6 top-0 bg-[#1a1a1a] border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-xl">
-                       <Zap size={12} className="text-primary animate-pulse" />
-                       <span className="text-[10px] font-bold text-white uppercase">High-End</span>
+                      <Zap size={12} className="text-primary animate-pulse" />
+                      <span className="text-[10px] font-bold text-white uppercase">
+                        High-End
+                      </span>
                     </div>
                   </div>
 
                   {/* 3. Text & Title */}
                   <div className="space-y-4 relative z-10 mb-8">
                     <div className="flex items-center gap-3">
-                       <div className="h-[1px] w-8 bg-primary" />
-                       <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em]">Studio Concept</span>
+                      <div className="h-[1px] w-8 bg-primary" />
+                      <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em]">
+                        Studio Concept
+                      </span>
                     </div>
-                    
+
                     <h2 className="text-white text-[44px] font-black tracking-tighter leading-[0.9] uppercase italic">
-                      Digital <br /> 
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/30">Mastery</span>
+                      Digital <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/30">
+                        Mastery
+                      </span>
                     </h2>
                   </div>
 
@@ -189,9 +221,18 @@ export default function Hero() {
                       </span>
                       <div className="flex -space-x-3">
                         {[
-                          { img: "https://randomuser.me/api/portraits/men/32.jpg", name: "Client 1" },
-                          { img: "https://randomuser.me/api/portraits/women/44.jpg", name: "Client 2" },
-                          { img: "https://randomuser.me/api/portraits/men/65.jpg", name: "Client 3" },
+                          {
+                            img: "https://randomuser.me/api/portraits/men/32.jpg",
+                            name: "Client 1",
+                          },
+                          {
+                            img: "https://randomuser.me/api/portraits/women/44.jpg",
+                            name: "Client 2",
+                          },
+                          {
+                            img: "https://randomuser.me/api/portraits/men/65.jpg",
+                            name: "Client 3",
+                          },
                         ].map((user, i) => (
                           <motion.a
                             key={i}
@@ -201,7 +242,11 @@ export default function Hero() {
                             whileHover={{ y: -5, scale: 1.1, zIndex: 50 }}
                             className="relative size-10 rounded-full border-2 border-[#0d0d0d] overflow-hidden cursor-pointer bg-zinc-900"
                           >
-                            <img src={user.img} alt={user.name} className="size-full object-cover grayscale hover:grayscale-0 transition-all" />
+                            <img
+                              src={user.img}
+                              alt={user.name}
+                              className="size-full object-cover grayscale hover:grayscale-0 transition-all"
+                            />
                           </motion.a>
                         ))}
                         <motion.a
@@ -227,7 +272,7 @@ export default function Hero() {
                 </div>
 
                 {/* Animated Scanner Effect */}
-                <motion.div 
+                <motion.div
                   animate={{ top: ["-20%", "120%"] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
                   className="absolute left-0 w-full h-24 bg-gradient-to-b from-transparent via-primary/5 to-transparent z-30 pointer-events-none"
@@ -238,7 +283,6 @@ export default function Hero() {
               <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full blur-[100px] -z-10" />
             </motion.div>
           </div>
-          
         </div>
       </div>
     </section>

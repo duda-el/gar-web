@@ -10,8 +10,11 @@ const notoGeorgian = Noto_Sans_Georgian({
 });
 
 export const metadata: Metadata = {
-  title: "Garagaris Studio",
+  title: "Garagari",
   description: "Creative Design Agency",
+  icons: {
+    icon: "/gargari.ico",
+  },
 };
 
 export default function RootLayout({
