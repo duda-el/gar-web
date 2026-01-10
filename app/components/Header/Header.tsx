@@ -5,17 +5,33 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/gargari-logo.svg";
 import { motion } from "framer-motion";
-import { label } from "framer-motion/client";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: "სერვისები", href: "#services", label: "Services" },
-    { name: "პროექტები", href: "#projects", label: "Projects" },
-    { name: "ჩვენს შესახებ", href: "#about", label: "About Us" },
-    { name: "დაგვიკავშირდით", href: "#contact", label: "Contact Us" },
+    { name: "სერვისები", id: "services", label: "Services" },
+    { name: "პროექტები", id: "projects", label: "Projects" },
+    { name: "ჩვენს შესახებ", id: "about", label: "About Us" },
+    { name: "დაგვიკავშირდით", id: "contact", label: "Contact Us" },
   ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    setIsOpen(false);
+  };
 
   return (
     <header className="w-full fixed top-0 z-[100] font-georgian">
@@ -51,13 +67,13 @@ export default function Header() {
           <ul className="flex gap-10 text-white/95 text-[15px] font-semibold tracking-wide whitespace-nowrap">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link
-                  href={link.href}
+                <button
+                  onClick={() => scrollToSection(link.id)}
                   aria-label={link.label}
-                  className="hover:text-[#F19035] transition-all"
+                  className="hover:text-[#F19035] transition-all cursor-pointer bg-transparent border-none"
                 >
                   {link.name}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
@@ -103,32 +119,20 @@ export default function Header() {
         }`}
       >
         <div className="flex flex-col h-full justify-between">
-          <ul className="flex flex-col gap-6 mt-30">
+          <ul className="flex flex-col gap-6 mt-32">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-white text-md font-semibold hover:text-[#F19035] transition-colors inline-block"
+                <button
+                  onClick={() => scrollToSection(link.id)}
+                  className="text-white text-xl font-semibold hover:text-[#F19035] transition-colors text-left w-full"
                 >
                   {link.name}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
 
           <div className="absolute bottom-0 left-0 w-full h-[70%] pointer-events-none overflow-hidden">
-            {/* 1. Subtle Background Grid (Tech vibe-ისთვის) */}
-            {/* <div
-              className="absolute inset-0 opacity-[0.05]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(#f19035 1px, transparent 1px), linear-gradient(90deg, #f19035 1px, transparent 1px)",
-                // size: "20px 20px",
-                backgroundSize: "30px 30px",
-              }}
-            /> */}
-
             {[...Array(15)].map((_, i) => (
               <div
                 key={`col-group-${i}`}
@@ -179,29 +183,6 @@ export default function Header() {
                 }`}
               />
             ))}
-
-            {/* 4. Floating Tech Dust (პატარა წერტილები ჰაერში) */}
-            {/* {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={`dust-${i}`}
-                initial={{ opacity: 0, y: 0 }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  y: -100,
-                  x: Math.random() * 20 - 10,
-                }}
-                transition={{
-                  duration: Math.random() * 3 + 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                }}
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  bottom: `${Math.random() * 40}%`,
-                }}
-                className="absolute size-[2px] bg-primary rounded-full blur-[0.5px]"
-              />
-            ))} */}
 
             <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
             <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b to-transparent" />

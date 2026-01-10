@@ -8,7 +8,6 @@ import {
   Instagram,
   Linkedin,
   ArrowUpRight,
-  Github,
   Locate,
 } from "lucide-react";
 
@@ -16,12 +15,40 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: <Facebook size={18} />, href: "#", label: "Facebook" },
-    { icon: <Instagram size={18} />, href: "#", label: "Instagram" },
+    {
+      icon: <Facebook size={18} />,
+      href: "https://www.facebook.com/profile.php?id=61559932766757",
+      label: "Facebook",
+    },
+    {
+      icon: <Instagram size={18} />,
+      href: "https://www.instagram.com/_gargari/",
+      label: "Instagram",
+    },
     { icon: <Linkedin size={18} />, href: "#", label: "LinkedIn" },
   ];
 
-  const quickLinks = ["მთავარი", "პროექტები", "სერვისები", "ჩვენს შესახებ"];
+  const quickLinks = [
+    { name: "პროექტები", id: "projects" },
+    { name: "სერვისები", id: "services" },
+    { name: "ჩვენს შესახებ", id: "about" },
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <footer className="relative bg-[#121212] pt-24 pb-12 px-6 overflow-hidden">
@@ -42,6 +69,8 @@ const Footer = () => {
                 <motion.a
                   key={i}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   whileHover={{ y: -3, color: "#f19035" }}
                   className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-300 transition-colors border border-white/5"
@@ -59,17 +88,16 @@ const Footer = () => {
             <ul className="space-y-4">
               {quickLinks.map((link, i) => (
                 <li key={i}>
-                  <a
-                    href={`#${link}`}
-                    aria-label={`Go to ${link}`}
-                    className="text-zinc-300 hover:text-primary transition-colors text-sm font-georgian flex items-center group"
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-zinc-300 hover:text-primary transition-colors text-sm font-georgian flex items-center group bg-transparent border-none cursor-pointer p-0"
                   >
-                    {link}
+                    {link.name}
                     <ArrowUpRight
                       size={14}
                       className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-1 transition-all"
                     />
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -81,16 +109,18 @@ const Footer = () => {
             </h3>
             <div className="space-y-4">
               <a
-                href="mailto:hello@gargari.ge"
+                href="mailto:info@gargari.com"
                 aria-label="Contact us on Email"
                 className="flex items-center gap-3 text-zinc-300 hover:text-white transition-colors group"
               >
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
                   <Mail size={14} />
                 </div>
-                <span className="text-sm font-medium">info@gargari.com</span>
+                <span className="text-sm font-medium">
+                  gargariinfo@gmail.com
+                </span>
               </a>
-              <div className="flex items-center gap-3 text-zinc-300">
+              <div className="flex items-center gap-3 text-zinc-300 group">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-black transition-all">
                   <Locate size={14} />
                 </div>
@@ -106,13 +136,6 @@ const Footer = () => {
             <p className="text-zinc-300 text-xs font-georgian italic leading-relaxed">
               გაქვთ იდეა? მოდით, ერთად ვაქციოთ ის რეალობად.
             </p>
-            {/* <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-4 bg-primary text-black font-bold rounded-2xl text-xs uppercase tracking-widest transition-transform font-georgian"
-            >
-              დაიწყე პროექტი
-            </motion.button> */}
           </div>
         </div>
 
@@ -123,14 +146,12 @@ const Footer = () => {
           <div className="flex gap-8">
             <a
               href="#"
-              aria-label="Privacy Policy"
               className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
             >
               Privacy Policy
             </a>
             <a
               href="#"
-              aria-label="Terms of Service"
               className="text-zinc-400 hover:text-zinc-300 text-[10px] uppercase tracking-widest font-bold transition-colors"
             >
               Terms of Service

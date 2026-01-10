@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Activity, Terminal, Sparkles } from "lucide-react";
 
@@ -13,13 +12,28 @@ export default function Hero() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Hydration error-ის თავიდან ასაცილებლად რანდომიზაცია ხდება მხოლოდ კლიენტზე
     const positions = [...Array(15)].map(() => ({
       left: `${Math.random() * 100}%`,
       delay: Math.random() * 5,
     }));
     setRandomPositions(positions);
   }, []);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <section className="relative min-h-screen w-full bg-[#0a0a0a] flex items-center overflow-hidden pt-[140px] pb-16">
@@ -112,25 +126,23 @@ export default function Hero() {
             </div>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Link
-                href="#projects"
-                aria-label="იხილეთ ჩვენი ნამუშევრები"
-                className="group flex items-center justify-center gap-3 bg-primary text-black px-10 py-5 rounded-full font-bold transition-all hover:bg-white active:scale-95 text-base shadow-[0_0_30px_rgba(241,144,53,0.3)]"
+              <button
+                onClick={() => scrollToSection("projects")}
+                className="group flex items-center justify-center gap-3 bg-primary text-black px-10 py-5 rounded-full font-bold transition-all hover:bg-white active:scale-95 text-base shadow-[0_0_30px_rgba(241,144,53,0.3)] cursor-pointer"
               >
                 ნახე პროექტები
                 <ArrowUpRight
                   className="size-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                   aria-hidden="true"
                 />
-              </Link>
+              </button>
 
-              <Link
-                href="#contact"
-                aria-label="დაგვიკავშირდით თანამშრომლობისთვის"
-                className="flex items-center justify-center px-10 py-5 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all text-base backdrop-blur-sm"
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="flex items-center justify-center px-10 py-5 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all text-base backdrop-blur-sm cursor-pointer"
               >
                 დაგვიკავშირდით
-              </Link>
+              </button>
             </div>
           </div>
 

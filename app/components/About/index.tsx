@@ -31,6 +31,22 @@ const About = () => {
     setIsMounted(true);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section
       className="relative py-32 px-6 overflow-hidden bg-[#0a0a0a]"
@@ -183,6 +199,7 @@ const About = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="group relative px-10 py-5 bg-primary text-black font-bold rounded-2xl overflow-hidden transition-all"
+              onClick={() => scrollToSection("contact")}
             >
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
               <span className="relative z-10 flex items-center gap-3 text-xs tracking-[0.2em] uppercase">
