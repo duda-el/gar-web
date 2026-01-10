@@ -14,7 +14,7 @@ const stats = [
   },
   {
     label: "კმაყოფილი კლიენტი",
-    value: "30+",
+    value: "10+",
     icon: <Target className="size-5 text-primary" />,
   },
   {
