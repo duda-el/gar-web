@@ -141,7 +141,7 @@ const About = () => {
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-8 -right-8 p-8 bg-[#1a1a1a] border border-primary/20 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl z-30"
+              className="hidden sm:block absolute -bottom-8 -right-4 lg:-right-8 p-8 bg-[#1a1a1a] border border-primary/20 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl z-30"
             >
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-primary/10 rounded-2xl text-primary">
