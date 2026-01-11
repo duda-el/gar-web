@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian } from "next/font/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
@@ -98,8 +99,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ka" className={notoGeorgian.variable} suppressHydrationWarning>
+      <GoogleTagManager gtmId="GTM-TXP9LKXZ" />
       <body className="font-georgian antialiased" suppressHydrationWarning>
         {children}
+        <GoogleAnalytics gaId="G-TCBNN29N66" />
       </body>
     </html>
   );
