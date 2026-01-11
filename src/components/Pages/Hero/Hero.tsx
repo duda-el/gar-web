@@ -105,8 +105,8 @@ export default function Hero() {
 
             <div className="mt-8 lg:mt-12 max-w-[480px]">
               <p className="text-zinc-400 text-[14px] sm:text-lg leading-[1.7] font-medium border-l-2 border-primary/40 pl-6 bg-gradient-to-r from-primary/5 to-transparent py-4 rounded-r-xl">
-                ჩვენ ვთავაზობთ კოპმანიებს გამორჩეული ციფრული სივრცის შექმნას.
-                დიზაინი, დეველოპმენტი და სტრატეგია.
+                ჩვენ გთავაზობთ გამორჩეული ციფრული სივრცის შექმნას. დიზაინს,
+                დეველოპმენტს და სტრატეგიას.
               </p>
             </div>
 
@@ -133,7 +133,7 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="relative w-full max-w-[440px] aspect-[0.85/1] group perspective-1000"
+              className="relative w-full max-w-[440px] min-h-[520px] group perspective-1000"
             >
               {/* Outer Ambient Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-orange-500/40 rounded-[3.5rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700" />
