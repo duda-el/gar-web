@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -228,7 +228,6 @@ const Projects = () => {
         </div>
       </div>
 
-      {/* Modal Section */}
       <AnimatePresence>
         {selectedProject && (
           <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">

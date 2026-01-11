@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   ArrowUpRight,
-  Activity,
   Terminal,
   Sparkles,
   Globe,
   Zap,
-  Box,
-  Cpu,
 } from "lucide-react";
 
 export default function Hero() {
@@ -46,7 +43,6 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen w-full bg-[#0a0a0a] flex items-center overflow-hidden pt-[140px] pb-16">
-      {/* --- BACKGROUND ANIMATIONS --- */}
       <div
         className="absolute inset-0 pointer-events-none overflow-hidden"
         aria-hidden="true"
@@ -81,7 +77,6 @@ export default function Hero() {
 
       <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* --- LEFT CONTENT SECTION --- */}
           <div className="lg:col-span-7 flex flex-col items-start">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -127,7 +122,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* --- RIGHT SIDE: PREMIUM INTERACTIVE CARD --- */}
           <div className="hidden lg:flex lg:col-span-5 relative justify-end">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
@@ -135,12 +129,9 @@ export default function Hero() {
               transition={{ duration: 1, ease: "easeOut" }}
               className="relative w-full max-w-[440px] min-h-[520px] group perspective-1000"
             >
-              {/* Outer Ambient Glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-orange-500/40 rounded-[3.5rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700" />
 
-              {/* Card Container */}
               <div className="absolute inset-0 bg-[#0d0d0d] rounded-[2rem] border border-white/10 overflow-hidden z-20 shadow-2xl flex flex-col transition-all duration-500 group-hover:border-primary/30 group-hover:translate-y-[-8px]">
-                {/* 1. Header Area */}
                 <div className="h-14 border-b border-white/5 flex items-center justify-between px-8 bg-white/[0.02] backdrop-blur-md">
                   <div className="flex gap-1.5">
                     <div className="size-2.5 rounded-full bg-[#ff5f56]/30 border border-[#ff5f56]/40" />
@@ -157,10 +148,8 @@ export default function Hero() {
                 </div>
 
                 <div className="flex-1 p-10 flex flex-col relative overflow-hidden">
-                  {/* Visual Background Mesh */}
                   <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(241,144,53,0.08),transparent_70%)] pointer-events-none" />
 
-                  {/* 2. Dynamic Central Visual */}
                   <div className="relative mb-8 flex justify-center">
                     <div className="relative size-24">
                       <motion.div
@@ -196,7 +185,6 @@ export default function Hero() {
                     </div>
                   </div>
 
-                  {/* 3. Text & Title */}
                   <div className="space-y-4 relative z-10 mb-8">
                     <div className="flex items-center gap-3">
                       <div className="h-[1px] w-8 bg-primary" />
@@ -213,7 +201,6 @@ export default function Hero() {
                     </h2>
                   </div>
 
-                  {/* 4. FACEBOOK REVIEWS SECTION */}
                   <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
                     <div className="flex flex-col gap-3">
                       <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
@@ -271,7 +258,6 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Animated Scanner Effect */}
                 <motion.div
                   animate={{ top: ["-20%", "120%"] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
@@ -279,7 +265,6 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Back Decor Layer */}
               <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full blur-[100px] -z-10" />
             </motion.div>
           </div>

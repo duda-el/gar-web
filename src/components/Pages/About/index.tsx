@@ -1,16 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Rocket,
-  Target,
-  Zap,
-  Cpu,
-  ShieldCheck,
-  Globe,
-  CheckCircle2,
-} from "lucide-react";
+import { ShieldCheck, Globe } from "lucide-react";
 import Image from "next/image";
 import groupPhoto from "@/Assets/images/garagari-boys.jpg";
 
@@ -185,7 +177,6 @@ const About = () => {
               </p>
             </motion.div>
 
-            {/* --- New Interactive Feature List --- */}
             <div className="space-y-8 relative">
               <div className="absolute left-[11px] top-2 bottom-2 w-[1px] bg-gradient-to-b from-primary/50 via-primary/10 to-transparent" />
 

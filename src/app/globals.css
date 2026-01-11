@@ -45,7 +45,6 @@ body {
   padding: 0;
 }
 
-/* Endless Marquee Animation */
 @keyframes marquee {
   0% {
     transform: translateX(0);
@@ -61,7 +60,6 @@ body {
   animation: marquee 25s linear infinite;
 }
 
-/* Utility classes to use with your custom colors */
 .bg-brand-dark {
   background-color: var(--color-dark);
 }

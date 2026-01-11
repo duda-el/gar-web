@@ -10,7 +10,6 @@ const CookieConsent = () => {
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
     if (!consent) {
-      // დრო შევამცირეთ 0.5 წამამდე სწრაფი რეაგირებისთვის
       const timer = setTimeout(() => setIsVisible(true), 500);
       return () => clearTimeout(timer);
     }
@@ -34,7 +33,6 @@ const CookieConsent = () => {
           <div className="max-w-5xl mx-auto">
             <div className="bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-full p-4 md:px-8 md:py-4 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-4">
               
-              {/* მარცხენა მხარე: აიქონი და ტექსტი */}
               <div className="flex items-center gap-4">
                 <div className="hidden md:flex w-10 h-10 rounded-full bg-primary/10 items-center justify-center text-primary shrink-0">
                   <Cookie size={20} />
@@ -45,7 +43,6 @@ const CookieConsent = () => {
                 </p>
               </div>
 
-              {/* მარჯვენა მხარე: ღილაკები */}
               <div className="flex items-center gap-3 w-full md:w-auto">
                 <button
                   onClick={handleAccept}
