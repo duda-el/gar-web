@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 
@@ -9,23 +9,74 @@ const notoGeorgian = Noto_Sans_Georgian({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#121212",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
-  title: "Gargari",
+  metadataBase: new URL("https://gargari.ge"),
+
+  title: {
+    default: "Gargari",
+    template: "%s | Gargari",
+  },
+
   description:
-    "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
+    "Gargari გთავაზობთ პროფესიონალურ მომსახურებას: ვებ გვერდების შექმნა, UI/UX დიზაინი და ბრენდინგი. დავეხმაროთ თქვენს ბიზნესს ციფრულ ტრანსფორმაციაში.",
+
+  keywords: [
+    "საიტების დამზადება",
+    "ვებ დიზაინი",
+    "ვებ გვერდების შექმნა",
+    "UI/UX დიზაინი",
+    "ბრენდინგი",
+    "Gargari",
+    "გარგარი",
+    "ონლაინ მაღაზიის დამზადება",
+    "Web Development Tbilisi",
+  ],
+
+  alternates: {
+    canonical: "https://www.gargari.ge",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
   icons: {
     icon: "/gargari.ico",
+    shortcut: "/gargari.ico",
+    apple: "/gargari.ico",
+  },
+
+  appleWebApp: {
+    capable: true,
+    title: "Gargari",
+    statusBarStyle: "black-translucent",
   },
 
   openGraph: {
-    title: "Gargari",
+    title: "Gargari - საიტების დამზადება და ვებ დიზაინი",
     description:
       "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
-    url: "https://gargari.ge", 
+    url: "https://gargari.ge",
     siteName: "Gargari",
     images: [
       {
-        url: "/og-image.jpg", 
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Gargari",
@@ -34,12 +85,9 @@ export const metadata: Metadata = {
     locale: "ka_GE",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Gargari",
-    description:
-      "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
-    images: ["/og-image.jpg"],
+
+  verification: {
+    google: "kpGAn4W0G3agna6Gu57vQYMSEblYqT7kCNbXmFe-2MA",
   },
 };
 

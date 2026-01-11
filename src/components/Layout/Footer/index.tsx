@@ -140,7 +140,7 @@ const Footer = () => {
                 <li key={id}>
                   <button
                     onClick={() => scrollToSection(id)}
-                    className="text-zinc-300 hover:text-primary transition-colors text-sm font-georgian flex items-center group capitalize"
+                    className="text-zinc-300 hover:text-primary transition-colors text-sm font-georgian flex items-center group capitalize cursor-pointer"
                   >
                     {id === "projects"
                       ? "პროექტები"

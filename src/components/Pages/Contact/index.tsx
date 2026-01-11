@@ -153,7 +153,9 @@ const Contact = () => {
                   <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Facebook
                   </p>
-                  <p className="text-white text-sm font-medium">Gargari</p>
+                  <p className="text-white text-sm font-medium">
+                    გარგარი • GarGari
+                  </p>
                 </div>
               </a>
 
@@ -188,7 +190,7 @@ const Contact = () => {
                   <p className="text-[10px] text-zinc-300 uppercase tracking-widest font-georgian font-bold">
                     Instagram
                   </p>
-                  <p className="text-white text-sm font-medium">@_gargari</p>
+                  <p className="text-white text-sm font-medium">_gargari</p>
                 </div>
               </a>
             </div>
