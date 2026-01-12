@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian } from "next/font/google";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
@@ -58,9 +59,12 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/gargari.ico",
-    shortcut: "/gargari.ico",
-    apple: "/gargari.ico",
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/gargari.png",
+    apple: "/apple-touch-icon.png",
   },
 
   appleWebApp: {
@@ -72,7 +76,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gargari - საიტების დამზადება და ვებ დიზაინი",
     description:
-      "ჩვენ ვქმნით ინოვაციურ ვებსაიტებს, UI/UX დიზაინს და ციფრულ პროდუქტებს თქვენი ბიზნესისთვის.",
+      "Gargari გთავაზობთ პროფესიონალურ მომსახურებას: ვებ გვერდების შექმნა, UI/UX დიზაინი და ბრენდინგი. დავეხმაროთ თქვენს ბიზნესს ციფრულ ტრანსფორმაციაში.",
     url: "https://gargari.ge",
     siteName: "Gargari",
     images: [
@@ -87,8 +91,20 @@ export const metadata: Metadata = {
     type: "website",
   },
 
+  twitter: {
+    card: "summary_large_image",
+    title: "Gargari - საიტების დამზადება და ვებ დიზაინი",
+    description:
+      "Gargari გთავაზობთ პროფესიონალურ მომსახურებას: ვებ გვერდების შექმნა, UI/UX დიზაინი და ბრენდინგი. დავეხმაროთ თქვენს ბიზნესს ციფრულ ტრანსფორმაციაში.",
+    images: ["/og-image.jpg"],
+  },
+
   verification: {
     google: "kpGAn4W0G3agna6Gu57vQYMSEblYqT7kCNbXmFe-2MA",
+  },
+
+  other: {
+    "content-language": "ka",
   },
 };
 
@@ -99,6 +115,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ka" className={notoGeorgian.variable} suppressHydrationWarning>
+      <head>
+        <Script
+          id="schema-org"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Gargari",
+              url: "https://gargari.ge",
+              logo: "https://gargari.ge/gargari.png",
+              description:
+                "ვებ გვერდების დამზადება, UI/UX დიზაინი და ბრენდინგი საქართველოში",
+            }),
+          }}
+        />
+      </head>
       <GoogleTagManager gtmId="GTM-TXP9LKXZ" />
       <body className="font-georgian antialiased" suppressHydrationWarning>
         {children}
