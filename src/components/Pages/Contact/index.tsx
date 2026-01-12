@@ -20,40 +20,39 @@ const Contact = () => {
     "სხვა",
   ];
 
-  const sendEmail = (e: React.FormEvent) => {
+  const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
 
     setIsSending(true);
+    setStatus("idle");
 
-    const adminEmail = emailjs.sendForm(
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-      form.current,
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-    );
+    try {
+      await Promise.all([
+        emailjs.sendForm(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          form.current,
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        ),
+        emailjs.sendForm(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID!,
+          form.current,
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        ),
+      ]);
 
-    const clientEmail = emailjs.sendForm(
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-      process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID!,
-      form.current,
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-    );
-
-    Promise.all([adminEmail, clientEmail])
-      .then(() => {
-        setStatus("success");
-        form.current?.reset();
-        setSelectedService("");
-      })
-      .catch((error) => {
-        console.error("EmailJS Error:", error);
-        setStatus("error");
-      })
-      .finally(() => {
-        setIsSending(false);
-        setTimeout(() => setStatus("idle"), 3000);
-      });
+      setStatus("success");
+      form.current.reset();
+      setSelectedService("");
+    } catch (error) {
+      console.error("EmailJS Error details:", error);
+      setStatus("error");
+    } finally {
+      setIsSending(false);
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   };
 
   return (
