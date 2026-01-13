@@ -31,6 +31,15 @@ export const metadata: Metadata = {
     "Gargari გთავაზობთ პროფესიონალურ მომსახურებას: ვებ გვერდების შექმნა, UI/UX დიზაინი და ბრენდინგი. დავეხმაროთ თქვენს ბიზნესს ციფრულ ტრანსფორმაციაში.",
 
   keywords: [
+    "ვებ საიტების აწყობა",
+    "ვებ გვერდის დამზადების ფასი",
+    "ვებ საიტის შექმნა",
+    "ინტერნეტ მაღაზიის დამზადება",
+    "ვებ გვერდების ადმინისტრირება",
+    "პორტფოლიო საიტის დამზადება",
+    "სავიზიტო საიტის დამზადება",
+    "ვებ დეველოპმენტი",
+    "Web Sites",
     "საიტების დამზადება",
     "ვებ დიზაინი",
     "ვებ გვერდების შექმნა",
@@ -39,7 +48,15 @@ export const metadata: Metadata = {
     "Gargari",
     "გარგარი",
     "ონლაინ მაღაზიის დამზადება",
+    "სწრაფი ვებ გვერდების დამზადება",
+    "React Development Georgia",
+    "Next.js დეველოპმენტი",
+    "Landing Page-ის დამზადება",
     "Web Development Tbilisi",
+    "Web Development Georgia",
+    "Website Design Tbilisi",
+    "Freelance Web Developer Georgia",
+    "SEO Optimization Georgia",
   ],
 
   alternates: {
