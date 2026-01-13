@@ -1,35 +1,43 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/Assets/gargari-logo.svg";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    setCurrentTime(new Date());
+
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const hours = currentTime.getHours();
+  const hours = currentTime?.getHours() ?? 0;
   const isOnline = hours >= 10 && hours < 24;
 
-  const timeString = currentTime.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const timeString = currentTime
+    ? currentTime.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "--:--";
 
   const dateString = currentTime
-    .toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-    })
-    .toUpperCase();
+    ? currentTime
+        .toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+        })
+        .toUpperCase()
+    : "--- --";
 
   const navLinks = [
     { name: "სერვისები", id: "services", label: "Services" },
@@ -80,7 +88,6 @@ export default function Header() {
               alt="Garagaris Logo"
               width={100}
               height={28}
-              priority
               className="h-auto w-32 md:w-40 cursor-pointer"
             />
           </Link>
@@ -104,29 +111,35 @@ export default function Header() {
 
         <div className="flex items-center justify-end gap-6">
           <div className="hidden md:flex items-center gap-4 font-mono text-xs tracking-widest">
-            <div className="flex flex-col items-end text-zinc-400">
-              <span className="text-primary font-bold">{timeString}</span>
-              <span className="text-[10px] text-gray-300">{dateString}</span>
-            </div>
+            {mounted && (
+              <>
+                <div className="flex flex-col items-end text-zinc-400">
+                  <span className="text-primary font-bold">{timeString}</span>
+                  <span className="text-[10px] text-gray-300">
+                    {dateString}
+                  </span>
+                </div>
 
-            <div className="w-[1px] h-8 bg-white/10" />
+                <div className="w-[1px] h-8 bg-white/10" />
 
-            <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
-              <div
-                className={`size-1.5 rounded-full animate-pulse ${
-                  isOnline
-                    ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
-                    : "bg-primary shadow-[0_0_8px_rgba(241,144,53,0.6)]"
-                }`}
-              />
-              <span
-                className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
-                  isOnline ? "text-green-500" : "text-primary"
-                }`}
-              >
-                {isOnline ? "Online" : "Standby"}
-              </span>
-            </div>
+                <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+                  <div
+                    className={`size-1.5 rounded-full animate-pulse ${
+                      isOnline
+                        ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+                        : "bg-primary shadow-[0_0_8px_rgba(241,144,53,0.6)]"
+                    }`}
+                  />
+                  <span
+                    className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
+                      isOnline ? "text-green-500" : "text-primary"
+                    }`}
+                  >
+                    {isOnline ? "Online" : "Standby"}
+                  </span>
+                </div>
+              </>
+            )}
           </div>
 
           <button
@@ -175,34 +188,38 @@ export default function Header() {
           <div className="relative z-10 flex flex-col gap-1 pb-4">
             <div className="w-full h-[1px] bg-white/5 mb-6" />
 
-            <div className="flex items-center gap-2 mb-4">
-              <div
-                className={`size-2 rounded-full ${
-                  isOnline ? "bg-green-500" : "bg-primary"
-                }`}
-              />
-              <span
-                className={`text-xs font-bold uppercase tracking-widest ${
-                  isOnline ? "text-green-500" : "text-primary"
-                }`}
-              >
-                System {isOnline ? "Online" : "Standby"}
-              </span>
-            </div>
+            {mounted && (
+              <>
+                <div className="flex items-center gap-2 mb-4">
+                  <div
+                    className={`size-2 rounded-full ${
+                      isOnline ? "bg-green-500" : "bg-primary"
+                    }`}
+                  />
+                  <span
+                    className={`text-xs font-bold uppercase tracking-widest ${
+                      isOnline ? "text-green-500" : "text-primary"
+                    }`}
+                  >
+                    System {isOnline ? "Online" : "Standby"}
+                  </span>
+                </div>
 
-            <div className="flex justify-between items-end">
-              <div className="flex flex-col">
-                <span className="text-white font-bold text-3xl tracking-tighter">
-                  {timeString}
-                </span>
-                <span className="text-zinc-400 text-[10px] tracking-widest uppercase">
-                  {dateString}
-                </span>
-              </div>
-              <span className="text-white/70 text-xs tracking-widest italic">
-                © 2026
-              </span>
-            </div>
+                <div className="flex justify-between items-end">
+                  <div className="flex flex-col">
+                    <span className="text-white font-bold text-3xl tracking-tighter">
+                      {timeString}
+                    </span>
+                    <span className="text-zinc-400 text-[10px] tracking-widest uppercase">
+                      {dateString}
+                    </span>
+                  </div>
+                  <span className="text-white/70 text-xs tracking-widest italic">
+                    © 2026
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

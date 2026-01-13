@@ -21,7 +21,7 @@ const Projects = () => {
   const [modalImgIndex, setModalImgIndex] = useState(0);
   const swiperRef = useRef<any>(null);
   const [swiper, setSwiper] = useState<any>(null);
-  const MotionImage = motion(Image);
+  const MotionImage = motion.create(Image);
 
   useEffect(() => {
     const loadSwiper = async () => {
@@ -257,14 +257,18 @@ const Projects = () => {
                 <AnimatePresence mode="wait">
                   <MotionImage
                     key={modalImgIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.02 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
                     src={
                       selectedProject.images[modalImgIndex]?.src ||
                       selectedProject.images[modalImgIndex]
                     }
-                    alt={`${selectedProject.alt}`}
+                    alt={selectedProject.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 80vw"
+                    priority
                     className="w-full h-full object-contain p-4 relative z-10"
                   />
                 </AnimatePresence>
@@ -274,8 +278,10 @@ const Projects = () => {
                     selectedProject.images[modalImgIndex]?.src ||
                     selectedProject.images[modalImgIndex]
                   }
-                  className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl"
                   alt=""
+                  fill
+                  className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl"
+                  priority={false}
                 />
 
                 {selectedProject.images.length > 1 && (
