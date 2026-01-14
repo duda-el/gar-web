@@ -103,6 +103,8 @@ export const metadata: Metadata = {
 
   other: {
     "content-language": "ka",
+    "publisher": "Gargari", 
+    "author": "Gargari Team",
   },
 };
 
