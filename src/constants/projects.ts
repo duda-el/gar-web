@@ -75,9 +75,7 @@ export const projects: Project[] = [
     images: [BizonImg],
     services: [
       "Frontend Development",
-      "Marketplace Architecture",
-      "Mobile First Design",
-      "Search Engine Optimization",
+      "Redesign & Refactor",
     ],
   },
   {

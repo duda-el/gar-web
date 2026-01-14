@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://gargari.ge"),
 
   title: {
-    default: "Gargari",
+    default: "ვებ გვერდების დამზადება, UI/UX და გრაფიკული დიზაინი საქართველოში | Gargari",
     template: "%s | Gargari",
   },
 
