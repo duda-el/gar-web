@@ -15,6 +15,8 @@ import UnistatImg1 from "@/Assets/images/unistat1.jpg";
 import UnistatImg2 from "@/Assets/images/unistat2.jpg";
 import MafiaImg from "@/Assets/images/mafia.jpg";
 import MafiaImg1 from "@/Assets/images/mafia1.jpg";
+import ReagentImg from "@/Assets/images/reagent.jpg";
+import ReagentImg1 from "@/Assets/images/reagent1.jpg";
 
 export interface Project {
   id: number;
@@ -65,6 +67,22 @@ export const projects: Project[] = [
   },
   {
     id: 3,
+    title: "Reagent.ge",
+    category: "კატეგორია: პროდუქტის კატალოგი",
+    status: "დასრულებული",
+    type: "website",
+    alt: "Reagent.ge - ინფორმაციული ვებ-საიტი რექტივებისა და ლაბორატორიული ჭურჭელის შესახებ",
+    description:
+      "პრემიუმ ხარისხის რეაქტივები. REAGENT GROUP გთავაზობთ უმაღლესი ხარისხის ქიმიურ რეაგენტებს ლაბორატიებისთვის და ინდუსტრიული მიზნებისთვის.",
+    images: [ReagentImg, ReagentImg1],
+    services: [
+      "Frontend Development",
+      "UI/UX დიზაინი",
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 4,
     title: "Bizon.ge",
     category: "კატეგორია: გაქირავება",
     status: "დასრულებული",
@@ -79,7 +97,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     title: "Gree",
     category: "კატეგორია: E-commerce",
     status: "დასრულებული",
@@ -96,7 +114,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     title: "Freezer",
     category: "კატეგორია: პოსტერი",
     status: "დასრულებული",
@@ -108,7 +126,7 @@ export const projects: Project[] = [
     services: ["Poster Design", "Social Media Kit"],
   },
   {
-    id: 6,
+    id: 7,
     title: "COFFEEON",
     category: "კატეგორია: ბრენდინგი",
     status: "დასრულებული",
@@ -131,7 +149,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     title: "UNISTATS",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",
@@ -148,7 +166,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 8,
+    id: 9,
     title: "NOSTAL.GE",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",

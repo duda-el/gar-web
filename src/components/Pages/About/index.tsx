@@ -89,6 +89,7 @@ const About = () => {
                     src={groupPhoto}
                     alt="Gargari"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover opacity-30 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
                     placeholder="blur"
                   />
