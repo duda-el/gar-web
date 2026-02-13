@@ -68,7 +68,7 @@ export const projects: Project[] = [
   {
     id: 3,
     title: "Reagent.ge",
-    category: "კატეგორია: პროდუქტის კატალოგი",
+    category: "კატეგორია: კატალოგი",
     status: "დასრულებული",
     type: "website",
     alt: "Reagent.ge - ინფორმაციული ვებ-საიტი რექტივებისა და ლაბორატორიული ჭურჭელის შესახებ",
