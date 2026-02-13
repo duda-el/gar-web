@@ -217,7 +217,7 @@ const Projects = () => {
                     <h3 className="text-xl md:text-2xl font-bold leading-tight tracking-tight text-white group-hover:text-[#f19035] transition-colors duration-200 font-georgian mb-3">
                       {project.title}
                     </h3>
-                    <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-4 italic">
+                    <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-3 italic">
                       {project.description}
                     </p>
                   </div>
