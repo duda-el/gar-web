@@ -219,7 +219,7 @@ const Services = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="bg-[#1c1c1c] p-4 sm:p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
+                className="bg-[#1c1c1c] p-8 sm:p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
                 style={{ borderRadius: "2.5rem" }}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6">
