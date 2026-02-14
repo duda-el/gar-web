@@ -22,35 +22,46 @@ interface ServiceDetail {
 
 const servicesData: Record<string, ServiceDetail> = {
   landing: {
-    title: "Landing Page",
-    price: "2500₾-დან",
-    description: "ერთგვერდიანი საიტი თქვენი პროდუქტის პრეზენტაციისთვის.",
-    includes: [
-      "UI/UX დიზაინი",
-      "ყველა მოწყობილობასთან თავსებადი დიზაინი",
-      "საბაზისო SEO ოპტიმიზაცია",
-      "კონტაქტის ფორმის ინტეგრაცია",
-    ],
-    techStack: ["React", "TailwindCSS/CSS/SCSS"],
-  },
-  ecommerce: {
-    title: "E-Commerce",
-    price: "6000₾-დან",
+    title: "Static/Landing Page",
+    price: "2,500₾-დან",
     description:
-      "სრული ფუნქციონალი თქვენი ონლაინ მაღაზიისთვის, გადახდის სისტემით.",
+      "მაღალი კონვერტაციის მქონე ერთგვერდიანი საიტი უნიკალური დიზაინით.",
     includes: [
-      "პროდუქტების კატალოგი",
-      "ონლაინ გადახდა (BOG/TBC/CREDO)",
-      "ადმინ პანელი",
-      "ინვენტარის მართვა",
-      "SMS შეტყობინებები",
+      "Custom UI/UX დიზაინი (Figma)",
+      "Responsive (Mobile-First) განლაგება",
+      "სწრაფი ჩატვირთვა (Performance Optimization)",
+      "SEO-Friendly სტრუქტურა",
+    ],
+    techStack: ["React", "TailwindCSS", "Framer Motion"],
+  },
+  complex: {
+    title: "Complex Web Application",
+    price: "5,000₾-დან",
+    description:
+      "მასშტაბირებადი პლატფორმა რთული ბიზნეს ლოგიკითა და მართვის პანელით.",
+    includes: [
+      "ინდივიდუალური არქიტექტურა",
+      "მართვის პანელი (CMS/Admin)",
+      "მონაცემთა ბაზების ინტეგრაცია",
+      "მაღალი უსაფრთხოების სტანდარტები",
     ],
     techStack: [
-      "Next.js/React/Angular",
-      "Django/Laravel/C#",
-      "Payload CMS",
-      "Stripe/PayPal/Local Pay",
+      "Next.js / Angular",
+      "Node.js / C# / Python",
+      "PostgreSQL / MongoDB",
     ],
+  },
+  ecommerce: {
+    title: "E-Commerce System",
+    price: "7,500₾-დან",
+    description: "სრული ონლაინ გაყიდვების ეკოსისტემა თქვენი ბიზნესისთვის.",
+    includes: [
+      "პროდუქტების რთული ფილტრაცია",
+      "საბანკო გადახდების ინტეგრაცია",
+      "მარაგებისა და შეკვეთების მართვა",
+      "მომხმარებლის პირადი კაბინეტი",
+    ],
+    techStack: ["Next.js", "Payload CMS / Strapi", "BOG/TBC API"],
   },
   calculator: {
     title: "კალკულატორი",
@@ -63,21 +74,61 @@ const servicesData: Record<string, ServiceDetail> = {
 };
 
 const CALC_OPTIONS = [
-  { id: "landing", label: "ბაზისური ვებსაიტი", price: 1000, complex: false },
+  {
+    id: "landing",
+    label: "ბაზისური ვებსაიტი (Landing)",
+    price: 2500,
+    complex: false,
+  },
   {
     id: "multi_page",
-    label: "კომპლექსური საიტი",
-    price: 1500,
+    label: "კომპლექსური საიტი (Multi-page)",
+    price: 5000,
     complex: true,
   },
-  { id: "design", label: "პრემიუმ UI/UX დიზაინი", price: 500, complex: false },
-  { id: "cms", label: "მართვის პანელი (CMS)", price: 800, complex: true },
-  { id: "ecommerce", label: "მაღაზიის სისტემა", price: 1200, complex: true },
-  { id: "payment", label: "ბანკების ინტეგრაცია", price: 400, complex: true },
-  { id: "auth", label: "ავტორიზაცია/პროფილი", price: 700, complex: true },
-  { id: "multilang", label: "მრავალენოვანი საიტი", price: 400, complex: false },
-  { id: "booking", label: "დაჯავშნის სისტემა", price: 900, complex: true },
-  { id: "seo", label: "SEO ოპტიმიზაცია", price: 400, complex: false },
+  {
+    id: "design",
+    label: "პრემიუმ UI/UX დიზაინი (Custom)",
+    price: 1500,
+    complex: false,
+  },
+  {
+    id: "cms",
+    label: "მართვის პანელი (Admin Dashboard)",
+    price: 1600,
+    complex: true,
+  },
+  {
+    id: "ecommerce",
+    label: "მაღაზიის სისტემა (Cart/Checkout)",
+    price: 3000,
+    complex: true,
+  },
+  {
+    id: "payment",
+    label: "ბანკების ინტეგრაცია (BOG/TBC)",
+    price: 700,
+    complex: true,
+  },
+  {
+    id: "auth",
+    label: "ავტორიზაცია (Login/Register/Social)",
+    price: 1000,
+    complex: true,
+  },
+  {
+    id: "booking",
+    label: "დაჯავშნის სისტემა (Calendar/Slots)",
+    price: 2200,
+    complex: true,
+  },
+  {
+    id: "multilang",
+    label: "მრავალენოვანი მხარდაჭერა",
+    price: 600,
+    complex: false,
+  },
+  { id: "seo", label: "Advanced SEO ოპტიმიზაცია", price: 750, complex: true },
 ];
 
 const FAQ = [
@@ -115,7 +166,7 @@ const Services = () => {
         newList = newList.filter((item) => item !== "landing");
       if (!isSelected && id === "landing")
         newList = newList.filter(
-          (item) => !CALC_OPTIONS.find((o) => o.id === item)?.complex
+          (item) => !CALC_OPTIONS.find((o) => o.id === item)?.complex,
         );
       return newList;
     });
@@ -168,7 +219,7 @@ const Services = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="bg-[#1c1c1c] p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
+                className="bg-[#1c1c1c] p-4 sm:p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
                 style={{ borderRadius: "2.5rem" }}
               >
                 <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6">
