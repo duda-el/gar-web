@@ -23,7 +23,7 @@ interface ServiceDetail {
 const servicesData: Record<string, ServiceDetail> = {
   landing: {
     title: "Landing Page",
-    price: "1200₾-დან",
+    price: "2500₾-დან",
     description: "ერთგვერდიანი საიტი თქვენი პროდუქტის პრეზენტაციისთვის.",
     includes: [
       "UI/UX დიზაინი",
@@ -35,7 +35,7 @@ const servicesData: Record<string, ServiceDetail> = {
   },
   ecommerce: {
     title: "E-Commerce",
-    price: "4500₾-დან",
+    price: "6000₾-დან",
     description:
       "სრული ფუნქციონალი თქვენი ონლაინ მაღაზიისთვის, გადახდის სისტემით.",
     includes: [
