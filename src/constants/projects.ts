@@ -1,9 +1,11 @@
 import { StaticImageData } from "next/image";
 
-import ZmnaImg from "@/Assets/images/zmna.png";
+import ZmnaImg1 from "@/Assets/images/zmna1.png";
 import PayImg from "@/Assets/images/PayNety.jpg";
-import BizonImg from "@/Assets/images/Bizon.png";
-import GreeImg from "@/Assets/images/gree.png";
+import BizonImg from "@/Assets/images/Bizon.jpg";
+import BizonImg1 from "@/Assets/images/Bizon1.png";
+import GreeImg from "@/Assets/images/gree.jpg";
+import GreeImg1 from "@/Assets/images/gree.png";
 import FreezerImg from "@/Assets/images/freezer.jpg";
 import CoffeeonImg from "@/Assets/images/coffeeon-Untitled-2.jpg";
 import CoffeeonImg1 from "@/Assets/images/coffeeon-Mockup.jpg";
@@ -17,6 +19,7 @@ import MafiaImg from "@/Assets/images/mafia.jpg";
 import MafiaImg1 from "@/Assets/images/mafia1.jpg";
 import ReagentImg from "@/Assets/images/reagent.jpg";
 import ReagentImg1 from "@/Assets/images/reagent1.jpg";
+import ZmnaImg from "@/Assets/images/zmna.jpg";
 
 export interface Project {
   id: number;
@@ -40,7 +43,7 @@ export const projects: Project[] = [
     alt: "Zmna.ge - საინფორმაციო პორტალის ვებ-გვერდი",
     description:
       "თანამედროვე საინფორმაციო პორტალი, რომელიც ორიენტირებულია მომხმარებლისთვის სწრაფ და მოქნილ კონტენტის მიწოდებაზე.",
-    images: [ZmnaImg],
+    images: [ZmnaImg, ZmnaImg1],
     services: [
       "UI/UX დიზაინი",
       "Web Development",
@@ -90,11 +93,8 @@ export const projects: Project[] = [
     alt: "Bizon.ge - მძიმე ტექნიკის გაქირავების პლატფორმა",
     description:
       "მძიმე ტექნიკის გაქირავების ინოვაციური მარკეტპლეისი, გამართული ძიებისა და დაჯავშნის სისტემით.",
-    images: [BizonImg],
-    services: [
-      "Frontend Development",
-      "Redesign & Refactor",
-    ],
+    images: [BizonImg, BizonImg1],
+    services: ["Frontend Development", "Redesign & Refactor"],
   },
   {
     id: 5,
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     alt: "Gree - კონდიცირების ტექნიკის ონლაინ მაღაზია",
     description:
       "კონდიცირებისა და კლიმატური ტექნიკის ონლაინ მაღაზია, რომელიც მომხმარებელს პროდუქციის მარტივად შერჩევასა და შეძენაში ეხმარება.",
-    images: [GreeImg],
+    images: [GreeImg, GreeImg1],
     services: [
       "Frontend Development",
       "UI/UX დიზაინი",

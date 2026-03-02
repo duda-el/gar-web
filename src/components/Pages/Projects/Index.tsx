@@ -16,7 +16,7 @@ import { projects, Project } from "../../../constants/projects";
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [filter, setFilter] = useState<"website" | "design" | "uiux">(
-    "website"
+    "website",
   );
   const [modalImgIndex, setModalImgIndex] = useState(0);
   const swiperRef = useRef<any>(null);
@@ -119,6 +119,8 @@ const Projects = () => {
     }
   };
 
+  const currentImage = selectedProject?.images?.[modalImgIndex];
+
   return (
     <section
       className="relative pb-8 py-10 sm:py-24 px-6 overflow-hidden bg-[#121212]"
@@ -160,8 +162,8 @@ const Projects = () => {
                   {type === "website"
                     ? "ვებსაიტი"
                     : type === "uiux"
-                    ? "UI/UX დიზაინი"
-                    : "გრაფიკული დიზაინი"}
+                      ? "UI/UX დიზაინი"
+                      : "გრაფიკული დიზაინი"}
                 </button>
               ))}
             </div>
@@ -255,34 +257,32 @@ const Projects = () => {
 
               <div className="w-full h-[300px] md:h-[450px] bg-black relative flex items-center justify-center shrink-0 border-b border-white/5 group/modal">
                 <AnimatePresence mode="wait">
-                  <MotionImage
-                    key={modalImgIndex}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                    src={
-                      selectedProject.images[modalImgIndex]?.src ||
-                      selectedProject.images[modalImgIndex]
-                    }
-                    alt={selectedProject.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 80vw"
-                    priority
-                    className="w-full h-full object-contain p-4 relative z-10"
-                  />
+                  {currentImage && selectedProject && (
+                    <MotionImage
+                      key={modalImgIndex}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.02 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                      src={currentImage}
+                      alt={selectedProject.alt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 80vw"
+                      priority
+                      className="w-full h-full object-contain p-4 relative z-10"
+                    />
+                  )}
                 </AnimatePresence>
 
-                <Image
-                  src={
-                    selectedProject.images[modalImgIndex]?.src ||
-                    selectedProject.images[modalImgIndex]
-                  }
-                  alt=""
-                  fill
-                  className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl"
-                  priority={false}
-                />
+                {currentImage && (
+                  <Image
+                    src={currentImage}
+                    alt=""
+                    fill
+                    className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl"
+                    priority={false}
+                  />
+                )}
 
                 {selectedProject.images.length > 1 && (
                   <>

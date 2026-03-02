@@ -13,7 +13,7 @@ const Contact = () => {
   const [selectedService, setSelectedService] = useState("");
 
   const services = [
-    "ვებ დიზაინი",
+    "Web გვერდის აწყობა",
     "ბრენდინგი",
     "UI/UX დიზაინი",
     "გრაფიკული დიზაინი",
@@ -33,13 +33,13 @@ const Contact = () => {
           process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
           process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
           form.current,
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
         ),
         emailjs.sendForm(
           process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
           process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID!,
           form.current,
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
         ),
       ]);
 
@@ -314,8 +314,8 @@ const Contact = () => {
                 {isSending
                   ? "იგზავნება..."
                   : status === "success"
-                  ? "გაიგზავნა! ✓"
-                  : "გაგზავნა"}
+                    ? "გაიგზავნა! ✓"
+                    : "გაგზავნა"}
               </motion.button>
 
               {status === "error" && (
