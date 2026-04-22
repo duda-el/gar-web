@@ -36,7 +36,7 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-    {
+  {
     id: 1,
     title: "I-Techno",
     category: "კატეგორია: E-Commerce/Catalog",
@@ -49,14 +49,14 @@ export const projects: Project[] = [
     services: [
       "UI/UX დიზაინი",
       "Web Development",
-      "Full-Stack Development"
+      "Full-Stack Development",
       "Content Management System",
       "SEO ოპტიმიზაცია",
-      "Caching"
+      "Caching",
       "Hosting & Maintenance",
     ],
   },
-      {
+  {
     id: 2,
     title: "MechanX",
     category: "კატეგორია: E-Commerce/Catalog",
@@ -69,10 +69,10 @@ export const projects: Project[] = [
     services: [
       "UI/UX დიზაინი",
       "Web Development",
-      "Full-Stack Development"
+      "Full-Stack Development",
       "Content Management System",
       "SEO ოპტიმიზაცია",
-      "Caching"
+      "Caching",
       "Hosting & Maintenance",
     ],
   },
