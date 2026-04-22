@@ -20,6 +20,8 @@ import MafiaImg1 from "@/Assets/images/mafia1.jpg";
 import ReagentImg from "@/Assets/images/reagent.jpg";
 import ReagentImg1 from "@/Assets/images/reagent1.jpg";
 import ZmnaImg from "@/Assets/images/zmna.jpg";
+import ItechnoImg from "@/Assets/images/ITechno.jpg";
+import MechanxImg from "@/Assets/images/MechanX.jpg";
 
 export interface Project {
   id: number;
@@ -34,8 +36,48 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  {
+    {
     id: 1,
+    title: "I-Techno",
+    category: "კატეგორია: E-Commerce/Catalog",
+    status: "დასრულებული",
+    type: "website",
+    alt: "ITechno - უსაფღტხოების სისტემები და ტექნოლოგიები",
+    description:
+      "შპს „აითექნო“ დაარსდა 2017 წელს და უკვე 8 წელია წარმატებით ოპერირებს საქართველოს ბაზარზე უსაფრთხოების სისტემების სფეროში. ჩვენი საქმიანობა ეფუძნება პროფესიონალიზმს, ტექნიკურ სიზუსტეს და მაღალ პასუხისმგებლობას.",
+    images: [ItechnoImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Web Development",
+      "Full-Stack Development"
+      "Content Management System",
+      "SEO ოპტიმიზაცია",
+      "Caching"
+      "Hosting & Maintenance",
+    ],
+  },
+      {
+    id: 2,
+    title: "MechanX",
+    category: "კატეგორია: E-Commerce/Catalog",
+    status: "დასრულებული",
+    type: "website",
+    alt: "MechanX - პროფესიონალური ხელსაწყოების ონლაინ მაღაზია",
+    description:
+      "MechanX - ახალი სიტყვა ტექნიკისა და სამშენებლო ხელსაწყოების ონლაინ ბაზარზე, რომელიც აერთიანებს მრავალწლიან პრაქტიკულ გამოცდილებას, ხარისხსა და მომხმარებელზე ორიენტირებულ სერვისს.",
+    images: [MechanxImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Web Development",
+      "Full-Stack Development"
+      "Content Management System",
+      "SEO ოპტიმიზაცია",
+      "Caching"
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 3,
     title: "Zmna.ge",
     category: "კატეგორია: ახალი ამბები",
     status: "აქტიური",
@@ -53,7 +95,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 2,
+    id: 4,
     title: "PayNety",
     category: "კატეგორია: ინფორმაციული",
     status: "შეჩერებული",
@@ -69,7 +111,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 3,
+    id: 5,
     title: "Reagent.ge",
     category: "კატეგორია: კატალოგი",
     status: "დასრულებული",
@@ -85,7 +127,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 4,
+    id: 6,
     title: "Bizon.ge",
     category: "კატეგორია: გაქირავება",
     status: "დასრულებული",
@@ -97,7 +139,7 @@ export const projects: Project[] = [
     services: ["Frontend Development", "Redesign & Refactor"],
   },
   {
-    id: 5,
+    id: 7,
     title: "Gree",
     category: "კატეგორია: E-commerce",
     status: "დასრულებული",
@@ -114,7 +156,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 6,
+    id: 8,
     title: "Freezer",
     category: "კატეგორია: პოსტერი",
     status: "დასრულებული",
@@ -126,7 +168,7 @@ export const projects: Project[] = [
     services: ["Poster Design", "Social Media Kit"],
   },
   {
-    id: 7,
+    id: 9,
     title: "COFFEEON",
     category: "კატეგორია: ბრენდინგი",
     status: "დასრულებული",
@@ -149,7 +191,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 8,
+    id: 10,
     title: "UNISTATS",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",
@@ -166,7 +208,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 9,
+    id: 11,
     title: "NOSTAL.GE",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",
