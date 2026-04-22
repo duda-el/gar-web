@@ -118,7 +118,6 @@ const Footer = () => {
               Terms of Service
             </button>
             
-            {/* TOP.GE პირდაპირ აქ არის */}
             <div id="top-ge-counter-container" data-site-id="118478" className="opacity-60 hover:opacity-100 transition-opacity"></div>
           </div>
         </div>
