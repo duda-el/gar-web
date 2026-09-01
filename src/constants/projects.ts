@@ -1,7 +1,8 @@
 import { StaticImageData } from "next/image";
 
+import GmsTurboImg from "@/Assets/images/gmsturbo.png";
+import ReputationImg from "@/Assets/images/reputation.png";
 import ZmnaImg1 from "@/Assets/images/zmna1.png";
-import PayImg from "@/Assets/images/PayNety.jpg";
 import BizonImg from "@/Assets/images/Bizon.jpg";
 import BizonImg1 from "@/Assets/images/Bizon1.png";
 import GreeImg from "@/Assets/images/gree.jpg";
@@ -38,11 +39,29 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
+    title: "GMS Turbo",
+    category: "კატეგორია: E-Commerce/Catalog",
+    status: "დასრულებული",
+    type: "website",
+    alt: "GMS Turbo - ტურბოკომპრესორების შეკეთება და გაყიდვა",
+    description:
+      "GMS Turbo წარმოადგენს ტურბოკომპრესორების სერვისისა და დიაგნოსტიკის პრემიუმ პლატფორმას. ვებ-გვერდი გამოირჩევა თანამედროვე ვიზუალით, ეფექტური კატალოგითა და მომხმარებელზე ორიენტირებული ნავიგაციით.",
+    images: [GmsTurboImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Frontend Development",
+      "Full-Stack Development",
+      "SEO ოპტიმიზაცია",
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 2,
     title: "I-Techno",
     category: "კატეგორია: E-Commerce/Catalog",
     status: "დასრულებული",
     type: "website",
-    alt: "ITechno - უსაფღტხოების სისტემები და ტექნოლოგიები",
+    alt: "ITechno - უსაფრთხოების სისტემები და ტექნოლოგიები",
     description:
       "შპს „აითექნო“ დაარსდა 2017 წელს და უკვე 8 წელია წარმატებით ოპერირებს საქართველოს ბაზარზე უსაფრთხოების სისტემების სფეროში. ჩვენი საქმიანობა ეფუძნება პროფესიონალიზმს, ტექნიკურ სიზუსტეს და მაღალ პასუხისმგებლობას.",
     images: [ItechnoImg],
@@ -57,7 +76,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: "MechanX",
     category: "კატეგორია: E-Commerce/Catalog",
     status: "დასრულებული",
@@ -77,7 +96,25 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 3,
+    id: 4,
+    title: "Reputation.ge",
+    category: "კატეგორია: მედია / პორტალი",
+    status: "დასრულებული",
+    type: "website",
+    alt: "Reputation.ge - საინფორმაციო და მედია პორტალი",
+    description:
+      "თანამედროვე ქართული მედია პლატფორმა და ონლაინ ჟურნალი, სადაც თავმოყრილია სტატიები და სიახლეები ჯანდაცვის, ბიზნესისა და საზოგადოებრივი ცხოვრების შესახებ. საიტი უზრუნველყოფს ინფორმაციის სწრაფ და ეფექტურ მიწოდებას.",
+    images: [ReputationImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Web Development",
+      "Content Management System",
+      "SEO ოპტიმიზაცია",
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 5,
     title: "Zmna.ge",
     category: "კატეგორია: ახალი ამბები",
     status: "აქტიური",
@@ -95,30 +132,14 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 4,
-    title: "PayNety",
-    category: "კატეგორია: ინფორმაციული",
-    status: "შეჩერებული",
-    type: "website",
-    alt: "PayNety - ფინანსური ტექნოლოგიების პლატფორმა",
-    description:
-      "ფინანსური ტექნოლოგიების პლატფორმა, რომელიც ამარტივებს ონლაინ გადახდების პროცესს და მონაცემთა მართვას.",
-    images: [PayImg],
-    services: [
-      "Frontend Development",
-      "UI/UX დიზაინი",
-      "Hosting & Maintenance",
-    ],
-  },
-  {
-    id: 5,
+    id: 6,
     title: "Reagent.ge",
     category: "კატეგორია: კატალოგი",
     status: "დასრულებული",
     type: "website",
-    alt: "Reagent.ge - ინფორმაციული ვებ-საიტი რექტივებისა და ლაბორატორიული ჭურჭელის შესახებ",
+    alt: "Reagent.ge - ინფორმაციული ვებ-საიტი რეაქტივებისა და ლაბორატორიული ჭურჭელის შესახებ",
     description:
-      "პრემიუმ ხარისხის რეაქტივები. REAGENT GROUP გთავაზობთ უმაღლესი ხარისხის ქიმიურ რეაგენტებს ლაბორატიებისთვის და ინდუსტრიული მიზნებისთვის.",
+      "პრემიუმ ხარისხის რეაქტივები. REAGENT GROUP გთავაზობთ უმაღლესი ხარისხის ქიმიურ რეაგენტებს ლაბორატორიებისთვის და ინდუსტრიული მიზნებისთვის.",
     images: [ReagentImg, ReagentImg1],
     services: [
       "Frontend Development",
@@ -127,7 +148,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     title: "Bizon.ge",
     category: "კატეგორია: გაქირავება",
     status: "დასრულებული",
@@ -139,7 +160,7 @@ export const projects: Project[] = [
     services: ["Frontend Development", "Redesign & Refactor"],
   },
   {
-    id: 7,
+    id: 8,
     title: "Gree",
     category: "კატეგორია: E-commerce",
     status: "დასრულებული",
@@ -156,7 +177,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 8,
+    id: 9,
     title: "Freezer",
     category: "კატეგორია: პოსტერი",
     status: "დასრულებული",
@@ -168,7 +189,7 @@ export const projects: Project[] = [
     services: ["Poster Design", "Social Media Kit"],
   },
   {
-    id: 9,
+    id: 10,
     title: "COFFEEON",
     category: "კატეგორია: ბრენდინგი",
     status: "დასრულებული",
@@ -191,7 +212,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     title: "UNISTATS",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",
@@ -208,7 +229,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     title: "NOSTAL.GE",
     category: "კატეგორია: UI/UX დიზაინი",
     status: "დასრულებული",
