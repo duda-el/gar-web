@@ -1,387 +1,148 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Sparkles,
-  X,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import Image, { StaticImageData } from "next/image";
 
-import { projects, Project } from "../../../constants/projects";
+import ItechnoImg from "@/Assets/images/ITechno.jpg";
+import ZmnaImg from "@/Assets/images/zmna.jpg";
+import BizonImg from "@/Assets/images/Bizon.jpg";
+import ReagentImg from "@/Assets/images/reagent.jpg";
 
-const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [filter, setFilter] = useState<"website" | "design" | "uiux">(
-    "website",
-  );
-  const [modalImgIndex, setModalImgIndex] = useState(0);
-  const swiperRef = useRef<any>(null);
-  const [swiper, setSwiper] = useState<any>(null);
-  const MotionImage = motion.create(Image);
+interface WorkItem {
+  index: string;
+  name: string;
+  category: string;
+  image: StaticImageData;
+  ratio: string;
+  flexBasis: string;
+  offsetClass: string;
+  corners: { pos: string; color: string }[];
+}
 
-  useEffect(() => {
-    const loadSwiper = async () => {
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href =
-        "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css";
-      document.head.appendChild(link);
+const works: WorkItem[] = [
+  {
+    index: "01",
+    name: "I-Techno",
+    category: "E-Commerce",
+    image: ItechnoImg,
+    ratio: "aspect-[16/10]",
+    flexBasis: "flex-[1.55_1_460px]",
+    offsetClass: "",
+    corners: [
+      { pos: "left-[-1px] top-[-1px] border-l-2 border-t-2", color: "border-[#0E0E0E]" },
+      { pos: "right-[-1px] bottom-[-1px] border-r-2 border-b-2", color: "border-[#FF7A00]" },
+    ],
+  },
+  {
+    index: "02",
+    name: "Zmna.ge",
+    category: "Media",
+    image: ZmnaImg,
+    ratio: "aspect-[4/3]",
+    flexBasis: "flex-[1_1_300px]",
+    offsetClass: "mt-0 lg:mt-[74px]",
+    corners: [{ pos: "left-[-1px] bottom-[-1px] border-l-2 border-b-2", color: "border-[#0E0E0E]" }],
+  },
+  {
+    index: "03",
+    name: "Bizon.ge",
+    category: "Marketplace",
+    image: BizonImg,
+    ratio: "aspect-[4/3]",
+    flexBasis: "flex-[1_1_300px]",
+    offsetClass: "",
+    corners: [{ pos: "right-[-1px] top-[-1px] border-r-2 border-t-2", color: "border-[#0E0E0E]" }],
+  },
+  {
+    index: "04",
+    name: "Reagent.ge",
+    category: "Catalogue",
+    image: ReagentImg,
+    ratio: "aspect-[16/10]",
+    flexBasis: "flex-[1.55_1_460px]",
+    offsetClass: "mt-0 lg:mt-[50px]",
+    corners: [
+      { pos: "left-[-1px] top-[-1px] border-l-2 border-t-2", color: "border-[#0E0E0E]" },
+      { pos: "right-[-1px] top-[-1px] border-r-2 border-t-2", color: "border-[#0E0E0E]" },
+    ],
+  },
+];
 
-      const script = document.createElement("script");
-      script.src =
-        "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js";
-      script.async = true;
+const rows: WorkItem[][] = [
+  [works[0], works[1]],
+  [works[2], works[3]],
+];
 
-      script.onload = () => {
-        initSwiper();
-      };
-
-      document.body.appendChild(script);
-
-      return () => {
-        document.head.removeChild(link);
-        document.body.removeChild(script);
-      };
-    };
-
-    loadSwiper();
-  }, []);
-
-  const initSwiper = () => {
-    if (
-      typeof window !== "undefined" &&
-      (window as any).Swiper &&
-      swiperRef.current
-    ) {
-      const swiperInstance = new (window as any).Swiper(swiperRef.current, {
-        slidesPerView: 1,
-        spaceBetween: 24,
-        navigation: {
-          nextEl: ".swiper-button-next-custom",
-          prevEl: ".swiper-button-prev-custom",
-        },
-        breakpoints: {
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 24,
-          },
-          1024: {
-            slidesPerView: 3,
-            spaceBetween: 24,
-          },
-          1330: {
-            slidesPerView: 4,
-            spaceBetween: 24,
-          },
-        },
-      });
-
-      setSwiper(swiperInstance);
-    }
-  };
-
-  useEffect(() => {
-    if (swiper) {
-      setTimeout(() => {
-        swiper.update();
-        swiper.slideTo(0);
-      }, 100);
-    }
-  }, [filter, swiper]);
-
-  useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = "hidden";
-      setModalImgIndex(0);
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [selectedProject]);
-
-  const filteredProjects = projects.filter((p) => p.type === filter);
-
-  const nextModalImg = () => {
-    if (selectedProject && modalImgIndex < selectedProject.images.length - 1) {
-      setModalImgIndex((prev) => prev + 1);
-    }
-  };
-
-  const prevModalImg = () => {
-    if (modalImgIndex > 0) {
-      setModalImgIndex((prev) => prev - 1);
-    }
-  };
-
-  const currentImage = selectedProject?.images?.[modalImgIndex];
-
+export default function Projects() {
   return (
     <section
-      className="relative pb-8 py-10 sm:py-24 px-6 overflow-hidden bg-[#121212]"
       id="projects"
+      className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] py-[26px] sm:py-14 lg:py-[54px] lg:pb-[118px]"
     >
-      <div className="absolute inset-0 bg-grid-white pointer-events-none opacity-20" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6"
+      <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 lg:gap-9 mb-6 sm:mb-9 lg:mb-[52px]">
+        <h2 className="m-0 font-outfit font-extrabold text-[#0E0E0E] leading-none tracking-[-0.04em] text-[clamp(30px,4.1vw,58px)]">
+          Recent projects
+        </h2>
+        <svg
+          className="flex-1 min-w-[80px] h-3 hidden sm:block"
+          aria-hidden="true"
         >
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-[1px] w-12 bg-[#f19035]" />
-              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[#f19035] font-medium font-georgian">
-                შესრულებული პროექტები
-              </p>
-            </div>
-            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tighter text-white font-georgian uppercase">
-              პროექტები
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex flex-wrap gap-2">
-              {["website", "uiux", "design"].map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setFilter(type as any)}
-                  className={`px-6 py-2 rounded-full border text-sm font-georgian transition-all cursor-pointer hover:scale-105 active:scale-95 ${
-                    filter === type
-                      ? "bg-[#f19035] border-[#f19035] text-black font-bold"
-                      : "border-white/10 text-white hover:border-[#f19035]/50"
-                  }`}
-                >
-                  {type === "website"
-                    ? "ვებსაიტი"
-                    : type === "uiux"
-                      ? "UI/UX დიზაინი"
-                      : "გრაფიკული დიზაინი"}
-                </button>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="flex justify-end gap-2 mb-6">
-          <button className="swiper-button-prev-custom p-2 border border-white/10 rounded-full text-white hover:bg-white/5 transition-all cursor-pointer">
-            <ChevronLeft size={20} />
-          </button>
-          <button className="swiper-button-next-custom p-2 border border-white/10 rounded-full text-white hover:bg-white/5 transition-all cursor-pointer">
-            <ChevronRight size={20} />
-          </button>
-        </div>
-
-        <div className="swiper" ref={swiperRef}>
-          <div className="swiper-wrapper pt-4">
-            {filteredProjects.map((project) => (
-              <div key={project.id} className="swiper-slide">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -10 }}
-                  onClick={() => setSelectedProject(project)}
-                  className="group relative flex flex-col bg-[#1c1c1c]/80 backdrop-blur-sm p-6 border border-white/5 hover:border-[#f19035]/30 transition-all duration-200 min-h-[420px] cursor-pointer"
-                  style={{ borderRadius: "2rem" }}
-                >
-                  <div
-                    className="relative w-full h-52 bg-[#252525] overflow-hidden mb-8 flex items-center justify-center"
-                    style={{ borderRadius: "1.5rem" }}
-                  >
-                    <Image
-                      src={project.images[0]}
-                      alt={project.alt}
-                      fill
-                      priority={project.id <= 2}
-                      className="object-cover pointer-events-none"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute bottom-6 left-6 w-12 h-12 bg-black/50 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 z-10">
-                      <Sparkles className="size-6 text-[#f19035] animate-pulse" />
-                    </div>
-                  </div>
-
-                  <div className="mt-auto px-2 relative">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#f19035] animate-pulse"></div>
-                      <span className="text-[10px] tracking-[0.2em] text-zinc-300 font-bold uppercase font-georgian">
-                        {project.category}
-                      </span>
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight tracking-tight text-white group-hover:text-[#f19035] transition-colors duration-200 font-georgian mb-3">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-zinc-300 font-georgian leading-relaxed line-clamp-3 italic">
-                      {project.description}
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
-            ))}
-          </div>
-        </div>
+          <defs>
+            <pattern id="rpChevron" width="18" height="12" patternUnits="userSpaceOnUse">
+              <path d="M4 3 L9 6 L4 9" fill="none" stroke="#C7C7CC" strokeWidth="1.1" strokeLinecap="square" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="12" fill="url(#rpChevron)" />
+        </svg>
+        <span className="shrink-0 text-[10.5px] tracking-[0.2em] uppercase text-[#5A5A5F]">
+          Four of sixty
+        </span>
       </div>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-zoom-out"
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="relative w-full max-w-4xl max-h-[90vh] bg-[#1c1c1c] border border-white/10 overflow-hidden z-[151] flex flex-col"
-              style={{ borderRadius: "24px" }}
-              onClick={(e) => e.stopPropagation()}
+      {rows.map((row, rowIdx) => (
+        <div
+          key={rowIdx}
+          className={`flex flex-wrap gap-[18px] sm:gap-6 lg:gap-[38px] items-start ${
+            rowIdx > 0 ? "mt-8 sm:mt-9 lg:mt-[66px]" : ""
+          }`}
+        >
+          {row.map((item) => (
+            <a
+              key={item.name}
+              href="#contact"
+              className={`group block min-w-0 ${item.flexBasis} ${item.offsetClass} transition-transform duration-300 ease-out hover:-translate-y-1`}
             >
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 p-2 bg-black/50 hover:bg-white/10 rounded-full text-zinc-400 hover:text-white transition-all z-40 backdrop-blur-md cursor-pointer"
+              <div
+                className="relative p-2"
+                style={{
+                  border: "1px solid #E3E3E6",
+                  background: "linear-gradient(160deg,#FFFFFF 0%,#F5F5F7 100%)",
+                }}
               >
-                <X size={20} />
-              </button>
-
-              <div className="w-full h-[300px] md:h-[450px] bg-black relative flex items-center justify-center shrink-0 border-b border-white/5 group/modal">
-                <AnimatePresence mode="wait">
-                  {currentImage && selectedProject && (
-                    <MotionImage
-                      key={modalImgIndex}
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.02 }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
-                      src={currentImage}
-                      alt={selectedProject.alt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 80vw"
-                      priority
-                      className="w-full h-full object-contain p-4 relative z-10"
-                    />
-                  )}
-                </AnimatePresence>
-
-                {currentImage && (
+                {item.corners.map((c, i) => (
+                  <i key={i} className={`absolute w-[10px] h-[10px] ${c.pos} ${c.color}`} />
+                ))}
+                <div className={`relative w-full ${item.ratio} overflow-hidden`}>
                   <Image
-                    src={currentImage}
-                    alt=""
+                    src={item.image}
+                    alt={`${item.name} project screenshot`}
                     fill
-                    className="absolute inset-0 w-full h-full object-cover opacity-20 blur-xl"
-                    priority={false}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
                   />
-                )}
-
-                {selectedProject.images.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevModalImg}
-                      disabled={modalImgIndex === 0}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-[#f19035] rounded-full text-white z-20 transition-all disabled:opacity-0 cursor-pointer disabled:cursor-default"
-                    >
-                      <ChevronLeft size={24} />
-                    </button>
-                    <button
-                      onClick={nextModalImg}
-                      disabled={
-                        modalImgIndex === selectedProject.images.length - 1
-                      }
-                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-black/40 hover:bg-[#f19035] rounded-full text-white z-20 transition-all disabled:opacity-0 cursor-pointer disabled:cursor-default"
-                    >
-                      <ChevronRight size={24} />
-                    </button>
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
-                      {selectedProject.images.map((_, idx) => (
-                        <div
-                          key={idx}
-                          onClick={() => setModalImgIndex(idx)}
-                          className={`h-1.5 w-1.5 rounded-full transition-all cursor-pointer ${
-                            idx === modalImgIndex
-                              ? "bg-[#f19035] w-4"
-                              : "bg-white/30 hover:bg-white/60"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-
-              <div className="flex-1 overflow-y-auto p-8 md:p-12 bg-[#1c1c1c] custom-scrollbar">
-                <div className="max-w-3xl mx-auto space-y-8">
-                  <div>
-                    <span className="text-[#f19035] text-[10px] tracking-[0.3em] font-bold uppercase mb-2 block font-georgian">
-                      {selectedProject.category}
-                    </span>
-                    <h2 className="text-4xl font-bold text-white font-georgian tracking-tighter">
-                      {selectedProject.title}
-                    </h2>
-                  </div>
-                  <p className="text-zinc-400 font-georgian leading-relaxed italic border-l-2 border-[#f19035]/30 pl-4 text-lg">
-                    {selectedProject.description}
-                  </p>
-                  <div className="space-y-4 pt-4">
-                    <h4 className="text-white text-sm font-bold uppercase tracking-widest flex items-center gap-2 font-georgian">
-                      <div className="w-4 h-[1px] bg-[#f19035]" /> ჩვენი
-                      სერვისები
-                    </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {selectedProject.services.map((service, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center gap-3 text-zinc-300 text-sm font-georgian"
-                        >
-                          <CheckCircle2
-                            size={16}
-                            className="text-[#f19035] shrink-0"
-                          />
-                          {service}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <span className="text-[#f19035] text-[10px] tracking-[0.3em] font-bold uppercase mb-2 block font-georgian">
-                    სტატუსი: {selectedProject.status}
-                  </span>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #f19035;
-          border-radius: 10px;
-        }
-
-        .swiper-button-prev-custom.swiper-button-disabled,
-        .swiper-button-next-custom.swiper-button-disabled {
-          opacity: 0.2;
-          pointer-events: none;
-        }
-      `}</style>
+              <div className="flex items-baseline justify-between gap-3 mt-[11px]">
+                <span className="font-outfit font-bold text-[19px] tracking-[-0.025em] text-[#0E0E0E]">
+                  {item.index}&nbsp;&nbsp;{item.name}
+                </span>
+                <span className="text-[10.5px] tracking-[0.16em] uppercase text-[#5A5A5F] whitespace-nowrap">
+                  {item.category}
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      ))}
     </section>
   );
-};
-
-export default Projects;
+}

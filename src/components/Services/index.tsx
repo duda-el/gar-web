@@ -1,434 +1,108 @@
-"use client";
+const services = [
+  {
+    title: "Landing & static pages",
+    description:
+      "One-page and multi-page sites for launches, services and campaigns. Responsive, quick to load, easy to update.",
+    price: "from ₾2,500",
+  },
+  {
+    title: "Web applications",
+    description:
+      "Dashboards, booking systems, portals and internal tools, with an admin panel and the integrations you already use.",
+    price: "quoted on scope",
+  },
+  {
+    title: "E-commerce",
+    description:
+      "Stores with catalogue, cart, local payment providers and delivery — built for real inventory and real traffic.",
+    price: "quoted on scope",
+  },
+];
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  CheckCircle2,
-  Plus,
-  Minus,
-  Zap,
-  ShieldCheck,
-  BarChart3,
-  Code2,
-} from "lucide-react";
+const brandingTags = [
+  "Logo & identity",
+  "Wireframes",
+  "Interface design",
+  "Design systems",
+];
 
-interface ServiceDetail {
-  title: string;
-  price: string;
-  description: string;
-  includes: string[];
-  techStack: string[];
+function ServiceIcon() {
+  return (
+    <svg width="26" height="20" viewBox="0 0 34 26" aria-hidden="true">
+      <rect x="0" y="10" width="12" height="6" rx="1" fill="#FF7A00" />
+      <polygon points="10,2 18,2 30,13 18,24 10,24 22,13" fill="#0E0E0E" />
+    </svg>
+  );
 }
 
-const servicesData: Record<string, ServiceDetail> = {
-  landing: {
-    title: "Static/Landing Page",
-    price: "2,500₾-დან",
-    description:
-      "მაღალი კონვერტაციის მქონე ერთგვერდიანი საიტი უნიკალური დიზაინით.",
-    includes: [
-      "Custom UI/UX დიზაინი (Figma)",
-      "Responsive (Mobile-First) განლაგება",
-      "სწრაფი ჩატვირთვა (Performance Optimization)",
-      "SEO-Friendly სტრუქტურა",
-    ],
-    techStack: ["React", "TailwindCSS", "Framer Motion"],
-  },
-  complex: {
-    title: "Complex Web Application",
-    price: "5,000₾-დან",
-    description:
-      "მასშტაბირებადი პლატფორმა რთული ბიზნეს ლოგიკითა და მართვის პანელით.",
-    includes: [
-      "ინდივიდუალური არქიტექტურა",
-      "მართვის პანელი (CMS/Admin)",
-      "მონაცემთა ბაზების ინტეგრაცია",
-      "მაღალი უსაფრთხოების სტანდარტები",
-    ],
-    techStack: [
-      "Next.js / Angular",
-      "Node.js / C# / Python",
-      "PostgreSQL / MongoDB",
-    ],
-  },
-  ecommerce: {
-    title: "E-Commerce System",
-    price: "7,500₾-დან",
-    description: "სრული ონლაინ გაყიდვების ეკოსისტემა თქვენი ბიზნესისთვის.",
-    includes: [
-      "პროდუქტების რთული ფილტრაცია",
-      "საბანკო გადახდების ინტეგრაცია",
-      "მარაგებისა და შეკვეთების მართვა",
-      "მომხმარებლის პირადი კაბინეტი",
-    ],
-    techStack: ["Next.js", "Payload CMS / Strapi", "BOG/TBC API"],
-  },
-  calculator: {
-    title: "კალკულატორი",
-    price: "Custom",
-    description:
-      "შეადგინეთ თქვენი პაკეტი ინდივიდუალურად და გაიგეთ მიახლოვებული ღირებულება.",
-    includes: [],
-    techStack: ["Custom Solutions", "Architecture Design"],
-  },
-};
-
-const CALC_OPTIONS = [
-  {
-    id: "landing",
-    label: "ბაზისური ვებსაიტი (Landing)",
-    price: 2500,
-    complex: false,
-  },
-  {
-    id: "multi_page",
-    label: "კომპლექსური საიტი (Multi-page)",
-    price: 5000,
-    complex: true,
-  },
-  {
-    id: "design",
-    label: "პრემიუმ UI/UX დიზაინი (Custom)",
-    price: 1500,
-    complex: false,
-  },
-  {
-    id: "cms",
-    label: "მართვის პანელი (Admin Dashboard)",
-    price: 1600,
-    complex: true,
-  },
-  {
-    id: "ecommerce",
-    label: "მაღაზიის სისტემა (Cart/Checkout)",
-    price: 3000,
-    complex: true,
-  },
-  {
-    id: "payment",
-    label: "ბანკების ინტეგრაცია (BOG/TBC)",
-    price: 700,
-    complex: true,
-  },
-  {
-    id: "auth",
-    label: "ავტორიზაცია (Login/Register/Social)",
-    price: 1000,
-    complex: true,
-  },
-  {
-    id: "booking",
-    label: "დაჯავშნის სისტემა (Calendar/Slots)",
-    price: 2200,
-    complex: true,
-  },
-  {
-    id: "multilang",
-    label: "მრავალენოვანი მხარდაჭერა",
-    price: 600,
-    complex: false,
-  },
-  { id: "seo", label: "Advanced SEO ოპტიმიზაცია", price: 750, complex: true },
-];
-
-const FAQ = [
-  {
-    q: "რა დრო სჭირდება დამზადებას?",
-    a: "ლენდინგ გვერდს საშუალოდ 7-10 დღე, ხოლო რთულ სისტემებს 1-3 თვე.",
-  },
-  {
-    q: "შესაძლებელია ნაწილ-ნაწილ გადახდა?",
-    a: "დიახ, გვაქვს ნაწილ-ნაწილ გადახდის სისტემა.",
-  },
-];
-
-const Services = () => {
-  const [activeTab, setActiveTab] =
-    useState<keyof typeof servicesData>("landing");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([
-    "landing",
-  ]);
-
-  const totalPrice = selectedFeatures.reduce((acc, curr) => {
-    const option = CALC_OPTIONS.find((o) => o.id === curr);
-    return acc + (option?.price || 0);
-  }, 0);
-
-  const toggleFeature = (id: string) => {
-    setSelectedFeatures((prev) => {
-      const isSelected = prev.includes(id);
-      const option = CALC_OPTIONS.find((o) => o.id === id);
-      let newList = isSelected
-        ? prev.filter((item) => item !== id)
-        : [...prev, id];
-      if (!isSelected && option?.complex)
-        newList = newList.filter((item) => item !== "landing");
-      if (!isSelected && id === "landing")
-        newList = newList.filter(
-          (item) => !CALC_OPTIONS.find((o) => o.id === item)?.complex,
-        );
-      return newList;
-    });
-  };
-
+export default function Services() {
   return (
     <section
-      className="relative py-10 sm:py-24 px-6 bg-[#121212]"
       id="services"
+      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]"
     >
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16">
-          <div className="flex items-center gap-3">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: 48 }}
-              transition={{ duration: 0.2 }}
-              className="h-[1px] bg-primary mb-4 "
-            />
-            <p className="text-xs sm:text-sm pb-4 uppercase tracking-[0.2em] text-primary font-medium font-georgian">
-              ტარიფები და სერვისები
-            </p>
-          </div>
-          <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white font-georgian uppercase">
-            რას გთავაზობთ
+      <div className="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+            Services
+          </span>
+          <h2 className="mt-3 font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
+            What we build
           </h2>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-8 space-y-8">
-            <div className="flex flex-wrap gap-4 border-b border-white/10 pb-6">
-              {Object.keys(servicesData).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => setActiveTab(key as keyof typeof servicesData)}
-                  className={`px-6 py-3 rounded-full cursor-pointer text-sm font-bold font-georgian transition-all ${
-                    activeTab === key
-                      ? "bg-primary text-black"
-                      : "text-zinc-300 hover:text-white border border-white/10"
-                  }`}
-                >
-                  {servicesData[key].title}
-                </button>
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="bg-[#1c1c1c] p-8 sm:p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden"
-                style={{ borderRadius: "2.5rem" }}
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start mb-8 gap-6">
-                  <div>
-                    <h3 className="text-2xl min-[403px]:text-3xl md:text-4xl font-bold text-white mb-4 font-georgian">
-                      {servicesData[activeTab].title}
-                    </h3>
-                    <p className="text-zinc-300 font-georgian text-lg max-[402px]:text-sm max-w-md italic">
-                      {servicesData[activeTab].description}
-                    </p>
-                  </div>
-                  <div className="text-left md:text-right w-full md:w-auto">
-                    <p className="text-zinc-300 text-sm font-georgian uppercase">
-                      ფასი
-                    </p>
-                    <p className="text-4xl lg:text-5xl font-bold text-primary">
-                      {activeTab === "calculator"
-                        ? `${totalPrice}₾`
-                        : servicesData[activeTab].price}
-                    </p>
-                    {activeTab === "calculator" && (
-                      <p className="text-[10px] text-zinc-400 font-georgian mt-2 max-w-[200px] md:ml-auto leading-tight">
-                        * ფასი შეიძლება გაიზარდოს ან შემცირდეს ტექნიკური
-                        დეტალების დაზუსტების შემდეგ.
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {activeTab === "calculator" ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    {CALC_OPTIONS.map((opt) => (
-                      <div
-                        key={opt.id}
-                        onClick={() => toggleFeature(opt.id)}
-                        className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
-                          selectedFeatures.includes(opt.id)
-                            ? "bg-primary/10 border-primary text-white"
-                            : "bg-white/5 border-white/10 text-zinc-300 hover:border-white/30"
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`size-4 rounded border flex items-center justify-center transition-colors ${
-                              selectedFeatures.includes(opt.id)
-                                ? "bg-primary border-primary"
-                                : "border-white/20"
-                            }`}
-                          >
-                            {selectedFeatures.includes(opt.id)}
-                          </div>
-                          <span className="font-georgian text-xs">
-                            {opt.label}
-                          </span>
-                        </div>
-                        <span className="text-xs font-bold text-primary">
-                          +{opt.price}₾
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <h4 className="text-white font-bold font-georgian flex items-center gap-2">
-                        <Zap className="size-4 text-primary" /> რა შედის ფასში?
-                      </h4>
-                      <ul className="space-y-3">
-                        {servicesData[activeTab].includes.map((item, i) => (
-                          <li
-                            key={i}
-                            className="flex items-center gap-3 text-zinc-300 text-sm font-georgian"
-                          >
-                            <CheckCircle2 className="size-4 text-primary" />{" "}
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="space-y-4">
-                      <h4 className="text-white font-bold font-georgian flex items-center gap-2">
-                        <Code2 className="size-4 text-primary" /> ტექნოლოგიები
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {servicesData[activeTab].techStack.map((tech, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-[10px] text-zinc-300 uppercase tracking-widest font-bold"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <div className="lg:col-span-4 space-y-6">
-            <div
-              className="bg-primary/5 p-8 border border-primary/20"
-              style={{ borderRadius: "2rem" }}
-            >
-              <h4 className="text-white font-bold font-georgian mb-6 text-xl">
-                რატომ ჩვენ?
-              </h4>
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: <ShieldCheck />,
-                    t: "ხარისხის გარანტია",
-                    d: "კოდის სისუფთავე და უსაფრთხოება.",
-                  },
-                  {
-                    icon: <BarChart3 />,
-                    t: "შედეგზე ორიენტირებული",
-                    d: "კონვერსიაზე გათვლილი დიზაინი.",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="text-primary">{item.icon}</div>
-                    <div>
-                      <p className="text-white font-bold text-sm font-georgian">
-                        {item.t}
-                      </p>
-                      <p className="text-zinc-300 text-xs font-georgian">
-                        {item.d}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-white font-bold font-georgian px-2">
-                ხშირად დასმული კითხვები
-              </h4>
-              {FAQ.map((faq, i) => (
-                <div
-                  key={i}
-                  className="border border-white/5 bg-[#1c1c1c]/30 rounded-2xl overflow-hidden"
-                >
-                  <button
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-4 cursor-pointer text-left text-zinc-300 font-georgian text-sm"
-                  >
-                    {faq.q}
-                    {openFaq === i ? (
-                      <Minus className="size-4" />
-                    ) : (
-                      <Plus className="size-4" />
-                    )}
-                  </button>
-                  <AnimatePresence>
-                    {openFaq === i && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{
-                          height: "auto",
-                          opacity: 1,
-                          transition: {
-                            height: {
-                              duration: 0.3,
-                              ease: [0.4, 0, 0.2, 1],
-                            },
-                            opacity: { duration: 0.2, delay: 0.1 },
-                          },
-                        }}
-                        exit={{
-                          height: 0,
-                          opacity: 0,
-                          transition: {
-                            height: { duration: 0.3, ease: [0.4, 0, 1, 1] },
-                            opacity: { duration: 0.2 },
-                          },
-                        }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-4 pb-4 text-zinc-300 text-xs font-georgian">
-                          {faq.a}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <p className="m-0 max-w-[38ch] text-[16px] leading-[1.6] text-[#4A4744]">
+          Three ways to work with us, plus the design work that sits in front
+          of the build.
+        </p>
       </div>
 
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: var(--color-primary, #f19035);
-          border-radius: 10px;
-        }
-      `}</style>
+      <div
+        className="mt-10 grid gap-5"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
+      >
+        {services.map((service) => (
+          <div
+            key={service.title}
+            className="flex flex-col gap-3.5 rounded-xl border border-[#EDEAE6] p-7 transition-[border-color,transform] duration-[250ms] hover:border-[#FF7A00]/40 hover:-translate-y-1"
+          >
+            <ServiceIcon />
+            <h3 className="mt-1.5 font-outfit font-bold text-[21px] text-[#0E0E0E]">
+              {service.title}
+            </h3>
+            <p className="m-0 text-[15.5px] leading-[1.6] text-[#4A4744]">
+              {service.description}
+            </p>
+            <div className="mt-auto pt-3.5 border-t border-[#F1EEEA] font-outfit font-bold text-[17px] text-[#0E0E0E]">
+              {service.price}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div
+        className="mt-5 grid items-center gap-[22px] rounded-xl border border-[#EDEAE6] bg-[#F7F6F4] p-7"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}
+      >
+        <div>
+          <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
+            Branding &amp; UI/UX
+          </h3>
+          <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
+            Identity, type and a small system that holds together — plus
+            wireframes and interface design before the build starts.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          {brandingTags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13.5px] text-[#0E0E0E]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
-};
-
-export default Services;
+}

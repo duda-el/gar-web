@@ -1,275 +1,207 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Terminal,
-  Sparkles,
-  Globe,
-  Zap,
-} from "lucide-react";
+
+function FlowLines() {
+  return (
+    <>
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 w-[110px] sm:w-[150px] lg:w-[190px] h-full z-0 opacity-70"
+        viewBox="0 0 200 600"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <motion.path
+          d="M170,0 C80,90 40,130 38,220 C36,310 150,330 145,420 C142,480 60,510 55,600"
+          stroke="#FF7A00"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
+        />
+      </svg>
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 w-[110px] sm:w-[150px] lg:w-[190px] h-full z-0 opacity-70"
+        viewBox="0 0 200 600"
+        preserveAspectRatio="none"
+        fill="none"
+        style={{ transform: "scaleX(-1)" }}
+      >
+        <motion.path
+          d="M170,0 C80,90 40,130 38,220 C36,310 150,330 145,420 C142,480 60,510 55,600"
+          stroke="#FF7A00"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.8, ease: "easeInOut", delay: 0.15 }}
+        />
+      </svg>
+    </>
+  );
+}
+
+const clients = [
+  "Nikora Home",
+  "Mtis Media",
+  "Bazari.ge",
+  "Kalata Wine",
+  "Gudauri Ski",
+];
+
+const stats = [
+  { value: "60+", label: "sites shipped" },
+  { value: "3 weeks", label: "average delivery" },
+  { value: "₾2,500", label: "starting price" },
+  { value: "98", suffix: "/100", label: "median PageSpeed" },
+];
 
 export default function Hero() {
-  const [isMounted, setIsMounted] = useState(false);
-  const [randomPositions, setRandomPositions] = useState<
-    { left: string; delay: number }[]
-  >([]);
-
-  useEffect(() => {
-    setIsMounted(true);
-    const positions = [...Array(15)].map(() => ({
-      left: `${Math.random() * 100}%`,
-      delay: Math.random() * 5,
-    }));
-    setRandomPositions(positions);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
-    <section className="relative min-h-screen w-full bg-[#0a0a0a] flex items-center overflow-hidden pt-[140px] pb-16">
-      <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden="true"
+    <>
+      <section
+        id="top"
+        className="relative overflow-hidden pt-11 sm:pt-16 lg:pt-[100px] pb-[22px] sm:pb-8 lg:pb-[42px] px-5 sm:px-9 lg:px-[72px]"
+        style={{
+          background:
+            "linear-gradient(180deg,#FFFFFF 0%,#F5F5F7 55%,#EFEFF2 100%)",
+        }}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(#f19035_0.5px,transparent_0.5px)] [background-size:40px_40px] opacity-[0.05]" />
+        <FlowLines />
 
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={`line-${i}`}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: [100, 400, 200, 500, 150],
-              opacity: [0, 0.3, 0.1, 0.4, 0],
-            }}
-            transition={{ duration: 5, repeat: Infinity, delay: i * 0.4 }}
-            style={{ left: `${i * 10}%`, bottom: "-50px" }}
-            className="absolute w-[1px] bg-gradient-to-t from-primary via-primary/20 to-transparent"
-          />
-        ))}
+        <div className="relative z-[1] max-w-[1440px] mx-auto flex flex-col items-center text-center">
+          <h1 className="m-0 max-w-[16ch] font-outfit font-extrabold text-[#0E0E0E] leading-[1] tracking-[-0.04em] text-[clamp(38px,6.4vw,94px)]">
+            We build websites
+            <br />
+            that are{" "}
+            <span className="font-instrument italic font-normal tracking-[-0.005em]">
+              fast &amp; well-made
+            </span>
+          </h1>
 
-        {isMounted &&
-          randomPositions.map((pos, i) => (
-            <motion.div
-              key={`bit-${i}`}
-              animate={{ y: [0, -600], opacity: [0, 1, 0], scale: [1, 1.5, 1] }}
-              transition={{ duration: 4, repeat: Infinity, delay: pos.delay }}
-              style={{ left: pos.left, bottom: "0", position: "absolute" }}
-              className="size-1 bg-primary/40 blur-[0.5px] rounded-sm"
-            />
-          ))}
-      </div>
+          <p className="mt-5 sm:mt-7 lg:mt-[34px] max-w-[58ch] text-[#4A4A4E] leading-[1.56] text-[clamp(15.5px,1.2vw,18.5px)]">
+            GarGari is a Tbilisi studio designing and building landing pages,
+            web applications and online stores — small team, hand-built work,
+            clear timelines.
+          </p>
 
-      <div className="container mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          <div className="lg:col-span-7 flex flex-col items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-3 mb-6 bg-white/[0.03] border border-white/5 px-4 py-2 rounded-full backdrop-blur-md"
+          <div className="flex flex-wrap items-center justify-center gap-[18px] sm:gap-7 lg:gap-9 mt-[26px] sm:mt-9 lg:mt-12">
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[#0E0E0E] text-[16.5px] tracking-[-0.01em] whitespace-nowrap transition-colors duration-200 shadow-[0_0_30px_rgba(241,144,53,0.3)]"
             >
-              <Terminal size={14} className="text-primary animate-pulse" />
-              <span className="text-primary font-bold text-[10px] sm:text-xs uppercase tracking-[0.3em]">
-                System Status: Ready to Build
+              Start a project
+              <span className="inline-flex items-center justify-center w-[30px] h-[30px] rounded-full bg-[#0E0E0E] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
+                <svg width="13" height="10" viewBox="0 0 7 9" aria-hidden="true">
+                  <path d="M1 1 L5 4.5 L1 8" fill="none" stroke="#FFFFFF" strokeWidth="1.7" />
+                </svg>
               </span>
-            </motion.div>
+            </a>
 
-            <h1 className="text-[14vw] sm:text-[10vw] lg:text-[80px] font-black text-white leading-[1.2] lg:leading-[1.1] tracking-tighter">
-              შეცვალე <br />
-              <span className="text-primary italic inline-block relative group">
-                მომავალი
-              </span>{" "}
-              <br />
-              ჩვენთან ერთად
-            </h1>
-
-            <div className="mt-8 lg:mt-12 max-w-[480px]">
-              <p className="text-zinc-400 text-[14px] sm:text-lg leading-[1.7] font-medium border-l-2 border-primary/40 pl-6 bg-gradient-to-r from-primary/5 to-transparent py-4 rounded-r-xl">
-                ჩვენ გთავაზობთ გამორჩეული ციფრული სივრცის შექმნას. დიზაინს,
-                დეველოპმენტს და სტრატეგიას.
-              </p>
-            </div>
-
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <button
-                onClick={() => scrollToSection("projects")}
-                className="group flex items-center justify-center gap-3 bg-primary text-black px-10 py-5 rounded-full font-bold transition-all hover:bg-white active:scale-95 text-base shadow-[0_0_30px_rgba(241,144,53,0.3)] cursor-pointer"
-              >
-                იხილე პროექტები
-                <ArrowUpRight className="size-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="flex items-center justify-center px-10 py-5 rounded-full border border-white/20 text-white font-bold hover:bg-white/5 transition-all text-base backdrop-blur-sm cursor-pointer"
-              >
-                დაგვიკავშირდით
-              </button>
-            </div>
-          </div>
-
-          <div className="hidden lg:flex lg:col-span-5 relative justify-end">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="relative w-full max-w-[440px] min-h-[520px] group perspective-1000"
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/40 to-orange-500/40 rounded-[3.5rem] blur-2xl opacity-10 group-hover:opacity-30 transition-opacity duration-700" />
-
-              <div className="absolute inset-0 bg-[#0d0d0d] rounded-[2rem] border border-white/10 overflow-hidden z-20 shadow-2xl flex flex-col transition-all duration-500 group-hover:border-primary/30 group-hover:translate-y-[-8px]">
-                <div className="h-14 border-b border-white/5 flex items-center justify-between px-8 bg-white/[0.02] backdrop-blur-md">
-                  <div className="flex gap-1.5">
-                    <div className="size-2.5 rounded-full bg-[#ff5f56]/30 border border-[#ff5f56]/40" />
-                    <div className="size-2.5 rounded-full bg-[#ffbd2e]/30 border border-[#ffbd2e]/40" />
-                    <div className="size-2.5 rounded-full bg-[#27c93f]/30 border border-[#27c93f]/40" />
-                  </div>
-                  <div className="flex items-center gap-2 text-[9px] font-bold text-zinc-400 tracking-[0.2em] uppercase">
-                    <Globe
-                      size={10}
-                      className="animate-spin-slow text-primary/60"
-                    />
-                    Gargari Protocol
-                  </div>
-                </div>
-
-                <div className="flex-1 p-10 flex flex-col relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(241,144,53,0.08),transparent_70%)] pointer-events-none" />
-
-                  <div className="relative mb-8 flex justify-center">
-                    <div className="relative size-24">
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{
-                          duration: 12,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute inset-0 border-2 border-dashed border-primary/20 rounded-full"
-                      />
-                      <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute -inset-3 border border-white/5 rounded-full"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="size-16 rounded-2xl bg-gradient-to-br from-primary to-[#ff6b00] flex items-center justify-center shadow-[0_0_40px_rgba(241,144,53,0.3)]">
-                          <Sparkles className="size-8 text-black" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="absolute -right-6 top-0 bg-[#1a1a1a] border border-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-xl">
-                      <Zap size={12} className="text-primary animate-pulse" />
-                      <span className="text-[10px] font-bold text-white uppercase">
-                        High-End
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 relative z-10 mb-8">
-                    <div className="flex items-center gap-3">
-                      <div className="h-[1px] w-8 bg-primary" />
-                      <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em]">
-                        Studio Concept
-                      </span>
-                    </div>
-
-                    <h2 className="text-white text-[44px] font-black tracking-tighter leading-none uppercase italic overflow-visible">
-                      Digital <br />
-                      <span className="relative inline-block pb-2 pr-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/30">
-                        Mastery
-                      </span>
-                    </h2>
-                  </div>
-
-                  <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
-                    <div className="flex flex-col gap-3">
-                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
-                        Verified Reviews
-                      </span>
-                      <div className="flex -space-x-3">
-                        {[
-                          {
-                            img: "https://randomuser.me/api/portraits/men/32.jpg",
-                            name: "Client 1",
-                          },
-                          {
-                            img: "https://randomuser.me/api/portraits/women/44.jpg",
-                            name: "Client 2",
-                          },
-                          {
-                            img: "https://randomuser.me/api/portraits/men/65.jpg",
-                            name: "Client 3",
-                          },
-                        ].map((user, i) => (
-                          <motion.a
-                            key={i}
-                            href="https://www.facebook.com/profile.php?id=61559932766757&sk=reviews"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ y: -5, scale: 1.1, zIndex: 50 }}
-                            className="relative size-10 rounded-full border-2 border-[#0d0d0d] overflow-hidden cursor-pointer bg-zinc-900"
-                          >
-                            <img
-                              src={user.img}
-                              alt={user.name}
-                              className="size-full object-cover grayscale hover:grayscale-0 transition-all"
-                            />
-                          </motion.a>
-                        ))}
-                        <motion.a
-                          href="https://www.facebook.com/profile.php?id=61559932766757&sk=reviews"
-                          target="_blank"
-                          whileHover={{ scale: 1.1 }}
-                          className="size-10 rounded-full border-2 border-dashed border-white/10 bg-white/5 flex items-center justify-center text-zinc-400 hover:text-primary hover:border-primary/40 transition-all cursor-pointer"
-                        >
-                          <span className="text-[10px] font-bold">+12</span>
-                        </motion.a>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-1.5">
-                      <div className="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
-                        <div className="size-1.5 rounded-full bg-primary animate-ping" />
-                        <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
-                          Live Stats
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <motion.div
-                  animate={{ top: ["-20%", "120%"] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 w-full h-24 bg-gradient-to-b from-transparent via-primary/5 to-transparent z-30 pointer-events-none"
+            <div className="flex items-center gap-3.5">
+              <div className="flex items-center">
+                <span
+                  className="w-[27px] h-[27px] rounded-full"
+                  style={{ background: "linear-gradient(180deg,#F2F2F5 0%,#DEDEE3 100%)" }}
+                />
+                <span
+                  className="w-[27px] h-[27px] rounded-full -ml-[9px]"
+                  style={{ background: "linear-gradient(180deg,#DEDEE3 0%,#C7C7CC 100%)" }}
+                />
+                <span
+                  className="w-[27px] h-[27px] rounded-full -ml-[9px]"
+                  style={{ background: "linear-gradient(180deg,#3A3A3C 0%,#0E0E0E 100%)" }}
+                />
+                <span
+                  className="w-[27px] h-[27px] rounded-full -ml-[9px] bg-primary"
                 />
               </div>
+              <div className="text-left">
+                <div className="text-primary text-[13.5px] tracking-[0.08em] leading-none">
+                  ★★★★★
+                </div>
+                <div className="mt-[5px] text-[13.5px] text-[#4A4A4E] whitespace-nowrap">
+                  60+ sites shipped since 2019
+                </div>
+              </div>
+            </div>
+          </div>
 
-              <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full blur-[100px] -z-10" />
-            </motion.div>
+          <div className="w-full max-w-[1080px] flex items-center gap-3.5 sm:gap-5 lg:gap-7 mt-10 sm:mt-14 lg:mt-[92px]">
+            <span
+              className="flex-1 h-px"
+              style={{
+                background:
+                  "linear-gradient(90deg,rgba(227,227,230,0) 0%,#E3E3E6 100%)",
+              }}
+            />
+            <span className="shrink-0 text-[13.5px] text-[#6E6E73] text-center">
+              Trusted by Georgian brands, media and marketplaces
+            </span>
+            <span
+              className="flex-1 h-px"
+              style={{
+                background:
+                  "linear-gradient(90deg,#E3E3E6 0%,rgba(227,227,230,0) 100%)",
+              }}
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-5 sm:gap-9 lg:gap-[58px] mt-5 sm:mt-7 lg:mt-[34px] font-outfit font-semibold text-[#4A4A4E] tracking-[-0.015em] text-[clamp(15px,1.25vw,18px)]">
+            {clients.map((name) => (
+              <span key={name}>{name}</span>
+            ))}
           </div>
         </div>
+      </section>
+
+      <div className="relative z-[1] max-w-[1440px] mx-auto flex flex-wrap gap-px bg-[#E3E3E6] border-y border-[#E3E3E6]">
+        {stats.map((stat, i) => (
+          <div
+            key={stat.label}
+            className={`px-[18px] sm:px-[30px] lg:px-11 py-6 sm:py-8 ${
+              i === 0
+                ? "flex-[1.5_1_210px] pt-5 sm:pt-[26px] lg:pt-[34px] pb-6 sm:pb-8 lg:pb-11"
+                : i === 1
+                ? "flex-[1_1_180px] pt-[34px] sm:pt-11 lg:pt-16 pb-[18px] sm:pb-5 lg:pb-[26px]"
+                : i === 2
+                ? "flex-[1.2_1_190px] pt-6 sm:pt-7 lg:pt-10 pb-6 sm:pb-7 lg:pb-10"
+                : "flex-[1.1_1_190px] pt-10 sm:pt-12 lg:pt-[72px] pb-4 sm:pb-[18px] lg:pb-6"
+            }`}
+            style={{
+              background:
+                i === 0
+                  ? "linear-gradient(180deg,#FBFBFD 0%,#FFFFFF 100%)"
+                  : i === 1
+                  ? "linear-gradient(180deg,#F7F7F9 0%,#FFFFFF 100%)"
+                  : i === 2
+                  ? "linear-gradient(180deg,#FBFBFD 0%,#FFFFFF 100%)"
+                  : "linear-gradient(180deg,#F7F7F9 0%,#F2F2F5 100%)",
+            }}
+          >
+            <div
+              className={`font-outfit font-extrabold leading-none tracking-[-0.04em] text-[#0E0E0E] ${
+                i === 0 || i === 2
+                  ? "text-[clamp(30px,3.2vw,48px)]"
+                  : "text-[clamp(26px,2.5vw,35px)]"
+              }`}
+            >
+              {stat.value}
+              {stat.suffix && (
+                <span className="text-[#5A5A5F] font-medium">{stat.suffix}</span>
+              )}
+            </div>
+            <div className="mt-2 text-[12px] tracking-[0.14em] uppercase text-[#5A5A5F]">
+              {stat.label}
+            </div>
+          </div>
+        ))}
       </div>
-    </section>
+    </>
   );
 }

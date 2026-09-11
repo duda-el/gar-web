@@ -1,52 +1,45 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Logo from "@/Assets/gargari-logo.svg";
+
+const navLinks = [
+  { label: "Home", id: "top" },
+  { label: "Services", id: "services" },
+  { label: "Work", id: "projects" },
+  { label: "Why us", id: "why" },
+  { label: "Contact", id: "contact" },
+];
+
+function ArrowIcon({ stroke = "#0E0E0E" }: { stroke?: string }) {
+  return (
+    <svg width="12" height="9" viewBox="0 0 7 9" aria-hidden="true">
+      <path
+        d="M1 1 L5 4.5 L1 8"
+        fill="none"
+        stroke={stroke}
+        strokeWidth="1.7"
+      />
+    </svg>
+  );
+}
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState<Date | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    setCurrentTime(new Date());
-
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const hours = currentTime?.getHours() ?? 0;
-  const isOnline = hours >= 10 && hours < 24;
-
-  const timeString = currentTime
-    ? currentTime.toLocaleTimeString("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "--:--";
-
-  const dateString = currentTime
-    ? currentTime
-        .toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-        })
-        .toUpperCase()
-    : "--- --";
-
-  const navLinks = [
-    { name: "სერვისები", id: "services", label: "Services" },
-    { name: "პროექტები", id: "projects", label: "Projects" },
-    { name: "ჩვენს შესახებ", id: "about", label: "About Us" },
-    { name: "დაგვიკავშირდით", id: "contact", label: "Contact Us" },
-  ];
-
   const scrollToSection = (id: string) => {
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsOpen(false);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       const offset = 100;
@@ -55,173 +48,124 @@ export default function Header() {
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
-      window.history.pushState(null, "", `/${id}`);
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
     setIsOpen(false);
   };
 
   return (
-    <header className="w-full fixed top-0 z-[100] font-georgian">
-      <div className="bg-primary overflow-hidden py-2 border-b border-black/10 relative z-[110]">
-        <div className="animate-marquee flex items-center">
-          {[...Array(10)].map((_, i) => (
-            <span
-              key={i}
-              className="text-[#191919] font-bold text-[13px] uppercase tracking-wider mx-4 whitespace-nowrap"
+    <header
+      className={`sticky top-0 z-[100] transition-[background,box-shadow,border-color] duration-300 bg-white/[0.62] backdrop-blur-2xl backdrop-saturate-150 ${
+        scrolled
+          ? "border-b border-[#E3E3E6] shadow-[0_1px_0_rgba(255,255,255,0.55)_inset]"
+          : "border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 sm:gap-8 h-[76px] px-5 sm:px-9 lg:px-[72px]">
+        <button
+          onClick={() => scrollToSection("top")}
+          className="flex items-baseline gap-2.5 shrink-0 cursor-pointer"
+          aria-label="GarGari home"
+        >
+          <svg
+            width="28"
+            height="21"
+            viewBox="0 0 34 26"
+            aria-hidden="true"
+            className="self-center shrink-0"
+          >
+            <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
+            <polygon points="10,2 18,2 30,13 18,24 10,24 22,13" fill="#0E0E0E" />
+            <rect x="27" y="2" width="7" height="22" fill="#0E0E0E" />
+          </svg>
+          <span className="font-outfit font-extrabold text-[19px] sm:text-[21px] tracking-[-0.035em] text-[#0E0E0E]">
+            GarGari
+          </span>
+          <span className="hidden sm:inline text-[9.5px] tracking-[0.22em] uppercase text-[#5A5A5F] font-medium">
+            Tbilisi
+          </span>
+        </button>
+
+        <nav
+          className="hidden lg:flex items-center gap-0.5 shrink-0 bg-white/55 backdrop-blur-xl border border-white/70 rounded-full p-1.5"
+          style={{
+            boxShadow:
+              "0 1px 3px rgba(14,14,14,0.06), 0 0 0 0.5px rgba(14,14,14,0.05)",
+          }}
+        >
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollToSection(link.id)}
+              className={`font-outfit text-[14.5px] font-medium rounded-full px-4 py-2 whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                link.label === "Home"
+                  ? "text-[#0E0E0E] bg-white/90 shadow-[0_1px_3px_rgba(14,14,14,0.1),0_0_0_0.5px_rgba(14,14,14,0.04)]"
+                  : "text-[#4A4A4E] hover:text-[#0E0E0E] hover:bg-white/70"
+              }`}
             >
-              ✦ თქვენი თანამგზავრი ციფრულ სამყაროში ✦
-            </span>
+              {link.label}
+            </button>
           ))}
-        </div>
+        </nav>
+
+        <button
+          onClick={() => scrollToSection("contact")}
+          className="hidden sm:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
+        >
+          Start a project
+          <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
+            <ArrowIcon stroke="#FFFFFF" />
+          </span>
+        </button>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 shrink-0 cursor-pointer"
+          aria-label="Toggle Menu"
+        >
+          <span
+            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+              isOpen ? "rotate-45 translate-y-[7px]" : ""
+            }`}
+          />
+          <span
+            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+              isOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+              isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+            }`}
+          />
+        </button>
       </div>
 
-      <nav className="bg-[#191919] px-4 md:px-8 lg:px-12 py-6 flex md:grid md:grid-cols-[1fr_2fr_1fr] justify-between items-center border-b border-white/5 relative z-[110]">
-        <div className="flex justify-start">
-          <Link href="/" onClick={() => setIsOpen(false)} aria-label="Logo">
-            <Image
-              src={Logo}
-              alt="Garagaris Logo"
-              width={100}
-              height={28}
-              className="h-auto w-32 md:w-40 cursor-pointer"
-            />
-          </Link>
-        </div>
-
-        <div className="hidden md:flex justify-center px-4">
-          <ul className="flex md:gap-6 lg:gap-10 text-white/95 md:text-[12px] lg:text-[15px] font-semibold tracking-wide whitespace-nowrap">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <button
-                  onClick={() => scrollToSection(link.id)}
-                  aria-label={link.label}
-                  className="hover:text-primary transition-all cursor-pointer bg-transparent border-none"
-                >
-                  {link.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="flex items-center justify-end gap-6">
-          <div className="hidden md:flex items-center gap-4 font-mono text-xs tracking-widest">
-            {mounted && (
-              <>
-                <div className="flex flex-col items-end text-zinc-400">
-                  <span className="text-primary font-bold">{timeString}</span>
-                  <span className="text-[10px] text-gray-300">
-                    {dateString}
-                  </span>
-                </div>
-
-                <div className="w-[1px] h-8 bg-white/10" />
-
-                <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
-                  <div
-                    className={`size-1.5 rounded-full animate-pulse ${
-                      isOnline
-                        ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
-                        : "bg-primary shadow-[0_0_8px_rgba(241,144,53,0.6)]"
-                    }`}
-                  />
-                  <span
-                    className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
-                      isOnline ? "text-green-500" : "text-primary"
-                    }`}
-                  >
-                    {isOnline ? "Online" : "Standby"}
-                  </span>
-                </div>
-              </>
-            )}
-          </div>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8 z-[120] relative cursor-pointer"
-            aria-label="Toggle Menu"
-          >
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 my-1 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"
-              }`}
-            />
-          </button>
-        </div>
-      </nav>
-
       <div
-        className={`fixed right-0 top-0 h-full w-[80%] max-w-[320px] bg-[#191919] z-[106] p-8 transition-transform duration-500 ease-in-out border-l border-white/5 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out bg-white/90 backdrop-blur-2xl border-b border-[#E3E3E6] ${
+          isOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="flex flex-col h-full justify-between">
-          <ul className="flex flex-col gap-6 mt-32">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <button
-                  onClick={() => scrollToSection(link.id)}
-                  className="text-white text-xl font-semibold hover:text-primary transition-colors text-left w-full cursor-pointer"
-                >
-                  {link.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          <div className="relative z-10 flex flex-col gap-1 pb-4">
-            <div className="w-full h-[1px] bg-white/5 mb-6" />
-
-            {mounted && (
-              <>
-                <div className="flex items-center gap-2 mb-4">
-                  <div
-                    className={`size-2 rounded-full ${
-                      isOnline ? "bg-green-500" : "bg-primary"
-                    }`}
-                  />
-                  <span
-                    className={`text-xs font-bold uppercase tracking-widest ${
-                      isOnline ? "text-green-500" : "text-primary"
-                    }`}
-                  >
-                    System {isOnline ? "Online" : "Standby"}
-                  </span>
-                </div>
-
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col">
-                    <span className="text-white font-bold text-3xl tracking-tighter">
-                      {timeString}
-                    </span>
-                    <span className="text-zinc-400 text-[10px] tracking-widest uppercase">
-                      {dateString}
-                    </span>
-                  </div>
-                  <span className="text-white/70 text-xs tracking-widest italic">
-                    © 2026
-                  </span>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        <nav className="flex flex-col px-5 sm:px-9 py-4 gap-1">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollToSection(link.id)}
+              className="font-outfit text-[16px] font-medium text-left text-[#0E0E0E] py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer"
+            >
+              {link.label}
+            </button>
+          ))}
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="mt-4 mb-2 inline-flex items-center justify-center gap-2.5 rounded-full py-3 bg-primary hover:bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] cursor-pointer transition-colors duration-200"
+          >
+            Start a project
+            <span className="inline-flex items-center justify-center w-[24px] h-[24px] rounded-full bg-[#0E0E0E] shrink-0">
+              <ArrowIcon stroke="#FFFFFF" />
+            </span>
+          </button>
+        </nav>
       </div>
     </header>
   );

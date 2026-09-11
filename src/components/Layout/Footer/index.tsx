@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Mail, Facebook, Instagram, ArrowUpRight, Locate } from "lucide-react";
+import { Mail, Phone, Facebook, Instagram, MapPin } from "lucide-react";
 import Script from "next/script";
 import PolicyModal from "../../ui/Modal/PolicyModal";
 
@@ -12,11 +11,29 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   </svg>
 );
 
+const navLinks = [
+  { label: "Home", id: "top" },
+  { label: "Services", id: "services" },
+  { label: "Work", id: "projects" },
+  { label: "Why us", id: "why" },
+  { label: "Contact", id: "contact" },
+];
+
+const socials = [
+  { icon: <Facebook size={17} />, href: "https://www.facebook.com/profile.php?id=61559932766757", label: "Facebook" },
+  { icon: <Instagram size={17} />, href: "https://www.instagram.com/_gargari/", label: "Instagram" },
+  { icon: <TikTokIcon size={17} />, href: "https://www.tiktok.com/@gargari_", label: "TikTok" },
+];
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [modalType, setModalType] = useState<"privacy" | "terms" | null>(null);
 
   const scrollToSection = (id: string) => {
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({ top: element.offsetTop - 100, behavior: "smooth" });
@@ -47,23 +64,35 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-[#121212] pt-20 pb-10 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-white tracking-tighter font-georgian italic">
-              GAR<span className="text-primary italic">GARI</span>
-            </h2>
-            <p className="text-zinc-400 text-sm font-georgian max-w-xs">
-              ჩვენ ვქმნით ციფრულ გამოცდილებას, რომელიც ეხმარება ბიზნესს ზრდასა და განვითარებაში.
+    <footer className="relative bg-[#0E0E0E] text-white">
+      <div className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-16 sm:pt-20 lg:pt-24 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
+          <div className="flex flex-col gap-5">
+            <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-baseline gap-2.5 w-fit">
+              <svg width="26" height="20" viewBox="0 0 34 26" aria-hidden="true" className="self-center shrink-0">
+                <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
+                <polygon points="10,2 18,2 30,13 18,24 10,24 22,13" fill="#FFFFFF" />
+                <rect x="27" y="2" width="7" height="22" fill="#FFFFFF" />
+              </svg>
+              <span className="font-outfit font-extrabold text-[19px] tracking-[-0.035em] text-white">
+                GarGari
+              </span>
+            </a>
+            <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
+              A Tbilisi studio designing and building landing pages, web
+              applications and online stores — small team, hand-built work,
+              clear timelines.
             </p>
-            <div className="flex gap-4">
-              {[
-                { icon: <Facebook size={18} />, href: "https://www.facebook.com/profile.php?id=61559932766757" },
-                { icon: <Instagram size={18} />, href: "https://www.instagram.com/_gargari/" },
-                { icon: <TikTokIcon size={18} />, href: "https://www.tiktok.com/@gargari_" },
-              ].map((social, i) => (
-                <a key={i} href={social.href} target="_blank" className="text-zinc-400 hover:text-primary transition-colors">
+            <div className="flex gap-3">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/15 text-[#B9B6B3] hover:text-[#0E0E0E] hover:bg-primary hover:border-primary transition-colors duration-200"
+                >
                   {social.icon}
                 </a>
               ))}
@@ -71,12 +100,17 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold font-georgian mb-6 text-xs uppercase tracking-widest opacity-50">ნავიგაცია</h3>
-            <ul className="space-y-3">
-              {[{ id: "projects", label: "პროექტები" }, { id: "services", label: "სერვისები" }, { id: "about", label: "ჩვენს შესახებ" }].map((item) => (
-                <li key={item.id}>
-                  <button onClick={() => scrollToSection(item.id)} className="text-zinc-400 hover:text-white transition-colors text-sm font-georgian cursor-pointer">
-                    {item.label}
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+              Navigation
+            </h3>
+            <ul className="flex flex-col gap-3.5">
+              {navLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200 cursor-pointer"
+                  >
+                    {link.label}
                   </button>
                 </li>
               ))}
@@ -84,41 +118,60 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold font-georgian mb-6 text-xs uppercase tracking-widest opacity-50">კონტაქტი</h3>
-            <div className="space-y-4">
-              <a href="mailto:gargariinfo@gmail.com" className="flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
-                <Mail size={16} />
-                <span className="text-sm font-georgian">gargariinfo@gmail.com</span>
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+              Contact
+            </h3>
+            <div className="flex flex-col gap-3.5">
+              <a
+                href="mailto:hello@gargari.ge"
+                className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
+              >
+                <Mail size={15} className="text-[#FF7A00] shrink-0" />
+                hello@gargari.ge
               </a>
-              <div className="flex items-center gap-3 text-zinc-400">
-                <Locate size={16} />
-                <span className="text-sm font-georgian">Tbilisi, Georgia</span>
+              <a
+                href="tel:+995322000000"
+                className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
+              >
+                <Phone size={15} className="text-[#FF7A00] shrink-0" />
+                +995 32 2 00 00 00
+              </a>
+              <div className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3]">
+                <MapPin size={15} className="text-[#FF7A00] shrink-0" />
+                Rustaveli Ave, Tbilisi 0108
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="text-white font-bold font-georgian mb-6 text-xs uppercase tracking-widest opacity-50">დაგვიკავშირდით</h3>
-            <p className="text-zinc-400 text-xs font-georgian italic leading-relaxed">
-              გაქვთ იდეა? მოდით, ერთად ვაქციოთ ის რეალობად.
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+              Get in touch
+            </h3>
+            <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3]">
+              Have an idea? Let&apos;s turn it into something real.
             </p>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-zinc-500 text-[10px] uppercase tracking-[0.2em] font-bold">
-            © {currentYear} GARGARI STUDIO.
+        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-5">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#6E6E73]">
+            © {currentYear} GarGari Studio
           </p>
-          
-          <div className="flex items-center gap-8">
-            <button onClick={() => setModalType("privacy")} className="text-zinc-500 hover:text-white text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors">
+
+          <div className="flex items-center gap-6 sm:gap-8">
+            <button
+              onClick={() => setModalType("privacy")}
+              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+            >
               Privacy Policy
             </button>
-            <button onClick={() => setModalType("terms")} className="text-zinc-500 hover:text-white text-[10px] uppercase tracking-widest font-bold cursor-pointer transition-colors">
+            <button
+              onClick={() => setModalType("terms")}
+              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+            >
               Terms of Service
             </button>
-            
-            <div id="top-ge-counter-container" data-site-id="118478" className="opacity-60 hover:opacity-100 transition-opacity"></div>
+            <div id="top-ge-counter-container" data-site-id="118478" className="opacity-50 hover:opacity-100 transition-opacity" />
           </div>
         </div>
       </div>

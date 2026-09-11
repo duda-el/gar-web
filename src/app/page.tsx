@@ -5,20 +5,22 @@ import Contact from "../components/Pages/Contact";
 import Footer from "../components/Layout/Footer";
 import Projects from "../components/Pages/Projects/Index";
 import Services from "../components/Services";
+import WhyUs from "../components/Pages/WhyUs";
+import CTA from "../components/Pages/CTA";
 import CookieConsent from "../components/Cookie/CookieConsent";
 import ScrollHandler from "../components/ScrollHandler";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#191919]">
+    <div className="min-h-screen bg-white">
       <ScrollHandler />
       <Header />
       <main>
         <Hero />
         <Services />
         <Projects />
-        <About />
-        <Contact />
+        <WhyUs />
+        <CTA />
         <Footer />
         <CookieConsent />
       </main>
