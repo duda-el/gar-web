@@ -14,7 +14,7 @@ const services = [
   {
     title: "E-commerce",
     description:
-      "Stores with catalogue, cart, local payment providers and delivery — built for real inventory and real traffic.",
+      "Stores with catalogue, cart, local payment providers and delivery, built for real inventory and real traffic.",
     price: "quoted on scope",
   },
 ];
@@ -51,8 +51,8 @@ export default function Services() {
           </h2>
         </div>
         <p className="m-0 max-w-[38ch] text-[16px] leading-[1.6] text-[#4A4744]">
-          Three ways to work with us, plus the design work that sits in front
-          of the build.
+          Three ways to work with us, plus the design work that sits in front of
+          the build.
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export default function Services() {
             Branding &amp; UI/UX
           </h3>
           <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-            Identity, type and a small system that holds together — plus
+            Identity, type and a small system that holds together, plus
             wireframes and interface design before the build starts.
           </p>
         </div>

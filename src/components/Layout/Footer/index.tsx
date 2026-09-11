@@ -6,7 +6,16 @@ import Script from "next/script";
 import PolicyModal from "../../ui/Modal/PolicyModal";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
   </svg>
 );
@@ -20,9 +29,21 @@ const navLinks = [
 ];
 
 const socials = [
-  { icon: <Facebook size={17} />, href: "https://www.facebook.com/profile.php?id=61559932766757", label: "Facebook" },
-  { icon: <Instagram size={17} />, href: "https://www.instagram.com/_gargari/", label: "Instagram" },
-  { icon: <TikTokIcon size={17} />, href: "https://www.tiktok.com/@gargari_", label: "TikTok" },
+  {
+    icon: <Facebook size={17} />,
+    href: "https://www.facebook.com/profile.php?id=61559932766757",
+    label: "Facebook",
+  },
+  {
+    icon: <Instagram size={17} />,
+    href: "https://www.instagram.com/_gargari/",
+    label: "Instagram",
+  },
+  {
+    icon: <TikTokIcon size={17} />,
+    href: "https://www.tiktok.com/@gargari_",
+    label: "TikTok",
+  },
 ];
 
 const Footer = () => {
@@ -68,10 +89,26 @@ const Footer = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-16 sm:pt-20 lg:pt-24 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
           <div className="flex flex-col gap-5">
-            <a href="#top" onClick={(e) => { e.preventDefault(); scrollToSection("top"); }} className="flex items-baseline gap-2.5 w-fit">
-              <svg width="26" height="20" viewBox="0 0 34 26" aria-hidden="true" className="self-center shrink-0">
+            <a
+              href="#top"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("top");
+              }}
+              className="flex items-baseline gap-2.5 w-fit"
+            >
+              <svg
+                width="26"
+                height="20"
+                viewBox="0 0 34 26"
+                aria-hidden="true"
+                className="self-center shrink-0"
+              >
                 <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
-                <polygon points="10,2 18,2 30,13 18,24 10,24 22,13" fill="#FFFFFF" />
+                <polygon
+                  points="10,2 18,2 30,13 18,24 10,24 22,13"
+                  fill="#FFFFFF"
+                />
                 <rect x="27" y="2" width="7" height="22" fill="#FFFFFF" />
               </svg>
               <span className="font-outfit font-extrabold text-[19px] tracking-[-0.035em] text-white">
@@ -80,8 +117,8 @@ const Footer = () => {
             </a>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
               A Tbilisi studio designing and building landing pages, web
-              applications and online stores — small team, hand-built work,
-              clear timelines.
+              applications and online stores, small team, hand-built work, clear
+              timelines.
             </p>
             <div className="flex gap-3">
               {socials.map((social) => (
@@ -171,7 +208,11 @@ const Footer = () => {
             >
               Terms of Service
             </button>
-            <div id="top-ge-counter-container" data-site-id="118478" className="opacity-50 hover:opacity-100 transition-opacity" />
+            <div
+              id="top-ge-counter-container"
+              data-site-id="118478"
+              className="opacity-50 hover:opacity-100 transition-opacity"
+            />
           </div>
         </div>
       </div>

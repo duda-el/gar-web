@@ -21,7 +21,7 @@ const steps = [
     number: "04",
     title: "Launch",
     description:
-      "Domain, hosting, analytics, speed pass — then a month of support and a handover.",
+      "Domain, hosting, analytics, speed pass, then a month of support and a handover.",
   },
 ];
 
@@ -29,7 +29,11 @@ export default function WhyUs() {
   return (
     <section
       id="why"
-      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px] bg-[#F5F5F7]"
+      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]"
+      style={{
+        background:
+          "linear-gradient(180deg, #fbfbfb 0% 0%, #fefefe 55%, #ffffff 100%)",
+      }}
     >
       <div className="flex flex-wrap items-end justify-between gap-5 mb-14 sm:mb-16 lg:mb-20">
         <div>

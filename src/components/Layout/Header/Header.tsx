@@ -75,14 +75,14 @@ export default function Header() {
             className="self-center shrink-0"
           >
             <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
-            <polygon points="10,2 18,2 30,13 18,24 10,24 22,13" fill="#0E0E0E" />
+            <polygon
+              points="10,2 18,2 30,13 18,24 10,24 22,13"
+              fill="#0E0E0E"
+            />
             <rect x="27" y="2" width="7" height="22" fill="#0E0E0E" />
           </svg>
           <span className="font-outfit font-extrabold text-[19px] sm:text-[21px] tracking-[-0.035em] text-[#0E0E0E]">
             GarGari
-          </span>
-          <span className="hidden sm:inline text-[9.5px] tracking-[0.22em] uppercase text-[#5A5A5F] font-medium">
-            Tbilisi
           </span>
         </button>
 
@@ -110,7 +110,7 @@ export default function Header() {
 
         <button
           onClick={() => scrollToSection("contact")}
-          className="hidden sm:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
+          className="hidden lg:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
         >
           Start a project
           <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
