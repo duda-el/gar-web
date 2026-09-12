@@ -3,7 +3,11 @@
 import React, { useState } from "react";
 import { Mail, Phone, Facebook, Instagram, MapPin } from "lucide-react";
 import Script from "next/script";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import PolicyModal from "../../ui/Modal/PolicyModal";
+import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -21,11 +25,11 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 const navLinks = [
-  { label: "Home", id: "top" },
-  { label: "Services", id: "services" },
-  { label: "Work", id: "projects" },
-  { label: "Why us", id: "why" },
-  { label: "Contact", id: "contact" },
+  { label: "Home", href: "/", id: "top" },
+  { label: "Services", href: "/#services", id: "services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Why us", href: "/#why", id: "why" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const socials = [
@@ -49,6 +53,8 @@ const socials = [
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [modalType, setModalType] = useState<"privacy" | "terms" | null>(null);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const scrollToSection = (id: string) => {
     if (id === "top") {
@@ -58,6 +64,16 @@ const Footer = () => {
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({ top: element.offsetTop - 100, behavior: "smooth" });
+    }
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id?: string
+  ) => {
+    if (id && isHome) {
+      e.preventDefault();
+      scrollToSection(id);
     }
   };
 
@@ -89,32 +105,13 @@ const Footer = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-16 sm:pt-20 lg:pt-24 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
           <div className="flex flex-col gap-5">
-            <a
-              href="#top"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("top");
-              }}
-              className="flex items-baseline gap-2.5 w-fit"
+            <Link
+              href="/"
+              onClick={(e) => handleNavClick(e, "top")}
+              className="flex items-center w-fit"
             >
-              <svg
-                width="26"
-                height="20"
-                viewBox="0 0 34 26"
-                aria-hidden="true"
-                className="self-center shrink-0"
-              >
-                <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
-                <polygon
-                  points="10,2 18,2 30,13 18,24 10,24 22,13"
-                  fill="#FFFFFF"
-                />
-                <rect x="27" y="2" width="7" height="22" fill="#FFFFFF" />
-              </svg>
-              <span className="font-outfit font-extrabold text-[19px] tracking-[-0.035em] text-white">
-                GarGari
-              </span>
-            </a>
+              <Image src={gargariLogo} alt="GarGari" className="h-9 w-auto" />
+            </Link>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
               A Tbilisi studio designing and building landing pages, web
               applications and online stores, small team, hand-built work, clear
@@ -142,13 +139,14 @@ const Footer = () => {
             </h3>
             <ul className="flex flex-col gap-3.5">
               {navLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => scrollToSection(link.id)}
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className="text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200 cursor-pointer"
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

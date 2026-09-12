@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 type CTAProps = {
   className?: string;
@@ -87,13 +88,6 @@ const CTA = ({ className }: CTAProps) => {
     transition: { duration: 1, delay: 0.2 },
   };
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    if (element) {
-      window.scrollTo({ top: element.offsetTop - 100, behavior: "smooth" });
-    }
-  };
-
   return (
     <section className={className}>
       <div className="sm:py-20 py-8">
@@ -118,15 +112,15 @@ const CTA = ({ className }: CTAProps) => {
                   in every interaction.
                 </p>
               </div>
-              <button
-                onClick={scrollToContact}
+              <Link
+                href="/contact"
                 className="group relative inline-flex items-center rounded-full h-12 p-1 ps-6 pe-14 font-outfit font-semibold text-[15px] text-[#0E0E0E] bg-primary hover:bg-white w-fit overflow-hidden transition-all duration-500 hover:ps-14 hover:pe-6 cursor-pointer"
               >
                 <span className="relative z-10">Let&apos;s craft together</span>
                 <div className="absolute right-1 w-10 h-10 bg-[#0E0E0E] text-white rounded-full flex items-center justify-center transition-all duration-500 group-hover:right-[calc(100%-44px)] group-hover:rotate-45">
                   <ArrowUpRight size={16} />
                 </div>
-              </button>
+              </Link>
             </motion.div>
           </div>
         </div>

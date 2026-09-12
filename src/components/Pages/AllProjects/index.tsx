@@ -6,39 +6,39 @@ import Link from "next/link";
 import { projects, Project } from "@/constants/projects";
 
 const filters: { label: string; value: Project["type"] | "all" }[] = [
-  { label: "ყველა", value: "all" },
-  { label: "ვებ გვერდები", value: "website" },
-  { label: "დიზაინი", value: "design" },
+  { label: "All", value: "all" },
+  { label: "Websites", value: "website" },
+  { label: "Design", value: "design" },
   { label: "UI/UX", value: "uiux" },
 ];
 
 const statusColor: Record<string, string> = {
-  აქტიური: "#1FA34A",
-  დასრულებული: "#0E0E0E",
-  შეჩერებული: "#B3261E",
+  Active: "#1FA34A",
+  Completed: "#0E0E0E",
+  Paused: "#B3261E",
 };
 
 export default function AllProjects() {
   const [active, setActive] = useState<Project["type"] | "all">("all");
 
   const filtered = useMemo(
-    () => (active === "all" ? projects : projects.filter((p) => p.type === active)),
-    [active]
+    () =>
+      active === "all" ? projects : projects.filter((p) => p.type === active),
+    [active],
   );
 
   return (
     <section className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] py-[26px] sm:py-14 lg:py-[54px] lg:pb-[118px]">
       <div className="pt-10 sm:pt-12 lg:pt-16 mb-8 sm:mb-10 lg:mb-14">
         <span className="block text-[10.5px] tracking-[0.2em] uppercase text-[#5A5A5F] mb-3">
-          ჩვენი ნამუშევრები
+          Our Work
         </span>
         <h1 className="m-0 font-outfit font-extrabold text-[#0E0E0E] leading-none tracking-[-0.04em] text-[clamp(32px,5.5vw,64px)]">
-          ყველა პროექტი
+          All Projects
         </h1>
         <p className="mt-4 max-w-[56ch] text-[15px] leading-[1.6] text-[#4A4A4E]">
-          {projects.length} პროექტი, რომელიც GarGari-ის გუნდმა შექმნა — ვებ
-          გვერდებიდან და E-Commerce პლატფორმებიდან, ბრენდინგამდე და UI/UX
-          დიზაინამდე.
+          {projects.length} projects built by the GarGari team from websites and
+          e-commerce platforms to branding and UI/UX design.
         </p>
       </div>
 
@@ -84,7 +84,9 @@ export default function AllProjects() {
                 />
                 <span
                   className="absolute top-2.5 left-2.5 rounded-full px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.1em] text-white"
-                  style={{ backgroundColor: statusColor[project.status] ?? "#0E0E0E" }}
+                  style={{
+                    backgroundColor: statusColor[project.status] ?? "#0E0E0E",
+                  }}
                 >
                   {project.status}
                 </span>
@@ -97,7 +99,7 @@ export default function AllProjects() {
                 </span>
               </div>
               <p className="mt-1 text-[10.5px] tracking-[0.1em] uppercase text-[#5A5A5F]">
-                {project.category.replace(/^კატეგორია:\s*/, "")}
+                {project.category.replace(/^Category:\s*/, "")}
               </p>
               <p className="mt-2.5 text-[13.5px] leading-[1.55] text-[#4A4A4E] line-clamp-2">
                 {project.description}

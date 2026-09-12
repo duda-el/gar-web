@@ -1,13 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import gargariLogo from "@/Assets/images/gargari-logo-dark.png";
 
 const navLinks = [
-  { label: "Home", id: "top" },
-  { label: "Services", id: "services" },
-  { label: "Work", id: "projects" },
-  { label: "Why us", id: "why" },
-  { label: "Contact", id: "contact" },
+  { label: "Home", href: "/", id: "top" },
+  { label: "Services", href: "/#services", id: "services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Why us", href: "/#why", id: "why" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function ArrowIcon({ stroke = "#0E0E0E" }: { stroke?: string }) {
@@ -26,6 +30,8 @@ function ArrowIcon({ stroke = "#0E0E0E" }: { stroke?: string }) {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -53,6 +59,18 @@ export default function Header() {
     setIsOpen(false);
   };
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id?: string
+  ) => {
+    if (id && isHome) {
+      e.preventDefault();
+      scrollToSection(id);
+    } else {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <header
       className={`sticky top-0 z-[100] transition-[background,box-shadow,border-color] duration-300 bg-white/[0.62] backdrop-blur-2xl backdrop-saturate-150 ${
@@ -62,29 +80,19 @@ export default function Header() {
       }`}
     >
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 sm:gap-8 h-[76px] px-5 sm:px-9 lg:px-[72px]">
-        <button
-          onClick={() => scrollToSection("top")}
-          className="flex items-baseline gap-2.5 shrink-0 cursor-pointer"
+        <Link
+          href="/"
+          onClick={(e) => handleNavClick(e, "top")}
+          className="flex items-center shrink-0 cursor-pointer"
           aria-label="GarGari home"
         >
-          <svg
-            width="28"
-            height="21"
-            viewBox="0 0 34 26"
-            aria-hidden="true"
-            className="self-center shrink-0"
-          >
-            <rect x="0" y="10" width="12" height="6" fill="#FF7A00" />
-            <polygon
-              points="10,2 18,2 30,13 18,24 10,24 22,13"
-              fill="#0E0E0E"
-            />
-            <rect x="27" y="2" width="7" height="22" fill="#0E0E0E" />
-          </svg>
-          <span className="font-outfit font-extrabold text-[19px] sm:text-[21px] tracking-[-0.035em] text-[#0E0E0E]">
-            GarGari
-          </span>
-        </button>
+          <Image
+            src={gargariLogo}
+            alt="GarGari"
+            className="h-9 sm:h-10 w-auto"
+            priority
+          />
+        </Link>
 
         <nav
           className="hidden lg:flex items-center gap-0.5 shrink-0 bg-white/55 backdrop-blur-xl border border-white/70 rounded-full p-1.5"
@@ -93,30 +101,37 @@ export default function Header() {
               "0 1px 3px rgba(14,14,14,0.06), 0 0 0 0.5px rgba(14,14,14,0.05)",
           }}
         >
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => scrollToSection(link.id)}
-              className={`font-outfit text-[14.5px] font-medium rounded-full px-4 py-2 whitespace-nowrap transition-colors duration-200 cursor-pointer ${
-                link.label === "Home"
-                  ? "text-[#0E0E0E] bg-white/90 shadow-[0_1px_3px_rgba(14,14,14,0.1),0_0_0_0.5px_rgba(14,14,14,0.04)]"
-                  : "text-[#4A4A4E] hover:text-[#0E0E0E] hover:bg-white/70"
-              }`}
-            >
-              {link.label}
-            </button>
-          ))}
+          {navLinks.map((link) => {
+            const active = link.id
+              ? link.id === "top" && isHome
+              : pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.id)}
+                className={`font-outfit text-[14.5px] font-medium rounded-full px-4 py-2 whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                  active
+                    ? "text-[#0E0E0E] bg-white/90 shadow-[0_1px_3px_rgba(14,14,14,0.1),0_0_0_0.5px_rgba(14,14,14,0.04)]"
+                    : "text-[#4A4A4E] hover:text-[#0E0E0E] hover:bg-white/70"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <button
-          onClick={() => scrollToSection("contact")}
+        <Link
+          href="/contact"
+          onClick={(e) => handleNavClick(e)}
           className="hidden lg:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
         >
           Start a project
           <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
             <ArrowIcon stroke="#FFFFFF" />
           </span>
-        </button>
+        </Link>
 
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -148,23 +163,25 @@ export default function Header() {
       >
         <nav className="flex flex-col px-5 sm:px-9 py-4 gap-1">
           {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => scrollToSection(link.id)}
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.id)}
               className="font-outfit text-[16px] font-medium text-left text-[#0E0E0E] py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer"
             >
               {link.label}
-            </button>
+            </Link>
           ))}
-          <button
-            onClick={() => scrollToSection("contact")}
+          <Link
+            href="/contact"
+            onClick={(e) => handleNavClick(e)}
             className="mt-4 mb-2 inline-flex items-center justify-center gap-2.5 rounded-full py-3 bg-primary hover:bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] cursor-pointer transition-colors duration-200"
           >
             Start a project
             <span className="inline-flex items-center justify-center w-[24px] h-[24px] rounded-full bg-[#0E0E0E] shrink-0">
               <ArrowIcon stroke="#FFFFFF" />
             </span>
-          </button>
+          </Link>
         </nav>
       </div>
     </header>
