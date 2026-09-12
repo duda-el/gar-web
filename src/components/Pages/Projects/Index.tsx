@@ -1,7 +1,9 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
+import { projects as allProjects } from "@/constants/projects";
 import ItechnoImg from "@/Assets/images/ITechno.jpg";
 import ZmnaImg from "@/Assets/images/zmna.jpg";
 import BizonImg from "@/Assets/images/Bizon.jpg";
@@ -72,6 +74,14 @@ const rows: WorkItem[][] = [
   [works[2], works[3]],
 ];
 
+function ArrowIcon() {
+  return (
+    <svg width="12" height="9" viewBox="0 0 7 9" aria-hidden="true">
+      <path d="M1 1 L5 4.5 L1 8" fill="none" stroke="#FFFFFF" strokeWidth="1.7" />
+    </svg>
+  );
+}
+
 export default function Projects() {
   return (
     <section
@@ -94,8 +104,17 @@ export default function Projects() {
           <rect width="100%" height="12" fill="url(#rpChevron)" />
         </svg>
         <span className="shrink-0 text-[10.5px] tracking-[0.2em] uppercase text-[#5A5A5F]">
-          Four of sixty
+          {works.length} of {allProjects.length}
         </span>
+        <Link
+          href="/projects"
+          className="group inline-flex items-center gap-2.5 shrink-0 rounded-full pl-4 pr-1.5 py-1.5 border border-[#E3E3E6] hover:border-[#0E0E0E] font-outfit font-bold text-[13.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap transition-colors duration-200"
+        >
+          View all
+          <span className="inline-flex items-center justify-center w-[24px] h-[24px] rounded-full bg-[#0E0E0E] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
+            <ArrowIcon />
+          </span>
+        </Link>
       </div>
 
       {rows.map((row, rowIdx) => (
