@@ -6,7 +6,7 @@ type Testimonial = {
   name: string;
   role: string;
   quote: string;
-  badge: "star" | "google";
+  badge: "star" | "google" | "facebook";
 };
 
 const avatarPalette = [
@@ -50,6 +50,17 @@ function GoogleIcon() {
   );
 }
 
+function FacebookIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true">
+      <path
+        d="M18 9a9 9 0 1 0-10.4 8.89v-6.29H5.31V9h2.29V7.01c0-2.26 1.35-3.51 3.41-3.51.99 0 2.02.18 2.02.18v2.22h-1.14c-1.12 0-1.47.7-1.47 1.41V9h2.5l-.4 2.6h-2.1v6.29A9 9 0 0 0 18 9Z"
+        fill="#1877F2"
+      />
+    </svg>
+  );
+}
+
 function Avatar({ name }: { name: string }) {
   const initials = name
     .split(" ")
@@ -72,74 +83,50 @@ function Avatar({ name }: { name: string }) {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Nini Kapanadze",
-    role: "Founder, retail store",
-    badge: "star",
-    quote:
-      "They scoped everything clearly upfront, no surprises on price or timeline, and the site was ready two weeks before our launch date.",
+    name: "Khvicha Guliashvili",
+    role: "Facebook recommendation",
+    badge: "facebook",
+    quote: "Excellent, thank you for everything.",
   },
   {
-    name: "Davit Meskhi",
-    role: "CEO, logistics startup",
-    badge: "google",
+    name: "ITechno",
+    role: "Facebook recommendation",
+    badge: "facebook",
     quote:
-      "Our dashboard finally feels like it belongs to us. Fast, clean, and the admin panel makes onboarding new staff painless.",
+      "The GarGari team built our website really well. Communication was easy, the work was professional, and we got exactly the result we wanted. They paid close attention to detail, handled changes quickly, and overall we were very satisfied. We'll definitely recommend them.",
   },
   {
-    name: "Mariam Tsiklauri",
-    role: "Marketing lead",
-    badge: "star",
+    name: "Ekaterine Jantishvili",
+    role: "Facebook recommendation",
+    badge: "facebook",
     quote:
-      "They rebuilt our landing page in under three weeks and our conversion rate doubled within the first month.",
+      "GarGari, sincere thanks! It's such a pleasure working with a responsive, professional team. Wishing you continued success!",
   },
   {
-    name: "Giorgi Lomidze",
-    role: "Founder, e-commerce store",
-    badge: "google",
-    quote:
-      "Support after launch has been just as good as the build itself. Every small request gets handled within a day.",
+    name: "Mamuka Tsulaia",
+    role: "Facebook recommendation",
+    badge: "facebook",
+    quote: "Best team! Highly recommended!",
   },
   {
-    name: "Ana Beridze",
-    role: "Product manager",
-    badge: "star",
+    name: "Tata Gachechiladze",
+    role: "Facebook recommendation",
+    badge: "facebook",
     quote:
-      "Clear communication from brief to handover, we always knew exactly what stage the project was at.",
+      "The future of digital marketing belongs to these people. They created the best product for me in record time. There's nothing better than seeing someone turn your vision into reality, even better than you imagined. Thank you so much!",
   },
   {
-    name: "Luka Sordia",
-    role: "Founder, booking platform",
-    badge: "google",
-    quote:
-      "The booking system they built handles double the traffic we expected without a single hiccup.",
-  },
-  {
-    name: "Tako Robakidze",
-    role: "Operations manager",
-    badge: "star",
-    quote:
-      "Hand-built, not templated, and it shows. The site feels exactly like our brand, down to the small details.",
-  },
-  {
-    name: "Sandro Phutkaradze",
-    role: "Founder, wholesale supplier",
-    badge: "google",
-    quote:
-      "Straightforward pricing and a staging link from week one, we could see real progress the whole way through.",
-  },
-  {
-    name: "Keti Vashakidze",
-    role: "Marketing director",
-    badge: "star",
-    quote:
-      "Fast replies, sharp design decisions, and a site that actually loads fast on mobile, not just on their demo.",
+    name: "Nika Barjadze",
+    role: "Facebook recommendation",
+    badge: "facebook",
+    quote: "Highly recommended, great work all around!",
   },
 ];
 
 const columns: { items: Testimonial[]; direction: "up" | "down"; duration: number }[] = [
-  { items: testimonials.slice(0, 3), direction: "up", duration: 32 },
-  { items: testimonials.slice(3, 6), direction: "down", duration: 38 },
-  { items: testimonials.slice(6, 9), direction: "up", duration: 30 },
+  { items: testimonials.slice(0, 2), direction: "up", duration: 32 },
+  { items: testimonials.slice(2, 4), direction: "down", duration: 38 },
+  { items: testimonials.slice(4, 6), direction: "up", duration: 30 },
 ];
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
@@ -159,6 +146,8 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
         {testimonial.badge === "google" ? (
           <GoogleIcon />
+        ) : testimonial.badge === "facebook" ? (
+          <FacebookIcon />
         ) : (
           <Star size={16} className="text-[#FF7A00] fill-[#FF7A00] shrink-0" />
         )}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Users, Layers, Sparkles, MapPin, Clock } from "lucide-react";
-import groupPhoto from "@/Assets/images/garagari-boys.jpg";
+import heroIllustration from "@/Assets/images/about-hero-illustration.png";
 
 const values = [
   {
@@ -119,13 +119,13 @@ export default function AboutUs() {
           <div className="relative">
             <i className="absolute w-[14px] h-[14px] left-[-1px] top-[-1px] border-l-2 border-t-2 border-[#0E0E0E] z-10" />
             <i className="absolute w-[14px] h-[14px] right-[-1px] bottom-[-1px] border-r-2 border-b-2 border-[#FF7A00] z-10" />
-            <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[4/5] overflow-hidden rounded-2xl border border-[#E3E3E6]">
+            <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[4/5] rounded-2xl">
               <Image
-                src={groupPhoto}
-                alt="The GarGari team"
+                src={heroIllustration}
+                alt="GarGari, web design and development"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             </div>
