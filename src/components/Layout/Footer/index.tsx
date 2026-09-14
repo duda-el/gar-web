@@ -26,9 +26,9 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
 
 const navLinks = [
   { label: "Home", href: "/", id: "top" },
-  { label: "Services", href: "/#services", id: "services" },
+  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
-  { label: "Why us", href: "/#why", id: "why" },
+  { label: "About us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 

@@ -8,9 +8,9 @@ import gargariLogo from "@/Assets/images/gargari-logo-dark.png";
 
 const navLinks = [
   { label: "Home", href: "/", id: "top" },
-  { label: "Services", href: "/#services", id: "services" },
+  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
-  { label: "Why us", href: "/#why", id: "why" },
+  { label: "About us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 

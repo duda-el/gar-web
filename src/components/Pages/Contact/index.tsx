@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { Facebook, Instagram, Mail } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -129,60 +129,34 @@ const Contact = () => {
           Tell us about your project and we&apos;ll get back to you within a
           day.
         </p>
+
+        <div className="mt-6 flex flex-wrap gap-2.5">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
+            <MapPin size={14} className="text-[#FF7A00] shrink-0" />
+            Tbilisi, Georgia, remote friendly
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
+            <Clock size={14} className="text-[#FF7A00] shrink-0" />
+            Replies within a day
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
+            <span className="relative flex w-2 h-2 shrink-0">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#1FA34A] opacity-75 animate-ping" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-[#1FA34A]" />
+            </span>
+            Open for new projects
+          </span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-16 items-start">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          className="order-2 lg:order-1 rounded-xl border border-[#EDEAE6] bg-white p-5 sm:p-8"
         >
-          {contactCards.map((card) => (
-            <a
-              key={card.label}
-              href={card.href}
-              target={card.href.startsWith("http") ? "_blank" : undefined}
-              rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group relative p-4 flex items-center gap-3.5"
-              style={{
-                border: "1px solid #E3E3E6",
-                background:
-                  "linear-gradient(160deg,#FFFFFF 0%,#F5F5F7 100%)",
-              }}
-            >
-              <i className="absolute w-[10px] h-[10px] left-[-1px] top-[-1px] border-l-2 border-t-2 border-[#0E0E0E]" />
-              <i className="absolute w-[10px] h-[10px] right-[-1px] bottom-[-1px] border-r-2 border-b-2 border-[#FF7A00]" />
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-transform duration-200 group-hover:scale-105">
-                {card.icon}
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
-                  {card.label}
-                </p>
-                <p className="mt-0.5 text-[13.5px] font-medium text-[#0E0E0E] truncate">
-                  {card.value}
-                </p>
-              </div>
-            </a>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="relative p-5 sm:p-8"
-          style={{
-            border: "1px solid #E3E3E6",
-            background: "linear-gradient(160deg,#FFFFFF 0%,#F5F5F7 100%)",
-          }}
-        >
-          <i className="absolute w-[10px] h-[10px] left-[-1px] top-[-1px] border-l-2 border-t-2 border-[#0E0E0E]" />
-          <i className="absolute w-[10px] h-[10px] right-[-1px] bottom-[-1px] border-r-2 border-b-2 border-[#FF7A00]" />
-
           <form ref={form} onSubmit={sendEmail} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
@@ -225,7 +199,9 @@ const Contact = () => {
                 }`}
               >
                 <span
-                  className={selectedService ? "text-[#0E0E0E]" : "text-[#9A9A9E]"}
+                  className={
+                    selectedService ? "text-[#0E0E0E]" : "text-[#9A9A9E]"
+                  }
                 >
                   {selectedService || "Select a service"}
                 </span>
@@ -288,7 +264,9 @@ const Contact = () => {
               disabled={isSending}
               type="submit"
               className={`group relative w-full inline-flex items-center justify-center gap-2.5 rounded-full h-12 font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-                status === "success" ? "bg-[#1FA34A] text-white" : "bg-primary hover:bg-white"
+                status === "success"
+                  ? "bg-[#1FA34A] text-white"
+                  : "bg-primary hover:bg-white"
               }`}
             >
               {isSending
@@ -309,6 +287,38 @@ const Contact = () => {
               </p>
             )}
           </form>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="order-1 lg:order-2 flex flex-col gap-4"
+        >
+          {contactCards.map((card) => (
+            <a
+              key={card.label}
+              href={card.href}
+              target={card.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                card.href.startsWith("http") ? "noopener noreferrer" : undefined
+              }
+              className="group flex items-center gap-3.5 rounded-xl border border-[#EDEAE6] bg-white p-4 transition-[border-color,transform] duration-[250ms] hover:border-[#FF7A00]/40 hover:-translate-y-1"
+            >
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-transform duration-200 group-hover:scale-105">
+                {card.icon}
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
+                  {card.label}
+                </p>
+                <p className="mt-0.5 text-[13.5px] font-medium text-[#0E0E0E] truncate">
+                  {card.value}
+                </p>
+              </div>
+            </a>
+          ))}
         </motion.div>
       </div>
     </section>

@@ -177,6 +177,19 @@ body {
     width: max-content;
     animation: marquee 30s linear infinite;
   }
+
+  @keyframes marquee-y {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  .animate-marquee-y {
+    animation: marquee-y linear infinite;
+  }
 }
 
 @keyframes float-glow {

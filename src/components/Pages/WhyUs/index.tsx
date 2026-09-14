@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const steps = [
   {
     number: "01",
@@ -25,7 +29,32 @@ const steps = [
   },
 ];
 
+const faqs = [
+  {
+    question: "How long does a project take?",
+    answer:
+      "Most landing pages ship in 2-3 weeks. Larger web apps and stores run 4-8 weeks depending on scope.",
+  },
+  {
+    question: "Do you work with clients outside Georgia?",
+    answer:
+      "Yes. Calls, a shared staging link and async updates cover the whole process, wherever you are.",
+  },
+  {
+    question: "What do you need from me to start?",
+    answer:
+      "A short brief, your content or help writing it, and any brand assets you already have.",
+  },
+  {
+    question: "Is there support after launch?",
+    answer:
+      "Every project includes a month of support after handover, plus ongoing maintenance if you need it.",
+  },
+];
+
 export default function WhyUs() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
   return (
     <section
       id="why"
