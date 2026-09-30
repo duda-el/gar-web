@@ -1,7 +1,8 @@
 import { StaticImageData } from "next/image";
 
+import GmsTurboImg from "@/Assets/images/gmsturbo.png";
+import ReputationImg from "@/Assets/images/reputation.png";
 import ZmnaImg1 from "@/Assets/images/zmna1.png";
-import PayImg from "@/Assets/images/PayNety.jpg";
 import BizonImg from "@/Assets/images/Bizon.jpg";
 import BizonImg1 from "@/Assets/images/Bizon1.png";
 import GreeImg from "@/Assets/images/gree.jpg";
@@ -37,6 +38,24 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
+    title: "GMS Turbo",
+    category: "კატეგორია: E-Commerce/Catalog",
+    status: "დასრულებული",
+    type: "website",
+    alt: "GMS Turbo - ტურბოკომპრესორების შეკეთება და გაყიდვა",
+    description:
+      "GMS Turbo წარმოადგენს ტურბოკომპრესორების სერვისისა და დიაგნოსტიკის პრემიუმ პლატფორმას. ვებ-გვერდი გამოირჩევა თანამედროვე ვიზუალით, ეფექტური კატალოგითა და მომხმარებელზე ორიენტირებული ნავიგაციით.",
+    images: [GmsTurboImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Frontend Development",
+      "Full-Stack Development",
+      "SEO ოპტიმიზაცია",
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 2,
     title: "I-Techno",
     category: "Category: E-Commerce/Catalog",
     status: "Completed",
@@ -56,7 +75,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     title: "MechanX",
     category: "Category: E-Commerce/Catalog",
     status: "Completed",
@@ -76,7 +95,25 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 3,
+    id: 4,
+    title: "Reputation.ge",
+    category: "კატეგორია: მედია / პორტალი",
+    status: "დასრულებული",
+    type: "website",
+    alt: "Reputation.ge - საინფორმაციო და მედია პორტალი",
+    description:
+      "თანამედროვე ქართული მედია პლატფორმა და ონლაინ ჟურნალი, სადაც თავმოყრილია სტატიები და სიახლეები ჯანდაცვის, ბიზნესისა და საზოგადოებრივი ცხოვრების შესახებ. საიტი უზრუნველყოფს ინფორმაციის სწრაფ და ეფექტურ მიწოდებას.",
+    images: [ReputationImg],
+    services: [
+      "UI/UX დიზაინი",
+      "Web Development",
+      "Content Management System",
+      "SEO ოპტიმიზაცია",
+      "Hosting & Maintenance",
+    ],
+  },
+  {
+    id: 5,
     title: "Zmna.ge",
     category: "Category: News",
     status: "Active",
@@ -94,19 +131,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 4,
-    title: "PayNety",
-    category: "Category: Informational",
-    status: "Paused",
-    type: "website",
-    alt: "PayNety - Fintech platform",
-    description:
-      "A fintech platform that simplifies online payments and data management.",
-    images: [PayImg],
-    services: ["Frontend Development", "UI/UX Design", "Hosting & Maintenance"],
-  },
-  {
-    id: 5,
+    id: 6,
     title: "Reagent.ge",
     category: "Category: Catalog",
     status: "Completed",
@@ -118,7 +143,7 @@ export const projects: Project[] = [
     services: ["Frontend Development", "UI/UX Design", "Hosting & Maintenance"],
   },
   {
-    id: 6,
+    id: 7,
     title: "Bizon.ge",
     category: "Category: Rental",
     status: "Completed",
@@ -130,7 +155,7 @@ export const projects: Project[] = [
     services: ["Frontend Development", "Redesign & Refactor"],
   },
   {
-    id: 7,
+    id: 8,
     title: "Gree",
     category: "Category: E-commerce",
     status: "Completed",
@@ -147,7 +172,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 8,
+    id: 9,
     title: "Freezer",
     category: "Category: Poster",
     status: "Completed",
@@ -159,7 +184,7 @@ export const projects: Project[] = [
     services: ["Poster Design", "Social Media Kit"],
   },
   {
-    id: 9,
+    id: 10,
     title: "COFFEEON",
     category: "Category: Branding",
     status: "Completed",
@@ -182,7 +207,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     title: "UNISTATS",
     category: "Category: UI/UX Design",
     status: "Completed",
@@ -199,7 +224,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     title: "NOSTAL.GE",
     category: "Category: UI/UX Design",
     status: "Completed",
