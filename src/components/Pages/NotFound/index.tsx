@@ -1,20 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import gargariLogo from "@/Assets/images/gargari-logo-dark.png";
+import { useI18n } from "@/i18n/I18nProvider";
 
-export const metadata: Metadata = {
-  title: "Page not found",
-  robots: { index: false, follow: true },
-};
 
-const quickLinks = [
-  { label: "Services", description: "What we build", href: "/services" },
-  { label: "Projects", description: "Recent work", href: "/projects" },
-  { label: "About us", description: "Who we are", href: "/about" },
-  { label: "Contact", description: "Start a project", href: "/contact" },
-];
+const quickLinks = ["services", "projects", "about", "contact"] as const;
 
 type ShapeType = "triangle" | "square" | "circle" | "cross";
 
@@ -41,7 +34,9 @@ function Shape({ type, size }: { type: ShapeType; size: number }) {
   );
 }
 
-export default function NotFound() {
+export default function NotFoundView() {
+  const { t, href } = useI18n();
+
   return (
     <main
       className="relative isolate min-h-svh overflow-clip bg-[#F7F6F4] flex flex-col"
@@ -70,19 +65,15 @@ export default function NotFound() {
       ))}
 
       <header className="w-full max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] h-[76px] flex items-center">
-        <Link href="/" aria-label="GarGari home" className="inline-flex">
+        <Link href={href("/")} aria-label={t.nav.homeAria} className="inline-flex">
           <Image src={gargariLogo} alt="GarGari" className="h-9 sm:h-10 w-auto" priority />
         </Link>
       </header>
 
       <section className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-10">
-        <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
-          Error 404
-        </span>
-
         <div
           aria-hidden="true"
-          className="mt-6 flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
+          className="flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
         >
           <span>4</span>
           <span className="relative inline-flex items-center justify-center w-[0.72em] h-[0.72em] motion-safe:animate-[float-soft_6s_ease-in-out_infinite]">
@@ -93,48 +84,47 @@ export default function NotFound() {
         </div>
 
         <h1 className="mt-6 sm:mt-8 font-outfit font-extrabold text-[clamp(26px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-          This page took a wrong turn
+          {t.notFound.title}
         </h1>
         <p className="mt-4 mx-auto max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-          The page you&apos;re looking for doesn&apos;t exist or has moved.
-          Let&apos;s get you back on track.
+          {t.notFound.text}
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
-            href="/"
+            href={href("/")}
             className="group inline-flex items-center gap-2.5 h-12 rounded-full pl-6 pr-1.5 bg-primary font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-[background-color,color,box-shadow] duration-300 hover:bg-[#0E0E0E] hover:text-white hover:shadow-[0_12px_28px_-12px_rgba(14,14,14,0.6)]"
           >
-            Back to home
+            {t.notFound.home}
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#0E0E0E] text-white shrink-0 transition-[background-color,color,rotate] duration-300 group-hover:bg-primary group-hover:text-[#0E0E0E] group-hover:rotate-45">
               <ArrowUpRight size={16} />
             </span>
           </Link>
           <Link
-            href="/projects"
+            href={href("/projects")}
             className="inline-flex items-center h-12 rounded-full px-6 border border-[#E3DFDA] bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-colors duration-300 hover:border-[#0E0E0E]"
           >
-            View projects
+            {t.notFound.projects}
           </Link>
         </div>
       </section>
 
       <nav
-        aria-label="Popular pages"
+        aria-label={t.notFound.popular}
         className="w-full max-w-[1100px] mx-auto px-5 sm:px-8 pb-8 sm:pb-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
-        {quickLinks.map((link) => (
+        {quickLinks.map((key) => (
           <Link
-            key={link.href}
-            href={link.href}
+            key={key}
+            href={href(`/${key}`)}
             className="group flex items-center justify-between gap-3 rounded-xl border border-[#EDEAE6] bg-white/80 backdrop-blur-sm p-4 sm:p-5 transition-[border-color,background-color] duration-300 hover:border-[#FF7A00]/50 hover:bg-[#FFF8F1]"
           >
             <span>
               <span className="block font-outfit font-bold text-[16px] text-[#0E0E0E]">
-                {link.label}
+                {t.nav[key]}
               </span>
               <span className="block mt-0.5 text-[12.5px] text-[#5A5A5F]">
-                {link.description}
+                {t.notFound.links[key]}
               </span>
             </span>
             <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-[#E3DFDA] text-[#0E0E0E] shrink-0 transition-[background-color,border-color,color] duration-300 group-hover:bg-[#FF7A00] group-hover:border-[#FF7A00] group-hover:text-white">

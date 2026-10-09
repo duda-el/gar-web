@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/i18n/metadata";
+import { getDictionary, resolveLocale } from "@/i18n";
 import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import AllServices from "@/components/Pages/AllServices";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Landing pages, web applications, e-commerce, branding and UI/UX design, fixed scope and real prices, built by the GarGari team.",
-  alternates: {
-    canonical: "https://www.gargari.ge/services",
-  },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = resolveLocale((await params).lang);
+  return pageMetadata(locale, "/services", getDictionary(locale).meta.pages.services);
+}
 
 export default function ServicesPage() {
   return (

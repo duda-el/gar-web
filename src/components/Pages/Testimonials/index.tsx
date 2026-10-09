@@ -1,6 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
+import { useI18n } from "@/i18n/I18nProvider";
 
 type Testimonial = {
   name: string;
@@ -68,7 +69,8 @@ function Avatar({ name }: { name: string }) {
     .slice(0, 2)
     .map((w) => w[0])
     .join("")
-    .toUpperCase();
+    // Only Latin letters: uppercasing Georgian would turn it into Mtavruli capitals
+    .replace(/[a-z]/g, (c) => c.toUpperCase());
   const bg = avatarPalette[hashString(name) % avatarPalette.length];
 
   return (
@@ -81,52 +83,10 @@ function Avatar({ name }: { name: string }) {
   );
 }
 
-const testimonials: Testimonial[] = [
-  {
-    name: "Khvicha Guliashvili",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote: "Excellent, thank you for everything.",
-  },
-  {
-    name: "ITechno",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote:
-      "The GarGari team built our website really well. Communication was easy, the work was professional, and we got exactly the result we wanted. They paid close attention to detail, handled changes quickly, and overall we were very satisfied. We'll definitely recommend them.",
-  },
-  {
-    name: "Ekaterine Jantishvili",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote:
-      "GarGari, sincere thanks! It's such a pleasure working with a responsive, professional team. Wishing you continued success!",
-  },
-  {
-    name: "Mamuka Tsulaia",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote: "Best team! Highly recommended!",
-  },
-  {
-    name: "Tata Gachechiladze",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote:
-      "The future of digital marketing belongs to these people. They created the best product for me in record time. There's nothing better than seeing someone turn your vision into reality, even better than you imagined. Thank you so much!",
-  },
-  {
-    name: "Nika Barjadze",
-    role: "Facebook recommendation",
-    badge: "facebook",
-    quote: "Highly recommended, great work all around!",
-  },
-];
-
-const columns: { items: Testimonial[]; direction: "up" | "down"; duration: number }[] = [
-  { items: testimonials.slice(0, 2), direction: "up", duration: 32 },
-  { items: testimonials.slice(2, 4), direction: "down", duration: 38 },
-  { items: testimonials.slice(4, 6), direction: "up", duration: 30 },
+const columnLayout: { start: number; direction: "up" | "down"; duration: number }[] = [
+  { start: 0, direction: "up", duration: 32 },
+  { start: 2, direction: "down", duration: 38 },
+  { start: 4, direction: "up", duration: 30 },
 ];
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
@@ -188,18 +148,28 @@ function TestimonialColumn({
 }
 
 export default function Testimonials() {
+  const { t } = useI18n();
+  const testimonials: Testimonial[] = t.testimonials.items.map((item) => ({
+    ...item,
+    role: t.testimonials.role,
+    badge: "facebook",
+  }));
+  const columns = columnLayout.map((col) => ({
+    ...col,
+    items: testimonials.slice(col.start, col.start + 2),
+  }));
+
   return (
     <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]">
       <div className="flex flex-col items-center text-center gap-4">
         <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-          Testimonials
+          {t.testimonials.eyebrow}
         </span>
         <h2 className="max-w-[20ch] font-outfit font-extrabold text-[clamp(28px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-          Real feedback, real projects
+          {t.testimonials.title}
         </h2>
         <p className="max-w-[46ch] text-[16px] leading-[1.6] text-[#4A4A4E]">
-          What clients say after working with the GarGari team, from brief
-          to launch.
+          {t.testimonials.intro}
         </p>
       </div>
 

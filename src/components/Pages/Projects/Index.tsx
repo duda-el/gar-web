@@ -4,6 +4,8 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 import { projects as allProjects } from "@/constants/projects";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/format";
 import ItechnoImg from "@/Assets/images/ITechno.jpg";
 import ZmnaImg from "@/Assets/images/zmna.jpg";
 import BizonImg from "@/Assets/images/Bizon.jpg";
@@ -13,7 +15,6 @@ interface WorkItem {
   index: string;
   slug: string;
   name: string;
-  category: string;
   image: StaticImageData;
   ratio: string;
   flexBasis: string;
@@ -26,7 +27,6 @@ const works: WorkItem[] = [
     index: "01",
     slug: "i-techno",
     name: "I-Techno",
-    category: "E-Commerce",
     image: ItechnoImg,
     ratio: "aspect-[16/10]",
     flexBasis: "flex-[1.55_1_460px]",
@@ -40,7 +40,6 @@ const works: WorkItem[] = [
     index: "02",
     slug: "zmna-ge",
     name: "Zmna.ge",
-    category: "Media",
     image: ZmnaImg,
     ratio: "aspect-[4/3]",
     flexBasis: "flex-[1_1_300px]",
@@ -51,7 +50,6 @@ const works: WorkItem[] = [
     index: "03",
     slug: "bizon-ge",
     name: "Bizon.ge",
-    category: "Marketplace",
     image: BizonImg,
     ratio: "aspect-[4/3]",
     flexBasis: "flex-[1_1_300px]",
@@ -62,7 +60,6 @@ const works: WorkItem[] = [
     index: "04",
     slug: "reagent-ge",
     name: "Reagent.ge",
-    category: "Catalogue",
     image: ReagentImg,
     ratio: "aspect-[16/10]",
     flexBasis: "flex-[1.55_1_460px]",
@@ -88,6 +85,8 @@ function ArrowIcon() {
 }
 
 export default function Projects() {
+  const { t, href } = useI18n();
+
   return (
     <section
       id="projects"
@@ -95,7 +94,7 @@ export default function Projects() {
     >
       <div className="flex flex-wrap items-baseline gap-4 sm:gap-6 lg:gap-9 mb-6 sm:mb-9 lg:mb-[52px]">
         <h2 className="m-0 font-outfit font-extrabold text-[#0E0E0E] leading-none tracking-[-0.04em] text-[clamp(30px,4.1vw,58px)]">
-          Recent projects
+          {t.homeProjects.title}
         </h2>
         <svg
           className="flex-1 min-w-[80px] h-3 hidden sm:block"
@@ -109,13 +108,13 @@ export default function Projects() {
           <rect width="100%" height="12" fill="url(#rpChevron)" />
         </svg>
         <span className="shrink-0 text-[10.5px] tracking-[0.2em] uppercase text-[#5A5A5F]">
-          {works.length} of {allProjects.length}
+          {format(t.homeProjects.count, { shown: works.length, total: allProjects.length })}
         </span>
         <Link
-          href="/projects"
+          href={href("/projects")}
           className="group inline-flex items-center gap-2.5 shrink-0 rounded-full pl-4 pr-1.5 py-1.5 border border-[#E3E3E6] hover:border-[#0E0E0E] font-outfit font-bold text-[13.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap transition-colors duration-200"
         >
-          View all
+          {t.homeProjects.viewAll}
           <span className="inline-flex items-center justify-center w-[24px] h-[24px] rounded-full bg-[#0E0E0E] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
             <ArrowIcon />
           </span>
@@ -132,7 +131,7 @@ export default function Projects() {
           {row.map((item) => (
             <Link
               key={item.name}
-              href={`/projects/${item.slug}`}
+              href={href(`/projects/${item.slug}`)}
               className={`group block min-w-0 ${item.flexBasis} ${item.offsetClass} transition-transform duration-300 ease-out hover:-translate-y-1`}
             >
               <div
@@ -148,7 +147,7 @@ export default function Projects() {
                 <div className={`relative w-full ${item.ratio} overflow-hidden`}>
                   <Image
                     src={item.image}
-                    alt={`${item.name} project screenshot`}
+                    alt={format(t.homeProjects.screenshotAlt, { name: item.name })}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
@@ -160,7 +159,7 @@ export default function Projects() {
                   {item.index}&nbsp;&nbsp;{item.name}
                 </span>
                 <span className="text-[10.5px] tracking-[0.16em] uppercase text-[#5A5A5F] whitespace-nowrap">
-                  {item.category}
+                  {t.homeProjects.categories[item.slug]}
                 </span>
               </div>
             </Link>

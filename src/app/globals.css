@@ -86,7 +86,8 @@ body {
 
 @theme inline {
   --font-georgian: var(--font-noto-georgian), sans-serif;
-  --font-outfit: var(--ff-outfit), sans-serif;
+  /* Outfit has no Georgian glyphs, so Georgian text falls through to Noto Sans Georgian */
+  --font-outfit: var(--ff-outfit), var(--font-noto-georgian), sans-serif;
   --font-instrument: var(--ff-instrument), Georgia, serif;
   --font-dmsans: var(--ff-dmsans), sans-serif;
   --radius-sm: calc(var(--radius) - 4px);

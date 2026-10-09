@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import AllProjects from "@/components/Pages/AllProjects";
+import { pageMetadata } from "@/i18n/metadata";
+import { getDictionary, resolveLocale } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "All Projects",
-  description:
-    "See all the projects built by Gargari — websites, e-commerce platforms, branding, and UI/UX design.",
-  alternates: {
-    canonical: "https://www.gargari.ge/projects",
-  },
-};
+type Props = { params: Promise<{ lang: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = resolveLocale((await params).lang);
+  return pageMetadata(locale, "/projects", getDictionary(locale).meta.pages.projects);
+}
 
 export default function ProjectsPage() {
   return (

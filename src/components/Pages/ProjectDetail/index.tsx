@@ -4,23 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
-import { projects, Project } from "@/constants/projects";
+import { localizeProject, projects, Project } from "@/constants/projects";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/format";
 
-const typeLabel: Record<Project["type"], string> = {
-  website: "Website",
-  design: "Graphic Design",
-  uiux: "UI/UX Design",
-};
-
-const statusColor: Record<string, string> = {
-  Active: "#1FA34A",
-  Completed: "#0E0E0E",
-  Paused: "#B3261E",
+const statusColor: Record<Project["status"], string> = {
+  active: "#1FA34A",
+  completed: "#0E0E0E",
 };
 
 const EASE = "ease-[cubic-bezier(0.16,1,0.3,1)]";
-
-const cleanCategory = (category: string) => category.replace(/^Category:\s*/, "");
 
 function ArrowIcon() {
   return (
@@ -48,11 +41,14 @@ function Frame({ children }: { children: React.ReactNode }) {
 
 function Gallery({
   project,
+  alt,
   onOpen,
 }: {
   project: Project;
+  alt: string;
   onOpen: (index: number) => void;
 }) {
+  const { t } = useI18n();
   const track = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [scrollable, setScrollable] = useState(false);
@@ -109,7 +105,7 @@ function Gallery({
       <div className="flex items-end justify-between gap-4 mb-6 sm:mb-8">
         <div className="flex items-baseline gap-4 sm:gap-6">
           <h2 className="m-0 font-outfit font-extrabold text-[#0E0E0E] leading-none tracking-[-0.04em] text-[clamp(26px,3.2vw,42px)]">
-            Gallery
+            {t.projectDetail.gallery}
           </h2>
           <span className={`font-outfit font-bold text-[13px] tabular-nums text-[#5A5A5F] ${scrollable ? "" : "hidden"}`}>
             <span className="text-[#0E0E0E]">{String(active + 1).padStart(2, "0")}</span>
@@ -119,8 +115,8 @@ function Gallery({
         </div>
         <div className={`flex gap-2 ${scrollable ? "" : "hidden"}`}>
           {[
-            { label: "Previous image", icon: ChevronLeft, direction: -1 as const, disabled: edge.start },
-            { label: "Next image", icon: ChevronRight, direction: 1 as const, disabled: edge.end },
+            { label: t.projectDetail.previousImage, icon: ChevronLeft, direction: -1 as const, disabled: edge.start },
+            { label: t.projectDetail.nextImage, icon: ChevronRight, direction: 1 as const, disabled: edge.end },
           ].map(({ label, icon: Icon, direction, disabled }) => (
             <button
               key={label}
@@ -146,7 +142,7 @@ function Gallery({
             key={img.src}
             type="button"
             onClick={() => onOpen(i)}
-            aria-label={`Open ${project.title} image ${i + 1}`}
+            aria-label={format(t.projectDetail.openImage, { title: project.title, n: i + 1 })}
             className={`group ${i === total - 1 ? "snap-end" : "snap-start"} shrink-0 w-[86%] sm:w-[62%] lg:w-[44%] text-left cursor-zoom-in transition-opacity duration-500 ${
               !scrollable || i === active ? "opacity-100" : "opacity-60 hover:opacity-100"
             }`}
@@ -154,7 +150,7 @@ function Gallery({
             <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl bg-[#F5F5F7]">
               <Image
                 src={img}
-                alt={`${project.alt} — image ${i + 1}`}
+                alt={format(t.projectDetail.imageAlt, { alt, n: i + 1 })}
                 fill
                 placeholder="blur"
                 sizes="(max-width: 640px) 86vw, (max-width: 1024px) 62vw, 600px"
@@ -176,10 +172,13 @@ function Gallery({
 }
 
 function NextProject({ prev, next }: { prev: Project; next: Project }) {
+  const { t, locale, href } = useI18n();
+  const nextContent = next.content[locale];
+
   return (
-    <nav aria-label="More projects" className="mt-14 sm:mt-20 lg:mt-24">
+    <nav aria-label={t.projectDetail.moreProjects} className="mt-14 sm:mt-20 lg:mt-24">
       <Link
-        href={`/projects/${next.slug}`}
+        href={href(`/projects/${next.slug}`)}
         className="group relative isolate grid grid-cols-1 md:grid-cols-[1fr_0.9fr] items-center gap-6 md:gap-10 overflow-clip rounded-2xl bg-[#0E0E0E] p-6 sm:p-9 lg:p-12"
       >
         <span
@@ -188,25 +187,25 @@ function NextProject({ prev, next }: { prev: Project; next: Project }) {
         />
         <div>
           <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#FF7A00]">
-            Next project
+            {t.projectDetail.nextProject}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-white leading-[1.02] tracking-[-0.04em] text-[clamp(32px,5vw,68px)]">
             {next.title}
           </h2>
           <p className="mt-3 text-[12px] tracking-[0.16em] uppercase text-white/50">
-            {cleanCategory(next.category)} · {next.industry}
+            {nextContent.category} · {nextContent.industry}
           </p>
           <span className="mt-7 inline-flex items-center gap-3 font-outfit font-bold text-[15px] text-white">
             <span className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-[#0E0E0E] transition-[rotate,scale] duration-500 ${EASE} group-hover:rotate-45 group-hover:scale-110`}>
               <ArrowUpRight size={20} />
             </span>
-            View project
+            {t.projectDetail.viewProject}
           </span>
         </div>
         <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl">
           <Image
             src={next.images[0]}
-            alt={next.alt}
+            alt={nextContent.alt}
             fill
             sizes="(max-width: 768px) 100vw, 45vw"
             className={`object-cover transition-[scale] duration-[1200ms] ${EASE} scale-[1.04] group-hover:scale-100`}
@@ -216,21 +215,21 @@ function NextProject({ prev, next }: { prev: Project; next: Project }) {
 
       <div className="mt-4 flex justify-between gap-4">
         <Link
-          href={`/projects/${prev.slug}`}
+          href={href(`/projects/${prev.slug}`)}
           className="group inline-flex items-center gap-3 text-[#5A5A5F] hover:text-[#0E0E0E] transition-colors duration-300"
         >
           <span className={`inline-flex items-center justify-center w-9 h-9 rounded-full border border-[#E3E3E6] transition-[translate,border-color] duration-500 ${EASE} group-hover:-translate-x-1 group-hover:border-[#0E0E0E]`}>
             <ArrowLeft size={15} />
           </span>
           <span className="text-[13.5px]">
-            Previous: <span className="font-outfit font-bold text-[#0E0E0E]">{prev.title}</span>
+            {t.projectDetail.previous} <span className="font-outfit font-bold text-[#0E0E0E]">{prev.title}</span>
           </span>
         </Link>
         <Link
-          href="/projects"
+          href={href("/projects")}
           className="inline-flex items-center text-[13.5px] font-medium text-[#5A5A5F] hover:text-[#0E0E0E] transition-colors duration-300"
         >
-          All projects
+          {t.projectDetail.allProjects}
         </Link>
       </div>
     </nav>
@@ -238,12 +237,14 @@ function NextProject({ prev, next }: { prev: Project; next: Project }) {
 }
 
 export default function ProjectDetail({ project }: { project: Project }) {
+  const { t, locale, href } = useI18n();
+  const content = localizeProject(project, locale);
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const index = projects.findIndex((p) => p.slug === project.slug);
   const prev = projects[(index - 1 + projects.length) % projects.length];
   const next = projects[(index + 1) % projects.length];
-  const category = cleanCategory(project.category);
+  const category = content.category;
   const total = project.images.length;
 
   const showPrev = useCallback(
@@ -271,9 +272,9 @@ export default function ProjectDetail({ project }: { project: Project }) {
   }, [lightbox, showPrev, showNext]);
 
   const details = [
-    { label: "Industry", value: project.industry },
-    { label: "Category", value: category },
-    { label: "Type", value: typeLabel[project.type] },
+    { label: t.projectDetail.industry, value: content.industry },
+    { label: t.projectDetail.category, value: category },
+    { label: t.projectDetail.type, value: t.project.type[project.type] },
   ];
 
   return (
@@ -282,11 +283,11 @@ export default function ProjectDetail({ project }: { project: Project }) {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-8 lg:gap-14 items-center">
         <div>
           <Link
-            href="/projects"
+            href={href("/projects")}
             className="group inline-flex items-center gap-2 text-[13px] font-medium text-[#5A5A5F] hover:text-[#0E0E0E] transition-colors duration-200"
           >
             <ArrowLeft size={15} className={`transition-[translate] duration-500 ${EASE} group-hover:-translate-x-1`} />
-            All projects
+            {t.projectDetail.allProjects}
           </Link>
 
           <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3">
@@ -295,9 +296,9 @@ export default function ProjectDetail({ project }: { project: Project }) {
             </span>
             <span
               className="rounded-full px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.1em] text-white"
-              style={{ backgroundColor: statusColor[project.status] ?? "#0E0E0E" }}
+              style={{ backgroundColor: statusColor[project.status] }}
             >
-              {project.status}
+              {t.project.status[project.status]}
             </span>
           </div>
 
@@ -305,7 +306,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             {project.title}
           </h1>
           <p className="mt-5 max-w-[52ch] text-[15.5px] leading-[1.6] text-[#4A4A4E]">
-            {project.description}
+            {content.description}
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
@@ -316,17 +317,17 @@ export default function ProjectDetail({ project }: { project: Project }) {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2.5 rounded-full pl-5 pr-1.5 h-12 bg-primary hover:bg-[#0E0E0E] hover:text-white font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-colors duration-300"
               >
-                Visit website
+                {t.projectDetail.visitWebsite}
                 <span className={`inline-flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#0E0E0E] text-white shrink-0 transition-[rotate] duration-500 ${EASE} group-hover:rotate-45 group-hover:bg-primary group-hover:text-[#0E0E0E]`}>
                   <ArrowUpRight size={16} />
                 </span>
               </a>
             )}
             <Link
-              href="/contact"
+              href={href("/contact")}
               className="group inline-flex items-center gap-2.5 rounded-full pl-5 pr-1.5 h-12 border border-[#E3E3E6] hover:border-[#0E0E0E] font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-colors duration-300"
             >
-              Start a similar project
+              {t.projectDetail.startSimilar}
               <span className={`inline-flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#0E0E0E] shrink-0 transition-[translate] duration-500 ${EASE} group-hover:translate-x-0.5`}>
                 <ArrowIcon />
               </span>
@@ -338,13 +339,13 @@ export default function ProjectDetail({ project }: { project: Project }) {
           type="button"
           onClick={() => setLightbox(0)}
           className="group block w-full text-left cursor-zoom-in"
-          aria-label={`Open ${project.title} image 1`}
+          aria-label={format(t.projectDetail.openImage, { title: project.title, n: 1 })}
         >
           <Frame>
             <div className="relative w-full aspect-[4/3] overflow-hidden">
               <Image
                 src={project.images[0]}
-                alt={project.alt}
+                alt={content.alt}
                 fill
                 priority
                 placeholder="blur"
@@ -360,13 +361,13 @@ export default function ProjectDetail({ project }: { project: Project }) {
       <div className="mt-14 sm:mt-20 lg:mt-24 grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 lg:gap-16 items-start">
         <div>
           <span className="block text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-            Overview
+            {t.projectDetail.overview}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(26px,3.2vw,42px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-            About the project
+            {t.projectDetail.aboutProject}
           </h2>
           <div className="mt-5 space-y-4 max-w-[64ch]">
-            {project.overview.map((paragraph) => (
+            {content.overview.map((paragraph) => (
               <p key={paragraph} className="text-[15.5px] leading-[1.7] text-[#4A4A4E]">
                 {paragraph}
               </p>
@@ -374,10 +375,10 @@ export default function ProjectDetail({ project }: { project: Project }) {
           </div>
 
           <h3 className="mt-10 sm:mt-12 font-outfit font-bold text-[20px] tracking-[-0.02em] text-[#0E0E0E]">
-            What we delivered
+            {t.projectDetail.delivered}
           </h3>
           <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {project.highlights.map((item, i) => (
+            {content.highlights.map((item, i) => (
               <li
                 key={item}
                 className="flex items-start gap-3 rounded-xl border border-[#EDEAE6] bg-white p-4"
@@ -404,7 +405,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             {project.url && (
               <div className="pb-5 border-b border-[#E3E3E6]">
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
-                  Website
+                  {t.projectDetail.website}
                 </dt>
                 <dd className="mt-1">
                   <a
@@ -421,10 +422,10 @@ export default function ProjectDetail({ project }: { project: Project }) {
             )}
             <div>
               <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
-                Services
+                {t.projectDetail.services}
               </dt>
               <dd className="mt-3 flex flex-wrap gap-1.5">
-                {project.services.map((s) => (
+                {content.services.map((s) => (
                   <span
                     key={s}
                     className="rounded-full border border-[#E3E3E6] bg-white px-3 py-1.5 text-[11.5px] text-[#4A4A4E]"
@@ -438,7 +439,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         </aside>
       </div>
 
-      {total > 1 && <Gallery project={project} onOpen={setLightbox} />}
+      {total > 1 && <Gallery project={project} alt={content.alt} onOpen={setLightbox} />}
 
       <NextProject prev={prev} next={next} />
 
@@ -447,7 +448,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${project.title} gallery`}
+          aria-label={format(t.projectDetail.galleryLabel, { title: project.title })}
           className="fixed inset-0 z-[200] bg-[#0E0E0E]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-10"
           onClick={() => setLightbox(null)}
         >
@@ -455,7 +456,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             type="button"
             onClick={() => setLightbox(null)}
             className="absolute top-4 right-4 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors cursor-pointer"
-            aria-label="Close"
+            aria-label={t.projectDetail.close}
           >
             <X size={20} />
           </button>
@@ -468,7 +469,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   showPrev();
                 }}
                 className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white hover:bg-primary hover:text-[#0E0E0E] transition-colors cursor-pointer"
-                aria-label="Previous image"
+                aria-label={t.projectDetail.previousImage}
               >
                 <ChevronLeft size={22} />
               </button>
@@ -479,7 +480,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                   showNext();
                 }}
                 className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white hover:bg-primary hover:text-[#0E0E0E] transition-colors cursor-pointer"
-                aria-label="Next image"
+                aria-label={t.projectDetail.nextImage}
               >
                 <ChevronRight size={22} />
               </button>
@@ -491,7 +492,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
           >
             <Image
               src={project.images[lightbox]}
-              alt={`${project.alt} — image ${lightbox + 1}`}
+              alt={format(t.projectDetail.imageAlt, { alt: content.alt, n: lightbox + 1 })}
               fill
               sizes="100vw"
               className="object-contain"

@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { AlertCircle, Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
 import { toast } from "@/components/ui/toast";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/format";
+import { CONTACT_EMAIL } from "@/constants/policies";
 import {
   ContactErrors,
   ContactField,
@@ -32,37 +35,29 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
 const contactCards = [
   {
     icon: <Mail size={18} />,
-    label: "Email us",
+    key: "email",
     value: "gargariinfo@gmail.com",
     href: "mailto:gargariinfo@gmail.com",
   },
   {
     icon: <TikTokIcon size={18} />,
-    label: "TikTok",
+    key: "tiktok",
     value: "Gargari_",
     href: "https://www.tiktok.com/@gargari_",
   },
   {
     icon: <Facebook size={18} />,
-    label: "Facebook",
+    key: "facebook",
     value: "GarGari",
     href: "https://www.facebook.com/profile.php?id=61559932766757",
   },
   {
     icon: <Instagram size={18} />,
-    label: "Instagram",
+    key: "instagram",
     value: "_gargari",
     href: "https://www.instagram.com/_gargari/",
   },
-];
-
-const services = [
-  "Website Development",
-  "Branding",
-  "UI/UX Design",
-  "Graphic Design",
-  "Other",
-];
+] as const;
 
 function ArrowIcon() {
   return (
@@ -86,7 +81,6 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 // Anti-spam limits
 const MIN_FILL_TIME_MS = 3000;
 const SEND_COOLDOWN_MS = 60_000;
-const CONTACT_EMAIL = "gargariinfo@gmail.com";
 
 const emptyValues: ContactValues = {
   from_name: "",
@@ -122,6 +116,8 @@ const Contact = () => {
   const serviceBox = useRef<HTMLDivElement>(null);
   const mountedAt = useRef(0);
   const lastSentAt = useRef(0);
+  const { t } = useI18n();
+  const errorMessages = t.contact.errors;
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success">("idle");
   const [isOpen, setIsOpen] = useState(false);
@@ -154,13 +150,13 @@ const Contact = () => {
     setValues((prev) => ({ ...prev, [field]: value }));
     // Re-check live once the field has been visited, so errors clear as soon as they're fixed
     if (touched[field] || errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
+      setErrors((prev) => ({ ...prev, [field]: validateField(field, value, errorMessages) }));
     }
   };
 
   const touchField = (field: ContactField) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
-    setErrors((prev) => ({ ...prev, [field]: validateField(field, values[field]) }));
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, values[field], errorMessages) }));
   };
 
   const errorProps = (field: ContactField) => ({
@@ -188,7 +184,7 @@ const Contact = () => {
       return;
     }
 
-    const nextErrors = validateAll(values);
+    const nextErrors = validateAll(values, errorMessages);
     setErrors(nextErrors);
     setTouched({ from_name: true, email: true, service: true, message: true });
     const firstInvalid = fieldOrder.find((field) => nextErrors[field]);
@@ -203,8 +199,8 @@ const Contact = () => {
 
     const wait = Math.ceil((SEND_COOLDOWN_MS - (Date.now() - lastSentAt.current)) / 1000);
     if (wait > 0) {
-      toast.warning("Please wait a moment", {
-        description: `You can send another message in ${wait} seconds.`,
+      toast.warning(t.contact.toasts.waitTitle, {
+        description: format(t.contact.toasts.waitText, { seconds: wait }),
       });
       return;
     }
@@ -216,8 +212,8 @@ const Contact = () => {
       !EMAILJS_PUBLIC_KEY
     ) {
       console.error("EmailJS environment variables are not configured");
-      toast.error("The form is unavailable right now", {
-        description: `Please email us directly at ${CONTACT_EMAIL}.`,
+      toast.error(t.contact.toasts.unavailableTitle, {
+        description: format(t.contact.toasts.unavailableText, { email: CONTACT_EMAIL }),
       });
       return;
     }
@@ -245,14 +241,17 @@ const Contact = () => {
       lastSentAt.current = Date.now();
       setStatus("success");
       resetForm();
-      toast.success("Message sent", {
-        description: `Thanks, ${params.from_name}! We'll reply to ${params.email} within a day.`,
+      toast.success(t.contact.toasts.sentTitle, {
+        description: format(t.contact.toasts.sentText, {
+          name: params.from_name,
+          email: params.email,
+        }),
       });
       setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
       console.error("EmailJS Error details:", error);
-      toast.error("Message not sent", {
-        description: `Something went wrong. Please try again, or email us at ${CONTACT_EMAIL}.`,
+      toast.error(t.contact.toasts.failedTitle, {
+        description: format(t.contact.toasts.failedText, { email: CONTACT_EMAIL }),
       });
     } finally {
       setIsSending(false);
@@ -266,31 +265,30 @@ const Contact = () => {
     >
       <div className="mb-12 sm:mb-14 lg:mb-16">
         <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-          Contact
+          {t.contact.eyebrow}
         </span>
         <h1 className="mt-3 max-w-[20ch] font-outfit font-extrabold text-[clamp(30px,4.5vw,58px)] leading-[1.05] tracking-[-0.03em] text-[#0E0E0E]">
-          Let&apos;s build something great
+          {t.contact.title}
         </h1>
         <p className="mt-4 max-w-[56ch] text-[15.5px] leading-[1.6] text-[#4A4A4E]">
-          Tell us about your project and we&apos;ll get back to you within a
-          day.
+          {t.contact.intro}
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2.5">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
             <MapPin size={14} className="text-[#FF7A00] shrink-0" />
-            Tbilisi, Georgia, remote friendly
+            {t.contact.location}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
             <Clock size={14} className="text-[#FF7A00] shrink-0" />
-            Replies within a day
+            {t.contact.replies}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
             <span className="relative flex w-2 h-2 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-[#1FA34A] opacity-75 animate-ping" />
               <span className="relative inline-flex w-2 h-2 rounded-full bg-[#1FA34A]" />
             </span>
-            Open for new projects
+            {t.contact.open}
           </span>
         </div>
       </div>
@@ -316,7 +314,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="contact-name" className={labelClass}>
-                  Name
+                  {t.contact.labels.name}
                 </label>
                 <input
                   id="contact-name"
@@ -329,13 +327,13 @@ const Contact = () => {
                   onBlur={() => touchField("from_name")}
                   {...errorProps("from_name")}
                   className={inputClass(!!errors.from_name)}
-                  placeholder="Your name"
+                  placeholder={t.contact.placeholders.name}
                 />
                 <FieldError id="from_name-error" message={errors.from_name} />
               </div>
               <div>
                 <label htmlFor="contact-email" className={labelClass}>
-                  Email
+                  {t.contact.labels.email}
                 </label>
                 <input
                   id="contact-email"
@@ -349,7 +347,7 @@ const Contact = () => {
                   onBlur={() => touchField("email")}
                   {...errorProps("email")}
                   className={inputClass(!!errors.email)}
-                  placeholder="you@email.com"
+                  placeholder={t.contact.placeholders.email}
                 />
                 <FieldError id="email-error" message={errors.email} />
               </div>
@@ -357,7 +355,7 @@ const Contact = () => {
 
             <div className="relative" ref={serviceBox}>
               <span id="service-label" className={labelClass}>
-                Service
+                {t.contact.labels.service}
               </span>
 
               <button
@@ -380,7 +378,7 @@ const Contact = () => {
                     values.service ? "text-[#0E0E0E]" : "text-[#9A9A9E]"
                   }
                 >
-                  {values.service || "Select a service"}
+                  {values.service || t.contact.placeholders.service}
                 </span>
                 <svg
                   className={`w-4 h-4 text-[#FF7A00] transition-transform duration-300 ${
@@ -408,7 +406,7 @@ const Contact = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="absolute z-50 w-full mt-2 bg-white border border-[#E3E3E6] rounded-lg overflow-hidden shadow-lg"
                 >
-                  {services.map((service) => (
+                  {t.contact.services.map((service) => (
                     <li key={service} role="option" aria-selected={values.service === service}>
                       <button
                         type="button"
@@ -433,7 +431,7 @@ const Contact = () => {
             <div>
               <div className="flex items-baseline justify-between gap-3">
                 <label htmlFor="contact-message" className={labelClass}>
-                  Message
+                  {t.contact.labels.message}
                 </label>
                 <span
                   className={`text-[11px] tabular-nums ${
@@ -453,7 +451,7 @@ const Contact = () => {
                 onBlur={() => touchField("message")}
                 {...errorProps("message")}
                 className={`${inputClass(!!errors.message)} resize-none`}
-                placeholder="Tell us about your project..."
+                placeholder={t.contact.placeholders.message}
               ></textarea>
               <FieldError id="message-error" message={errors.message} />
             </div>
@@ -469,10 +467,10 @@ const Contact = () => {
               }`}
             >
               {isSending
-                ? "Sending..."
+                ? t.contact.sending
                 : status === "success"
-                  ? "Sent!"
-                  : "Send message"}
+                  ? t.contact.sent
+                  : t.contact.send}
               {status !== "success" && (
                 <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0 transition-[background-color,translate] duration-300 group-hover:bg-primary group-hover:translate-x-1">
                   <ArrowIcon />
@@ -491,7 +489,7 @@ const Contact = () => {
         >
           {contactCards.map((card) => (
             <a
-              key={card.label}
+              key={card.key}
               href={card.href}
               target={card.href.startsWith("http") ? "_blank" : undefined}
               rel={
@@ -504,7 +502,7 @@ const Contact = () => {
               </div>
               <div className="min-w-0">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
-                  {card.label}
+                  {t.contact.cards[card.key]}
                 </p>
                 <p className="mt-0.5 text-[13.5px] font-medium text-[#0E0E0E] truncate">
                   {card.value}

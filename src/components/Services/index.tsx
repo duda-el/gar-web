@@ -1,30 +1,6 @@
-const services = [
-  {
-    title: "Landing & static pages",
-    description:
-      "One-page and multi-page sites for launches, services and campaigns. Responsive, quick to load, easy to update.",
-    price: "from ₾2,500",
-  },
-  {
-    title: "Web applications",
-    description:
-      "Dashboards, booking systems, portals and internal tools, with an admin panel and the integrations you already use.",
-    price: "quoted on scope",
-  },
-  {
-    title: "E-commerce",
-    description:
-      "Stores with catalogue, cart, local payment providers and delivery, built for real inventory and real traffic.",
-    price: "quoted on scope",
-  },
-];
+"use client";
 
-const brandingTags = [
-  "Logo & identity",
-  "Wireframes",
-  "Interface design",
-  "Design systems",
-];
+import { useI18n } from "@/i18n/I18nProvider";
 
 function ServiceIcon() {
   return (
@@ -36,6 +12,9 @@ function ServiceIcon() {
 }
 
 export default function Services() {
+  const { t } = useI18n();
+  const services = [t.services.landing, t.services.webApps, t.services.ecommerce];
+
   return (
     <section
       id="services"
@@ -44,15 +23,14 @@ export default function Services() {
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
           <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-            Services
+            {t.homeServices.eyebrow}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-            What we build
+            {t.homeServices.title}
           </h2>
         </div>
         <p className="m-0 max-w-[38ch] text-[16px] leading-[1.6] text-[#4A4744]">
-          Three ways to work with us, plus the design work that sits in front of
-          the build.
+          {t.homeServices.intro}
         </p>
       </div>
 
@@ -85,15 +63,14 @@ export default function Services() {
       >
         <div>
           <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
-            Branding &amp; UI/UX
+            {t.services.brandingTitle}
           </h3>
           <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-            Identity, type and a small system that holds together, plus
-            wireframes and interface design before the build starts.
+            {t.services.brandingText}
           </p>
         </div>
         <div className="flex flex-wrap gap-2.5">
-          {brandingTags.map((tag) => (
+          {t.services.brandingTags.map((tag) => (
             <span
               key={tag}
               className="rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13.5px] text-[#0E0E0E]"
