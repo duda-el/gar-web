@@ -62,7 +62,7 @@ export default function AllProjects() {
         {filtered.map((project, idx) => (
           <Link
             key={project.id}
-            href="/#contact"
+            href={`/projects/${project.slug}`}
             className="group block min-w-0 transition-transform duration-300 ease-out hover:-translate-y-1"
           >
             <div
