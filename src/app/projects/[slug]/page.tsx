@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import ProjectDetail from "@/components/Pages/ProjectDetail";
-import CTA from "@/components/Pages/CTA";
 import { getProjectBySlug, projects } from "@/constants/projects";
 
 type Props = {
@@ -46,7 +45,6 @@ export default async function ProjectPage({ params }: Props) {
       <Header />
       <main>
         <ProjectDetail project={project} />
-        <CTA />
       </main>
       <Footer />
     </div>

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import AllServices from "@/components/Pages/AllServices";
-import CTA from "@/components/Pages/CTA";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -19,7 +18,6 @@ export default function ServicesPage() {
       <Header />
       <main>
         <AllServices />
-        <CTA />
       </main>
       <Footer />
     </div>
