@@ -6,6 +6,14 @@ import { FileText, Mail, ShieldCheck, X } from "lucide-react";
 import { CONTACT_EMAIL, PolicyType } from "@/constants/policies";
 import { useI18n } from "@/i18n/I18nProvider";
 import { format } from "@/i18n/format";
+import type { Locale } from "@/i18n/config";
+import type { Policies, Policy } from "@/i18n/policies/types";
+
+// Policy texts are split out of the dictionary and only downloaded when a modal opens
+const loaders: Record<Locale, () => Promise<{ default: Policies }>> = {
+  ka: () => import("@/i18n/policies/ka"),
+  en: () => import("@/i18n/policies/en"),
+};
 
 interface PolicyModalProps {
   type: PolicyType | null;
@@ -19,9 +27,16 @@ const icons: Record<PolicyType, React.ElementType> = {
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void }) {
+function PolicyPanel({
+  type,
+  policy,
+  onClose,
+}: {
+  type: PolicyType;
+  policy: Policy;
+  onClose: () => void;
+}) {
   const { t } = useI18n();
-  const policy = t.policies[type];
   const fill = (text: string) => format(text, { email: CONTACT_EMAIL });
   const Icon = icons[type];
   const closeButton = useRef<HTMLButtonElement>(null);
@@ -151,7 +166,21 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
 }
 
 const PolicyModal = ({ type, onClose }: PolicyModalProps) => {
+  const { locale } = useI18n();
+  const [policies, setPolicies] = useState<{ locale: Locale; data: Policies } | null>(null);
   const isOpen = type !== null;
+  const loaded = policies?.locale === locale ? policies.data : null;
+
+  useEffect(() => {
+    if (!isOpen || loaded) return;
+    let cancelled = false;
+    loaders[locale]().then((mod) => {
+      if (!cancelled) setPolicies({ locale, data: mod.default });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen, loaded, locale]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -169,7 +198,7 @@ const PolicyModal = ({ type, onClose }: PolicyModalProps) => {
 
   return (
     <AnimatePresence>
-      {type && (
+      {type && loaded && (
         <motion.div
           key="policy-overlay"
           initial={{ opacity: 0 }}
@@ -179,7 +208,7 @@ const PolicyModal = ({ type, onClose }: PolicyModalProps) => {
           onClick={onClose}
           className="fixed inset-0 z-[150] flex items-end sm:items-center justify-center sm:p-6 bg-[#0E0E0E]/55 backdrop-blur-sm"
         >
-          <PolicyPanel key={type} type={type} onClose={onClose} />
+          <PolicyPanel key={type} type={type} policy={loaded[type]} onClose={onClose} />
         </motion.div>
       )}
     </AnimatePresence>
