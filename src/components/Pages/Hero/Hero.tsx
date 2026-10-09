@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
+import { useI18n } from "@/i18n/I18nProvider";
 import {
   SiNextdotjs,
   SiReact,
@@ -65,14 +67,10 @@ const technologies = [
   { name: "Figma", Icon: SiFigma },
 ];
 
-const stats = [
-  { value: "10+", label: "sites shipped" },
-  { value: "3 weeks", label: "average delivery" },
-  { value: "₾2,500", label: "starting price" },
-  { value: "98", suffix: "/100", label: "median PageSpeed" },
-];
-
 export default function Hero() {
+  const { t, href } = useI18n();
+  const stats = t.hero.stats;
+
   return (
     <>
       <section
@@ -87,25 +85,21 @@ export default function Hero() {
 
         <div className="relative z-[1] max-w-[1440px] overflow-x-hidden mx-auto flex flex-col items-center text-center">
           <h1 className="m-0 max-w-[92%] sm:max-w-[85%] lg:max-w-[16ch] break-words font-outfit font-extrabold text-[#0E0E0E] leading-[1] tracking-[-0.04em] text-[clamp(34px,9vw,56px)] sm:text-[clamp(44px,7.2vw,72px)] lg:text-[clamp(56px,5.6vw,94px)]">
-            Change the future
+            {t.hero.titleLine1}
             <br />
-            {/* <span className="font-instrument italic font-normal tracking-[-0.005em]">
-              fast &amp; well-made
-            </span> */}
-            with us
+            {t.hero.titleLine2}
           </h1>
 
           <p className="mt-5 sm:mt-7 lg:mt-[34px] max-w-[58ch] text-[#4A4A4E] leading-[1.56] text-[clamp(15.5px,1.2vw,18.5px)]">
-            We offer the creation of a distinctive digital space-covering
-            design, development, and strategy.
+            {t.hero.subtitle}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-[18px] sm:gap-7 lg:gap-9 mt-[26px] sm:mt-9 lg:mt-12">
-            <a
-              href="#contact"
+            <Link
+              href={href("/contact")}
               className="group inline-flex items-center gap-3 rounded-full pl-7 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[#0E0E0E] text-[16.5px] tracking-[-0.01em] whitespace-nowrap transition-colors duration-200 shadow-[0_0_30px_rgba(241,144,53,0.3)]"
             >
-              Start a project
+              {t.hero.cta}
               <span className="inline-flex items-center justify-center w-[30px] h-[30px] rounded-full bg-[#0E0E0E] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
                 <svg
                   width="13"
@@ -121,7 +115,7 @@ export default function Hero() {
                   />
                 </svg>
               </span>
-            </a>
+            </Link>
           </div>
 
           <div className="w-full max-w-[1080px] flex items-center gap-3.5 sm:gap-5 lg:gap-7 mt-10 sm:mt-14 lg:mt-[92px]">
@@ -133,7 +127,7 @@ export default function Hero() {
               }}
             />
             <span className="shrink-0 text-[13.5px] text-[#6E6E73] text-center">
-              Modern technologies we work with
+              {t.hero.techLabel}
             </span>
             <span
               className="flex-1 h-px"
@@ -208,7 +202,7 @@ export default function Hero() {
               }`}
             >
               {stat.value}
-              {stat.suffix && (
+              {"suffix" in stat && stat.suffix && (
                 <span className="text-[#5A5A5F] font-medium">
                   {stat.suffix}
                 </span>

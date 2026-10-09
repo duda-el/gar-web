@@ -3,7 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, Mail, ShieldCheck, X } from "lucide-react";
-import { CONTACT_EMAIL, policies, PolicyType } from "@/constants/policies";
+import { CONTACT_EMAIL, PolicyType } from "@/constants/policies";
+import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/format";
 
 interface PolicyModalProps {
   type: PolicyType | null;
@@ -18,7 +20,9 @@ const icons: Record<PolicyType, React.ElementType> = {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void }) {
-  const policy = policies[type];
+  const { t } = useI18n();
+  const policy = t.policies[type];
+  const fill = (text: string) => format(text, { email: CONTACT_EMAIL });
   const Icon = icons[type];
   const closeButton = useRef<HTMLButtonElement>(null);
   const [progress, setProgress] = useState(0);
@@ -54,7 +58,7 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
         </span>
         <div className="min-w-0 flex-1">
           <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#FF7A00]">
-            Legal
+            {t.policyModal.legal}
           </span>
           <h2
             id="policy-title"
@@ -62,13 +66,15 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
           >
             {policy.title}
           </h2>
-          <p className="mt-1 text-[12.5px] text-[#5A5A5F]">Last updated {policy.updated}</p>
+          <p className="mt-1 text-[12.5px] text-[#5A5A5F]">
+            {format(t.policyModal.lastUpdated, { date: policy.updated })}
+          </p>
         </div>
         <button
           ref={closeButton}
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t.policyModal.close}
           className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-[#E3E3E6] text-[#0E0E0E] shrink-0 transition-[background-color,border-color,color,rotate] duration-300 hover:bg-[#0E0E0E] hover:border-[#0E0E0E] hover:text-white hover:rotate-90 outline-none focus-visible:border-[#FF7A00]"
         >
           <X size={18} />
@@ -100,7 +106,7 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
                 </h3>
                 {section.paragraphs?.map((p) => (
                   <p key={p} className="mt-2 text-[14.5px] leading-[1.7] text-[#4A4A4E]">
-                    {p}
+                    {fill(p)}
                   </p>
                 ))}
                 {section.list && (
@@ -108,14 +114,14 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
                     {section.list.map((item) => (
                       <li key={item} className="flex gap-3 text-[14.5px] leading-[1.6] text-[#4A4A4E]">
                         <span className="mt-[9px] w-1.5 h-1.5 rounded-full bg-[#FF7A00] shrink-0" />
-                        {item}
+                        {fill(item)}
                       </li>
                     ))}
                   </ul>
                 )}
                 {section.note && (
                   <p className="mt-2.5 text-[14.5px] leading-[1.7] font-medium text-[#0E0E0E]">
-                    {section.note}
+                    {fill(section.note)}
                   </p>
                 )}
               </div>
@@ -130,14 +136,14 @@ function PolicyPanel({ type, onClose }: { type: PolicyType; onClose: () => void 
           className="inline-flex items-center justify-center sm:justify-start gap-2 text-[13px] text-[#5A5A5F] hover:text-[#0E0E0E] transition-colors duration-200"
         >
           <Mail size={15} className="text-[#FF7A00]" />
-          Questions? {CONTACT_EMAIL}
+          {t.policyModal.questions} {CONTACT_EMAIL}
         </a>
         <button
           type="button"
           onClick={onClose}
           className="h-11 rounded-full px-7 bg-primary font-outfit font-bold text-[14.5px] text-[#0E0E0E] transition-[background-color,color] duration-300 hover:bg-[#0E0E0E] hover:text-white"
         >
-          Got it
+          {t.policyModal.gotIt}
         </button>
       </footer>
     </motion.div>

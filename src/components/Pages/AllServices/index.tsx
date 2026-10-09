@@ -5,36 +5,15 @@ import Link from "next/link";
 import { motion, MotionConfig } from "framer-motion";
 import { Globe, LayoutDashboard, ShoppingBag, ArrowUpRight } from "lucide-react";
 import { DashboardMockup, LandingMockup, ShopMockup } from "./ServiceMockups";
+import { useI18n } from "@/i18n/I18nProvider";
+import type { Dictionary } from "@/i18n/dictionaries/en";
 
-const services = [
-  {
-    number: "01",
-    icon: Globe,
-    title: "Landing & static pages",
-    description:
-      "One-page and multi-page sites for launches, services and campaigns, mobile-first and quick to load.",
-    price: "from ₾2,500",
-    Mockup: LandingMockup,
-  },
-  {
-    number: "02",
-    icon: LayoutDashboard,
-    title: "Web applications",
-    description:
-      "Dashboards, booking systems, portals and internal tools, with an admin panel and the integrations you already use.",
-    price: "quoted on scope",
-    Mockup: DashboardMockup,
-  },
-  {
-    number: "03",
-    icon: ShoppingBag,
-    title: "E-commerce",
-    description:
-      "Stores with catalogue, cart, local payment providers and delivery, built for real inventory and real traffic.",
-    price: "quoted on scope",
-    Mockup: ShopMockup,
-  },
-];
+// Visuals per service; the texts come from the dictionary (t.services)
+const serviceVisuals = [
+  { key: "landing", number: "01", icon: Globe, Mockup: LandingMockup },
+  { key: "webApps", number: "02", icon: LayoutDashboard, Mockup: DashboardMockup },
+  { key: "ecommerce", number: "03", icon: ShoppingBag, Mockup: ShopMockup },
+] as const;
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -47,7 +26,7 @@ const cardMotion = {
   }),
 };
 
-type Service = (typeof services)[number];
+type Service = (typeof serviceVisuals)[number] & Dictionary["services"]["landing"];
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const featured = service.number === "02";
@@ -149,52 +128,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   );
 }
 
-const brandingTags = [
-  "Logo & identity",
-  "Wireframes",
-  "Interface design",
-  "Design systems",
-];
-
-const faqs = [
-  {
-    question: "How long does a project take?",
-    answer:
-      "Most landing pages ship in 2-3 weeks. Larger web apps and stores run 4-8 weeks depending on scope.",
-  },
-  {
-    question: "How is a project priced?",
-    answer:
-      "Landing pages are fixed quotes based on the brief. Web apps and stores are scoped after the first call, then quoted before any work starts, no surprises later.",
-  },
-  {
-    question: "Do you offer ongoing support after launch?",
-    answer:
-      "Every project includes a month of support after handover. After that, we offer ongoing maintenance plans for updates, fixes and small changes.",
-  },
-  {
-    question: "Can you redesign or rebuild an existing site?",
-    answer:
-      "Yes. We audit what's there, keep what works, and rebuild the rest, content and SEO history included where possible.",
-  },
-  {
-    question: "What do you need from me to start?",
-    answer:
-      "A short brief, your content or help writing it, and any brand assets you already have.",
-  },
-  {
-    question: "Do you work with clients outside Georgia?",
-    answer:
-      "Yes. Calls, a shared staging link and async updates cover the whole process, wherever you are.",
-  },
-  {
-    question: "Do you handle hosting and domains?",
-    answer:
-      "Yes, we can set up hosting, domain and email from scratch, or work with infrastructure you already have.",
-  },
-];
-
 export default function AllServices() {
+  const { t, href } = useI18n();
+  const services: Service[] = serviceVisuals.map((visual) => ({
+    ...visual,
+    ...t.services[visual.key],
+  }));
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
@@ -204,15 +143,14 @@ export default function AllServices() {
           <div>
             <div>
               <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
-                Services
+                {t.allServices.badge}
               </span>
-              <h1 className="mt-4 font-outfit font-extrabold text-[clamp(30px,4.4vw,60px)] leading-[1.05] tracking-[-0.03em] text-[#0E0E0E] lg:whitespace-nowrap">
-                Fixed scope, built to launch
+              <h1 className="mt-4 font-outfit font-extrabold text-[clamp(30px,4.4vw,60px)] leading-[1.05] tracking-[-0.03em] text-[#0E0E0E] text-balance">
+                {t.allServices.title}
               </h1>
             </div>
             <p className="mt-4 max-w-[52ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-              Three ways to work with us, plus the design work that sits in
-              front of the build. Real prices, no vague packages.
+              {t.allServices.intro}
             </p>
           </div>
 
@@ -226,7 +164,7 @@ export default function AllServices() {
 
           <div className="mt-8 sm:mt-10 flex justify-center">
             <Link
-              href="/contact"
+              href={href("/contact")}
               className="group relative inline-flex items-center gap-3 h-[52px] rounded-full ps-6 pe-1.5 bg-white border border-[#E3DFDA] font-outfit font-semibold text-[14.5px] text-[#0E0E0E] overflow-hidden isolate transition-[border-color,box-shadow,scale] duration-500 hover:border-[#FF7A00] hover:shadow-[0_14px_34px_-12px_rgba(255,122,0,0.6)] active:scale-[0.98]"
             >
               {/* Orange fill grows out of the arrow circle */}
@@ -235,9 +173,9 @@ export default function AllServices() {
                 className="absolute right-1.5 top-1/2 -z-10 w-10 h-10 -translate-y-1/2 rounded-full bg-[#FF7A00] scale-0 transition-[scale] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[14]"
               />
               <span className="relative whitespace-nowrap">
-                <span className="sm:hidden">Let&apos;s build together</span>
+                <span className="sm:hidden">{t.allServices.ctaShort}</span>
                 <span className="hidden sm:inline">
-                  Let&apos;s build your project together
+                  {t.allServices.ctaFull}
                 </span>
               </span>
               <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#0E0E0E] text-white overflow-hidden shrink-0 transition-colors duration-500 group-hover:bg-white group-hover:text-[#0E0E0E]">
@@ -260,15 +198,14 @@ export default function AllServices() {
         >
           <div>
             <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
-              Branding &amp; UI/UX
+              {t.services.brandingTitle}
             </h3>
             <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-              Identity, type and a small system that holds together, plus
-              wireframes and interface design before the build starts.
+              {t.services.brandingText}
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5">
-            {brandingTags.map((tag) => (
+            {t.services.brandingTags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13.5px] text-[#0E0E0E]"
@@ -284,18 +221,18 @@ export default function AllServices() {
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-16">
           <div>
             <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-              FAQ
+              {t.allServices.faqEyebrow}
             </span>
             <h2 className="mt-3 max-w-[18ch] font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">
-              Answers before you ask
+              {t.allServices.faqTitle}
             </h2>
             <p className="mt-4 max-w-[42ch] text-[15px] leading-[1.6] text-[#4A4A4E]">
-              The questions that come up most before a project starts.
+              {t.allServices.faqIntro}
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            {faqs.map((faq, i) => {
+            {t.allServices.faqs.map((faq, i) => {
               const isOpen = openFaq === i;
               return (
                 <div

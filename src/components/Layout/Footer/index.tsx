@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 import PolicyModal from "../../ui/Modal/PolicyModal";
 import type { PolicyType } from "@/constants/policies";
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
+import { useI18n } from "@/i18n/I18nProvider";
+import { stripLocale } from "@/i18n/config";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -26,12 +28,12 @@ const TikTokIcon = ({ size = 18 }: { size?: number }) => (
 );
 
 const navLinks = [
-  { label: "Home", href: "/", id: "top" },
-  { label: "Services", href: "/services" },
-  { label: "Projects", href: "/projects" },
-  { label: "About us", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+  { key: "home", href: "/", id: "top" },
+  { key: "services", href: "/services" },
+  { key: "projects", href: "/projects" },
+  { key: "about", href: "/about" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 const socials = [
   {
@@ -54,8 +56,8 @@ const socials = [
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [modalType, setModalType] = useState<PolicyType | null>(null);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+  const { t, href } = useI18n();
+  const isHome = stripLocale(usePathname()) === "/";
 
   const scrollToSection = (id: string) => {
     if (id === "top") {
@@ -86,16 +88,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
           <div className="flex flex-col gap-5">
             <Link
-              href="/"
+              href={href("/")}
+              aria-label={t.nav.homeAria}
               onClick={(e) => handleNavClick(e, "top")}
               className="flex items-center w-fit"
             >
               <Image src={gargariLogo} alt="GarGari" className="h-9 w-auto" />
             </Link>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
-              A Tbilisi studio designing and building landing pages, web
-              applications and online stores, small team, hand-built work, clear
-              timelines.
+              {t.footer.about}
             </p>
             <div className="flex gap-3">
               {socials.map((social) => (
@@ -115,17 +116,17 @@ const Footer = () => {
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
-              Navigation
+              {t.footer.navigation}
             </h3>
             <ul className="flex flex-col gap-3.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.id)}
+                    href={href(link.href)}
+                    onClick={(e) => handleNavClick(e, "id" in link ? link.id : undefined)}
                     className="text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200 cursor-pointer"
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                   </Link>
                 </li>
               ))}
@@ -134,7 +135,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
-              Contact
+              {t.footer.contact}
             </h3>
             <div className="flex flex-col gap-3.5">
               <a
@@ -153,17 +154,17 @@ const Footer = () => {
               </a>
               <div className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3]">
                 <MapPin size={15} className="text-[#FF7A00] shrink-0" />
-                Rustaveli Ave, Tbilisi 0108
+                {t.footer.address}
               </div>
             </div>
           </div>
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
-              Get in touch
+              {t.footer.getInTouch}
             </h3>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3]">
-              Have an idea? Let&apos;s turn it into something real.
+              {t.footer.getInTouchText}
             </p>
           </div>
         </div>
@@ -178,13 +179,13 @@ const Footer = () => {
               onClick={() => setModalType("privacy")}
               className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
             >
-              Privacy Policy
+              {t.footer.privacy}
             </button>
             <button
               onClick={() => setModalType("terms")}
               className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
             >
-              Terms of Service
+              {t.footer.terms}
             </button>
             <div
               id="top-ge-counter-container"

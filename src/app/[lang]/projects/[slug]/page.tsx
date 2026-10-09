@@ -4,33 +4,38 @@ import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import ProjectDetail from "@/components/Pages/ProjectDetail";
 import { getProjectBySlug, projects } from "@/constants/projects";
+import { locales, pageAlternates } from "@/i18n/config";
+import { getDictionary, resolveLocale } from "@/i18n";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 };
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return locales.flatMap((lang) => projects.map((project) => ({ lang, slug: project.slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const locale = resolveLocale(lang);
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  const url = `https://www.gargari.ge/projects/${project.slug}`;
+  const content = project.content[locale];
+  const suffix = getDictionary(locale).meta.pages.project.titleSuffix;
+  const alternates = pageAlternates(locale, `/projects/${project.slug}`);
 
   return {
-    title: `${project.title} — Project`,
-    description: project.description,
-    alternates: { canonical: url },
+    title: `${project.title} — ${suffix}`,
+    description: content.description,
+    alternates,
     openGraph: {
       title: `${project.title} | Gargari`,
-      description: project.description,
-      url,
-      images: [{ url: project.images[0].src, alt: project.alt }],
+      description: content.description,
+      url: alternates.canonical,
+      images: [{ url: project.images[0].src, alt: content.alt }],
     },
   };
 }

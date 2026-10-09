@@ -5,8 +5,10 @@ import { Cookie, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/i18n/I18nProvider";
 
 const CookieConsent = () => {
+  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -16,8 +18,8 @@ const CookieConsent = () => {
 
   const dismiss = (accepted: boolean) => {
     setVisible(false);
-    if (accepted) toast.success("Cookies accepted.");
-    else toast.info("Only essential cookies will be used.");
+    if (accepted) toast.success(t.cookies.accepted);
+    else toast.info(t.cookies.rejected);
   };
 
   return (
@@ -34,25 +36,29 @@ const CookieConsent = () => {
               <Cookie className="w-4 h-4 text-secondary-foreground" />
             </div>
             <p className="text-muted-foreground md:text-lg text-base">
-              By clicking accept, you consent to our use of cookies.
+              {t.cookies.text}
             </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <Button variant="ghost" className="h-10 transition-colors rounded-full cursor-pointer">
+          <div className="flex w-full sm:w-auto items-center gap-2 sm:shrink-0">
+            <Button
+              variant="ghost"
+              aria-label={t.cookies.settings}
+              className="h-10 transition-colors rounded-full cursor-pointer"
+            >
               <Settings2 className="w-4 h-4" />
             </Button>
             <Button
               variant="outline"
-              className="h-10 px-6 rounded-full font-medium cursor-pointer"
+              className="h-10 flex-1 sm:flex-none px-4 sm:px-6 rounded-full font-medium cursor-pointer"
               onClick={() => dismiss(false)}
             >
-              Reject all
+              {t.cookies.reject}
             </Button>
             <Button
-              className="h-10 px-6 rounded-full font-medium cursor-pointer hover:bg-primary/80 transition-colors duration-200"
+              className="h-10 flex-1 sm:flex-none px-4 sm:px-6 rounded-full font-medium cursor-pointer hover:bg-primary/80 transition-colors duration-200"
               onClick={() => dismiss(true)}
             >
-              Accept
+              {t.cookies.accept}
             </Button>
           </div>
         </div>
