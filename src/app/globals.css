@@ -54,6 +54,17 @@ body {
   }
 }
 
+/* Gentle up-and-down drift for decorative shapes */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(6deg);
+  }
+}
+
 .animate-marquee {
   display: flex;
   width: max-content;
