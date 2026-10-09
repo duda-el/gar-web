@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_Georgian, Outfit, Instrument_Serif, DM_Sans } from "next/font/google";
+import { Noto_Sans_Georgian, Outfit } from "next/font/google";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import Script from "next/script";
 import AppToaster from "@/components/ui/AppToaster";
@@ -10,7 +10,8 @@ import "../globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
   subsets: ["georgian"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // Only the weights the site uses (normal, medium, semibold, bold, extrabold)
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-noto-georgian",
   display: "swap",
 });
@@ -19,21 +20,6 @@ const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--ff-outfit",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--ff-instrument",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--ff-dmsans",
   display: "swap",
 });
 
@@ -128,7 +114,7 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${notoGeorgian.variable} ${outfit.variable} ${instrumentSerif.variable} ${dmSans.variable}`}
+      className={`${notoGeorgian.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
       <head>
