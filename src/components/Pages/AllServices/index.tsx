@@ -1,13 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, MotionConfig } from "framer-motion";
 import { Globe, LayoutDashboard, ShoppingBag, ArrowUpRight } from "lucide-react";
-import BizonImg from "@/Assets/images/Bizon.jpg";
-import ReagentImg from "@/Assets/images/reagent.jpg";
-import MechanxImg from "@/Assets/images/MechanX.jpg";
+import { DashboardMockup, LandingMockup, ShopMockup } from "./ServiceMockups";
 
 const services = [
   {
@@ -17,7 +14,7 @@ const services = [
     description:
       "One-page and multi-page sites for launches, services and campaigns, mobile-first and quick to load.",
     price: "from ₾2,500",
-    image: ReagentImg,
+    Mockup: LandingMockup,
   },
   {
     number: "02",
@@ -26,7 +23,7 @@ const services = [
     description:
       "Dashboards, booking systems, portals and internal tools, with an admin panel and the integrations you already use.",
     price: "quoted on scope",
-    image: BizonImg,
+    Mockup: DashboardMockup,
   },
   {
     number: "03",
@@ -35,7 +32,7 @@ const services = [
     description:
       "Stores with catalogue, cart, local payment providers and delivery, built for real inventory and real traffic.",
     price: "quoted on scope",
-    image: MechanxImg,
+    Mockup: ShopMockup,
   },
 ];
 
@@ -81,37 +78,39 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           }`}
         />
 
-        <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#F7F6F4]">
-          {!featured && (
-            <div
-              className="absolute inset-0 flex items-center justify-center transition-[opacity,scale] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-0 group-hover:scale-90"
-              style={{
-                backgroundImage: "radial-gradient(#E3DFDA 1px, transparent 1px)",
-                backgroundSize: "16px 16px",
-              }}
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00]">
-                <service.icon size={24} />
-              </div>
+        <div
+          aria-hidden="true"
+          className={`relative w-full aspect-[16/10] overflow-hidden ${
+            featured
+              ? "bg-[radial-gradient(120%_90%_at_50%_0%,#3A2A1C_0%,#0E0E0E_70%)]"
+              : "bg-[#F7F6F4]"
+          }`}
+        >
+          {featured ? (
+            <div className="absolute inset-0 transition-[translate] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[4%]">
+              <service.Mockup />
             </div>
+          ) : (
+            <>
+              <div
+                className="absolute inset-0 flex items-center justify-center transition-[opacity,scale] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-0 group-hover:scale-90"
+                style={{
+                  backgroundImage: "radial-gradient(#E3DFDA 1px, transparent 1px)",
+                  backgroundSize: "16px 16px",
+                }}
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00]">
+                  <service.icon size={24} />
+                </div>
+              </div>
+              {/* Illustration drops down from the top on hover */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#FFE9D4] to-[#F7F6F4] [clip-path:inset(0_0_100%_0)] transition-[clip-path] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:[clip-path:inset(0_0_0_0)]">
+                <div className="absolute inset-0 -translate-y-[10%] transition-[translate] duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
+                  <service.Mockup />
+                </div>
+              </div>
+            </>
           )}
-          <div
-            className={`absolute inset-0 ${
-              featured
-                ? ""
-                : "[clip-path:inset(100%_0_0_0)] transition-[clip-path] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:[clip-path:inset(0_0_0_0)]"
-            }`}
-          >
-            <Image
-              src={service.image}
-              alt={`${service.title} project example`}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className={`object-cover transition-[scale] duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                featured ? "group-hover:scale-[1.05]" : "scale-[1.12] group-hover:scale-100"
-              }`}
-            />
-          </div>
         </div>
 
         <div className="relative flex-1 flex flex-col p-6 sm:p-7">
@@ -187,7 +186,7 @@ export default function AllServices() {
     <>
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-14 pb-[56px] sm:pb-20 lg:pb-[104px]">
         <div className="rounded-[2rem] border border-[#E3E3E6] bg-[#F7F6F4] p-6 sm:p-8 lg:p-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-10">
+          <div>
             <div>
               <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
                 Services
@@ -196,7 +195,7 @@ export default function AllServices() {
                 Fixed scope, built to launch
               </h1>
             </div>
-            <p className="max-w-[40ch] text-[15.5px] leading-[1.6] text-[#4A4744] lg:pb-2">
+            <p className="mt-4 max-w-[52ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
               Three ways to work with us, plus the design work that sits in
               front of the build. Real prices, no vague packages.
             </p>
