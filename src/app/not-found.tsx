@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import Header from "@/components/Layout/Header/Header";
-import Footer from "@/components/Layout/Footer";
+import gargariLogo from "@/Assets/images/gargari-logo-dark.png";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -43,97 +43,106 @@ function Shape({ type, size }: { type: ShapeType; size: number }) {
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      <main className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-10 pb-20 sm:pb-28 lg:pb-[120px]">
-        <section
-          className="relative overflow-clip rounded-[2rem] border border-[#E3E3E6] bg-[#F7F6F4] px-6 py-14 sm:px-10 sm:py-20 lg:py-24 text-center"
-          style={{
-            backgroundImage: "radial-gradient(#E3DFDA 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
+    <main
+      className="relative isolate min-h-svh overflow-clip bg-[#F7F6F4] flex flex-col"
+      style={{
+        backgroundImage: "radial-gradient(#E3DFDA 1px, transparent 1px)",
+        backgroundSize: "22px 22px",
+      }}
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(900px,120vw)] aspect-square rounded-full bg-[radial-gradient(circle,rgba(255,122,0,0.14)_0%,transparent_65%)]"
+      />
+      {shapes.map((shape, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          className={`pointer-events-none absolute opacity-60 ${shape.className}`}
         >
-          {shapes.map((shape, i) => (
-            <span
-              key={i}
-              aria-hidden="true"
-              className={`pointer-events-none absolute opacity-60 ${shape.className}`}
-            >
-              <span
-                className="block motion-safe:animate-[float-soft_7s_ease-in-out_infinite]"
-                style={{ animationDelay: shape.delay }}
-              >
-                <Shape type={shape.type} size={shape.size} />
-              </span>
-            </span>
-          ))}
-
-          <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
-            Error 404
-          </span>
-
-          <div
-            aria-hidden="true"
-            className="mt-6 flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
+          <span
+            className="block motion-safe:animate-[float-soft_7s_ease-in-out_infinite]"
+            style={{ animationDelay: shape.delay }}
           >
-            <span>4</span>
-            <span className="relative inline-flex items-center justify-center w-[0.72em] h-[0.72em] motion-safe:animate-[float-soft_6s_ease-in-out_infinite]">
-              <span className="absolute inset-0 rounded-full border-[0.12em] border-[#FF7A00]" />
-              <span className="w-[0.14em] h-[0.14em] rounded-full bg-[#0E0E0E]" />
+            <Shape type={shape.type} size={shape.size} />
+          </span>
+        </span>
+      ))}
+
+      <header className="w-full max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] h-[76px] flex items-center">
+        <Link href="/" aria-label="GarGari home" className="inline-flex">
+          <Image src={gargariLogo} alt="GarGari" className="h-9 sm:h-10 w-auto" priority />
+        </Link>
+      </header>
+
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-10">
+        <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
+          Error 404
+        </span>
+
+        <div
+          aria-hidden="true"
+          className="mt-6 flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
+        >
+          <span>4</span>
+          <span className="relative inline-flex items-center justify-center w-[0.72em] h-[0.72em] motion-safe:animate-[float-soft_6s_ease-in-out_infinite]">
+            <span className="absolute inset-0 rounded-full border-[0.12em] border-[#FF7A00]" />
+            <span className="w-[0.14em] h-[0.14em] rounded-full bg-[#0E0E0E]" />
+          </span>
+          <span>4</span>
+        </div>
+
+        <h1 className="mt-6 sm:mt-8 font-outfit font-extrabold text-[clamp(26px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
+          This page took a wrong turn
+        </h1>
+        <p className="mt-4 mx-auto max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
+          The page you&apos;re looking for doesn&apos;t exist or has moved.
+          Let&apos;s get you back on track.
+        </p>
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2.5 h-12 rounded-full pl-6 pr-1.5 bg-primary font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-[background-color,color,box-shadow] duration-300 hover:bg-[#0E0E0E] hover:text-white hover:shadow-[0_12px_28px_-12px_rgba(14,14,14,0.6)]"
+          >
+            Back to home
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#0E0E0E] text-white shrink-0 transition-[background-color,color,rotate] duration-300 group-hover:bg-primary group-hover:text-[#0E0E0E] group-hover:rotate-45">
+              <ArrowUpRight size={16} />
             </span>
-            <span>4</span>
-          </div>
+          </Link>
+          <Link
+            href="/projects"
+            className="inline-flex items-center h-12 rounded-full px-6 border border-[#E3DFDA] bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-colors duration-300 hover:border-[#0E0E0E]"
+          >
+            View projects
+          </Link>
+        </div>
+      </section>
 
-          <h1 className="mt-6 sm:mt-8 font-outfit font-extrabold text-[clamp(26px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-            This page took a wrong turn
-          </h1>
-          <p className="mt-4 mx-auto max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
-            The page you&apos;re looking for doesn&apos;t exist or has moved.
-            Let&apos;s get you back on track.
-          </p>
-
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/"
-              className="group inline-flex items-center gap-2.5 h-12 rounded-full pl-6 pr-1.5 bg-primary font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-[background-color,color,box-shadow] duration-300 hover:bg-[#0E0E0E] hover:text-white hover:shadow-[0_12px_28px_-12px_rgba(14,14,14,0.6)]"
-            >
-              Back to home
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#0E0E0E] text-white shrink-0 transition-[background-color,color,rotate] duration-300 group-hover:bg-primary group-hover:text-[#0E0E0E] group-hover:rotate-45">
-                <ArrowUpRight size={16} />
+      <nav
+        aria-label="Popular pages"
+        className="w-full max-w-[1100px] mx-auto px-5 sm:px-8 pb-8 sm:pb-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+      >
+        {quickLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="group flex items-center justify-between gap-3 rounded-xl border border-[#EDEAE6] bg-white/80 backdrop-blur-sm p-4 sm:p-5 transition-[border-color,background-color] duration-300 hover:border-[#FF7A00]/50 hover:bg-[#FFF8F1]"
+          >
+            <span>
+              <span className="block font-outfit font-bold text-[16px] text-[#0E0E0E]">
+                {link.label}
               </span>
-            </Link>
-            <Link
-              href="/projects"
-              className="inline-flex items-center h-12 rounded-full px-6 border border-[#E3DFDA] bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap transition-colors duration-300 hover:border-[#0E0E0E]"
-            >
-              View projects
-            </Link>
-          </div>
-        </section>
-
-        <nav aria-label="Popular pages" className="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {quickLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group flex items-center justify-between gap-3 rounded-xl border border-[#EDEAE6] bg-white p-4 sm:p-5 transition-[border-color,background-color] duration-300 hover:border-[#FF7A00]/50 hover:bg-[#FFF8F1]"
-            >
-              <span>
-                <span className="block font-outfit font-bold text-[16px] text-[#0E0E0E]">
-                  {link.label}
-                </span>
-                <span className="block mt-0.5 text-[12.5px] text-[#5A5A5F]">
-                  {link.description}
-                </span>
+              <span className="block mt-0.5 text-[12.5px] text-[#5A5A5F]">
+                {link.description}
               </span>
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-[#E3DFDA] text-[#0E0E0E] shrink-0 transition-[background-color,border-color,color] duration-300 group-hover:bg-[#FF7A00] group-hover:border-[#FF7A00] group-hover:text-white">
-                <ArrowUpRight size={15} />
-              </span>
-            </Link>
-          ))}
-        </nav>
-      </main>
-      <Footer />
-    </div>
+            </span>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-[#E3DFDA] text-[#0E0E0E] shrink-0 transition-[background-color,border-color,color] duration-300 group-hover:bg-[#FF7A00] group-hover:border-[#FF7A00] group-hover:text-white">
+              <ArrowUpRight size={15} />
+            </span>
+          </Link>
+        ))}
+      </nav>
+    </main>
   );
 }
