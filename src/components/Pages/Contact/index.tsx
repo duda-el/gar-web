@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
@@ -68,16 +68,65 @@ function ArrowIcon() {
   );
 }
 
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const EMAILJS_CLIENT_TEMPLATE_ID =
+  process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+// Anti-spam limits
+const MIN_FILL_TIME_MS = 3000;
+const SEND_COOLDOWN_MS = 60_000;
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_MESSAGE_LENGTH = 3000;
+
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
+  const mountedAt = useRef(0);
+  const lastSentAt = useRef(0);
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
 
+  useEffect(() => {
+    mountedAt.current = Date.now();
+  }, []);
+
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.current) return;
+    if (!form.current || isSending) return;
+
+    const data = new FormData(form.current);
+
+    // Bots fill the hidden honeypot field or submit instantly; silently drop them
+    if (
+      data.get("website") ||
+      Date.now() - mountedAt.current < MIN_FILL_TIME_MS
+    ) {
+      form.current.reset();
+      setStatus("success");
+      setTimeout(() => setStatus("idle"), 3000);
+      return;
+    }
+
+    if (Date.now() - lastSentAt.current < SEND_COOLDOWN_MS) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+      return;
+    }
+
+    if (
+      !EMAILJS_SERVICE_ID ||
+      !EMAILJS_TEMPLATE_ID ||
+      !EMAILJS_CLIENT_TEMPLATE_ID ||
+      !EMAILJS_PUBLIC_KEY
+    ) {
+      console.error("EmailJS environment variables are not configured");
+      setStatus("error");
+      return;
+    }
 
     setIsSending(true);
     setStatus("idle");
@@ -85,19 +134,20 @@ const Contact = () => {
     try {
       await Promise.all([
         emailjs.sendForm(
-          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
           form.current,
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+          { publicKey: EMAILJS_PUBLIC_KEY, limitRate: { throttle: SEND_COOLDOWN_MS } },
         ),
         emailjs.sendForm(
-          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-          process.env.NEXT_PUBLIC_EMAILJS_CLIENT_TEMPLATE_ID!,
+          EMAILJS_SERVICE_ID,
+          EMAILJS_CLIENT_TEMPLATE_ID,
           form.current,
-          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+          { publicKey: EMAILJS_PUBLIC_KEY },
         ),
       ]);
 
+      lastSentAt.current = Date.now();
       setStatus("success");
       form.current.reset();
       setSelectedService("");
@@ -158,6 +208,15 @@ const Contact = () => {
           className="order-2 lg:order-1 rounded-xl border border-[#EDEAE6] bg-white p-5 sm:p-8"
         >
           <form ref={form} onSubmit={sendEmail} className="space-y-5">
+            {/* Honeypot: hidden from people, bots tend to fill it */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="hidden"
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
@@ -167,6 +226,7 @@ const Contact = () => {
                   type="text"
                   name="from_name"
                   required
+                  maxLength={MAX_NAME_LENGTH}
                   className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
                   placeholder="Your name"
                 />
@@ -179,6 +239,7 @@ const Contact = () => {
                   type="email"
                   name="email"
                   required
+                  maxLength={MAX_EMAIL_LENGTH}
                   className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
                   placeholder="you@email.com"
                 />
@@ -252,6 +313,7 @@ const Contact = () => {
               <textarea
                 name="message"
                 required
+                maxLength={MAX_MESSAGE_LENGTH}
                 rows={4}
                 className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors resize-none"
                 placeholder="Tell us about your project..."
