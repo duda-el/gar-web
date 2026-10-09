@@ -158,6 +158,11 @@ const brandingTags = [
 
 const faqs = [
   {
+    question: "How long does a project take?",
+    answer:
+      "Most landing pages ship in 2-3 weeks. Larger web apps and stores run 4-8 weeks depending on scope.",
+  },
+  {
     question: "How is a project priced?",
     answer:
       "Landing pages are fixed quotes based on the brief. Web apps and stores are scoped after the first call, then quoted before any work starts, no surprises later.",
@@ -171,6 +176,16 @@ const faqs = [
     question: "Can you redesign or rebuild an existing site?",
     answer:
       "Yes. We audit what's there, keep what works, and rebuild the rest, content and SEO history included where possible.",
+  },
+  {
+    question: "What do you need from me to start?",
+    answer:
+      "A short brief, your content or help writing it, and any brand assets you already have.",
+  },
+  {
+    question: "Do you work with clients outside Georgia?",
+    answer:
+      "Yes. Calls, a shared staging link and async updates cover the whole process, wherever you are.",
   },
   {
     question: "Do you handle hosting and domains?",
