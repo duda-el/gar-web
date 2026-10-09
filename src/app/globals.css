@@ -160,6 +160,20 @@ body {
     @apply bg-background text-foreground;
     font-family: var(--font-georgian);
   }
+  /* Tailwind v4 resets buttons to the default cursor; restore the pointer for clickable controls */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  select,
+  summary,
+  label[for],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="submit"] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
 
 @layer utilities {
