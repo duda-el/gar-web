@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
+import { ArrowUpRight, Check, Facebook, Instagram, Loader2, Mail, MapPin, Clock } from "lucide-react";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -55,19 +55,6 @@ const services = [
   "Other",
 ];
 
-function ArrowIcon() {
-  return (
-    <svg width="12" height="9" viewBox="0 0 7 9" aria-hidden="true">
-      <path
-        d="M1 1 L5 4.5 L1 8"
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="1.7"
-      />
-    </svg>
-  );
-}
-
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const EMAILJS_CLIENT_TEMPLATE_ID =
@@ -81,14 +68,19 @@ const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 3000;
 
+const labelClass =
+  "block mb-2 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]";
+const fieldClass =
+  "w-full rounded-xl border border-transparent bg-[#F5F5F7] px-4 py-3.5 text-[14.5px] text-[#0E0E0E] placeholder-[#9A9A9E] outline-none transition-[background-color,border-color,box-shadow] duration-300 hover:bg-[#F0EFEC] focus:bg-white focus:border-[#FF7A00] focus:shadow-[0_0_0_4px_rgba(255,122,0,0.14)]";
+
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
   const mountedAt = useRef(0);
   const lastSentAt = useRef(0);
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("");
+  const [messageLength, setMessageLength] = useState(0);
 
   useEffect(() => {
     mountedAt.current = Date.now();
@@ -151,6 +143,7 @@ const Contact = () => {
       setStatus("success");
       form.current.reset();
       setSelectedService("");
+      setMessageLength(0);
     } catch (error) {
       console.error("EmailJS Error details:", error);
       setStatus("error");
@@ -163,10 +156,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] py-[56px] sm:py-20 lg:py-[104px]"
-      style={{
-        background: "linear-gradient(180deg,#FFFFFF 0%,#F5F5F7 100%)",
-      }}
+      className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-[56px] sm:pt-20 lg:pt-[104px] pb-20 sm:pb-28 lg:pb-[136px]"
     >
       <div className="mb-12 sm:mb-14 lg:mb-16">
         <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
@@ -204,10 +194,23 @@ const Contact = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="order-2 lg:order-1 rounded-xl border border-[#EDEAE6] bg-white p-5 sm:p-8"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="order-2 lg:order-1 relative overflow-clip rounded-2xl border border-[#EDEAE6] bg-white p-5 sm:p-8 lg:p-10 shadow-[0_30px_80px_-40px_rgba(14,14,14,0.25)]"
         >
-          <form ref={form} onSubmit={sendEmail} className="space-y-5">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-[#FF7A00]/10 blur-3xl"
+          />
+          <div className="relative mb-7 sm:mb-8">
+            <h2 className="font-outfit font-bold text-[22px] tracking-[-0.02em] text-[#0E0E0E]">
+              Tell us about your project
+            </h2>
+            <p className="mt-1.5 text-[14px] text-[#5A5A5F]">
+              A few lines are enough, we&apos;ll ask the rest on a call.
+            </p>
+          </div>
+
+          <form ref={form} onSubmit={sendEmail} className="relative space-y-6">
             {/* Honeypot: hidden from people, bots tend to fill it */}
             <input
               type="text"
@@ -219,133 +222,147 @@ const Contact = () => {
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
+                <label htmlFor="contact-name" className={labelClass}>
                   Name
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="from_name"
                   required
+                  autoComplete="name"
                   maxLength={MAX_NAME_LENGTH}
-                  className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
+                  className={fieldClass}
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
+                <label htmlFor="contact-email" className={labelClass}>
                   Email
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
                   required
+                  autoComplete="email"
                   maxLength={MAX_EMAIL_LENGTH}
-                  className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
+                  className={fieldClass}
                   placeholder="you@email.com"
                 />
               </div>
             </div>
 
-            <div className="relative">
-              <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
-                Service
-              </label>
-
+            <fieldset>
+              <legend className={labelClass}>What do you need?</legend>
               <input type="hidden" name="service" value={selectedService} />
-
-              <div
-                onClick={() => setIsOpen(!isOpen)}
-                className={`w-full bg-white border rounded-lg px-4 py-3 text-sm cursor-pointer flex justify-between items-center transition-colors ${
-                  isOpen ? "border-[#FF7A00]" : "border-[#E3E3E6]"
-                }`}
-              >
-                <span
-                  className={
-                    selectedService ? "text-[#0E0E0E]" : "text-[#9A9A9E]"
-                  }
-                >
-                  {selectedService || "Select a service"}
-                </span>
-                <svg
-                  className={`w-4 h-4 text-[#FF7A00] transition-transform duration-300 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-
-              {isOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute z-50 w-full mt-2 bg-white border border-[#E3E3E6] rounded-lg overflow-hidden shadow-lg"
-                >
-                  {services.map((service) => (
-                    <div
+              <div className="flex flex-wrap gap-2">
+                {services.map((service) => {
+                  const selected = selectedService === service;
+                  return (
+                    <button
                       key={service}
-                      onClick={() => {
-                        setSelectedService(service);
-                        setIsOpen(false);
-                      }}
-                      className="px-4 py-2.5 hover:bg-[#F5F5F7] cursor-pointer transition-colors text-[#0E0E0E] text-sm border-b border-[#E3E3E6] last:border-b-0"
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => setSelectedService(selected ? "" : service)}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[13.5px] font-medium transition-[background-color,border-color,color] duration-300 ${
+                        selected
+                          ? "border-[#0E0E0E] bg-[#0E0E0E] text-white"
+                          : "border-[#E3E3E6] bg-[#F7F6F4] text-[#0E0E0E] hover:border-[#0E0E0E]/40 hover:bg-white"
+                      }`}
                     >
+                      <span
+                        className={`inline-flex items-center justify-center rounded-full bg-[#FF7A00] text-[#0E0E0E] overflow-hidden transition-[width,height,opacity] duration-300 ${
+                          selected ? "w-4 h-4 opacity-100" : "w-0 h-4 opacity-0"
+                        }`}
+                      >
+                        <Check size={11} strokeWidth={3} />
+                      </span>
                       {service}
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-            </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
 
             <div>
-              <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
-                Message
-              </label>
+              <div className="flex items-baseline justify-between">
+                <label htmlFor="contact-message" className={labelClass}>
+                  Message
+                </label>
+                <span className="text-[11px] tabular-nums text-[#9A9A9E]">
+                  {messageLength} / {MAX_MESSAGE_LENGTH}
+                </span>
+              </div>
               <textarea
+                id="contact-message"
                 name="message"
                 required
                 maxLength={MAX_MESSAGE_LENGTH}
-                rows={4}
-                className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors resize-none"
-                placeholder="Tell us about your project..."
+                rows={5}
+                onChange={(e) => setMessageLength(e.target.value.length)}
+                className={`${fieldClass} resize-none`}
+                placeholder="Tell us about your project, goals and timeline..."
               ></textarea>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              disabled={isSending}
-              type="submit"
-              className={`group relative w-full inline-flex items-center justify-center gap-2.5 rounded-full h-12 font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-                status === "success"
-                  ? "bg-[#1FA34A] text-white"
-                  : "bg-primary hover:bg-white"
-              }`}
-            >
-              {isSending
-                ? "Sending..."
-                : status === "success"
-                  ? "Sent!"
-                  : "Send message"}
-              {status !== "success" && (
-                <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
-                  <ArrowIcon />
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4 pt-1">
+              <p className="text-[12.5px] text-[#5A5A5F]">
+                We reply within one business day.
+              </p>
+              <button
+                disabled={isSending}
+                type="submit"
+                className={`group relative isolate inline-flex items-center justify-center sm:justify-start gap-3 h-[54px] rounded-full ps-6 pe-1.5 overflow-hidden font-outfit font-bold text-[15px] whitespace-nowrap transition-[background-color,color,box-shadow,scale] duration-500 active:scale-[0.98] disabled:opacity-70 ${
+                  status === "success"
+                    ? "bg-[#1FA34A] text-white"
+                    : "bg-[#0E0E0E] text-white hover:text-[#0E0E0E] hover:shadow-[0_16px_36px_-14px_rgba(255,122,0,0.75)]"
+                }`}
+              >
+                {/* Orange fill grows out of the arrow circle */}
+                {status !== "success" && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-1.5 top-1/2 -z-10 w-[42px] h-[42px] -translate-y-1/2 rounded-full bg-[#FF7A00] scale-0 transition-[scale] duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[12] group-disabled:scale-0"
+                  />
+                )}
+                <span className="relative">
+                  {isSending
+                    ? "Sending..."
+                    : status === "success"
+                      ? "Message sent"
+                      : "Send message"}
                 </span>
-              )}
-            </motion.button>
+                <span
+                  className={`relative inline-flex items-center justify-center w-[42px] h-[42px] rounded-full overflow-hidden shrink-0 transition-colors duration-500 ${
+                    status === "success"
+                      ? "bg-white text-[#1FA34A]"
+                      : "bg-[#FF7A00] text-[#0E0E0E] group-hover:bg-[#0E0E0E] group-hover:text-white"
+                  }`}
+                >
+                  {isSending ? (
+                    <Loader2 size={17} className="animate-spin" />
+                  ) : status === "success" ? (
+                    <Check size={18} strokeWidth={2.5} />
+                  ) : (
+                    <>
+                      <ArrowUpRight
+                        size={17}
+                        className="absolute transition-[translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-6 group-hover:-translate-y-6"
+                      />
+                      <ArrowUpRight
+                        size={17}
+                        className="absolute -translate-x-6 translate-y-6 transition-[translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:translate-y-0"
+                      />
+                    </>
+                  )}
+                </span>
+              </button>
+            </div>
 
             {status === "error" && (
-              <p className="text-[#B3261E] text-xs text-center">
-                Something went wrong, please try again later.
+              <p role="alert" className="rounded-lg bg-[#B3261E]/[0.06] px-4 py-3 text-[#B3261E] text-[13px]">
+                Something went wrong, please try again in a minute.
               </p>
             )}
           </form>
@@ -366,19 +383,27 @@ const Contact = () => {
               rel={
                 card.href.startsWith("http") ? "noopener noreferrer" : undefined
               }
-              className="group flex items-center gap-3.5 rounded-xl border border-[#EDEAE6] bg-white p-4 transition-[border-color,transform] duration-[250ms] hover:border-[#FF7A00]/40 hover:-translate-y-1"
+              className="group relative isolate flex items-center gap-3.5 overflow-hidden rounded-xl border border-[#EDEAE6] bg-white p-4 transition-[border-color,translate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#0E0E0E] hover:-translate-y-0.5"
             >
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-transform duration-200 group-hover:scale-105">
+              {/* Dark fill sweeps in from the left */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 origin-left scale-x-0 bg-[#0E0E0E] transition-[scale] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+              />
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-[background-color,color,rotate] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[#FF7A00] group-hover:text-[#0E0E0E] group-hover:-rotate-8">
                 {card.icon}
               </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F]">
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] transition-colors duration-500 group-hover:text-white/55">
                   {card.label}
                 </p>
-                <p className="mt-0.5 text-[13.5px] font-medium text-[#0E0E0E] truncate">
+                <p className="mt-0.5 text-[13.5px] font-medium text-[#0E0E0E] truncate transition-colors duration-500 group-hover:text-white">
                   {card.value}
                 </p>
               </div>
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#FF7A00] text-[#0E0E0E] shrink-0 opacity-0 -translate-x-3 scale-75 transition-[opacity,translate,scale] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100">
+                <ArrowUpRight size={15} />
+              </span>
             </a>
           ))}
         </motion.div>
