@@ -27,10 +27,12 @@ export function localizePath(locale: Locale, path: string): string {
   return clean === "/" ? `/${locale}` : `/${locale}${clean}`;
 }
 
-/** "/en/services" -> "/services"; Georgian paths are returned unchanged */
+/**
+ * "/en/services" -> "/services". Also strips "/ka": during server rendering usePathname()
+ * returns the internal rewritten path ("/ka/services"), not the URL in the address bar.
+ */
 export function stripLocale(pathname: string): string {
   for (const locale of locales) {
-    if (locale === defaultLocale) continue;
     if (pathname === `/${locale}`) return "/";
     if (pathname.startsWith(`/${locale}/`)) return pathname.slice(locale.length + 1);
   }
