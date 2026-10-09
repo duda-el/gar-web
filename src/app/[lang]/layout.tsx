@@ -46,6 +46,10 @@ export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
+// Only "ka" and "en" are valid; anything else (e.g. "/robots.txt", "/foo.php") is a 404
+// instead of silently rendering the Georgian home page
+export const dynamicParams = false;
+
 export const viewport: Viewport = {
   themeColor: "#121212",
   width: "device-width",

@@ -4,6 +4,9 @@ import { getDictionary, resolveLocale } from "@/i18n";
 
 type Props = { params: Promise<{ lang: string }> };
 
+// Overrides the layout's dynamicParams = false: unknown paths must reach this page to 404
+export const dynamicParams = true;
+
 // Without this the layout's home-page title and "index" robots would apply to the 404
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = resolveLocale((await params).lang);
