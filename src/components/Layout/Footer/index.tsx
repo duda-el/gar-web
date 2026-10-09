@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Mail, Phone, Facebook, Instagram, MapPin } from "lucide-react";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import PolicyModal from "../../ui/Modal/PolicyModal";
+import type { PolicyType } from "@/constants/policies";
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
@@ -52,7 +53,7 @@ const socials = [
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [modalType, setModalType] = useState<"privacy" | "terms" | null>(null);
+  const [modalType, setModalType] = useState<PolicyType | null>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -77,28 +78,7 @@ const Footer = () => {
     }
   };
 
-  const policies = {
-    privacy: {
-      title: "Privacy Policy",
-      content: (
-        <div className="space-y-4 text-sm font-georgian">
-          <p>ჩვენთვის მნიშვნელოვანია თქვენი მონაცემების უსაფრთხოება.</p>
-          <h4 className="text-white font-bold">1. ინფორმაციის შეგროვება</h4>
-          <p>ჩვენ ვაგროვებთ მხოლოდ იმ ინფორმაციას, რომელსაც თავად გვაწვდით.</p>
-        </div>
-      ),
-    },
-    terms: {
-      title: "Terms of Service",
-      content: (
-        <div className="space-y-4 text-sm font-georgian">
-          <p>GARGARI-ის ვებ-გვერდით სარგებლობით თქვენ ეთანხმებით პირობებს.</p>
-          <h4 className="text-white font-bold">1. ინტელექტუალური საკუთრება</h4>
-          <p>ვებ-გვერდზე განთავსებული მასალა წარმოადგენს სტუდიის საკუთრებას.</p>
-        </div>
-      ),
-    },
-  };
+  const closeModal = useCallback(() => setModalType(null), []);
 
   return (
     <footer className="relative bg-[#0E0E0E] text-white">
@@ -217,12 +197,7 @@ const Footer = () => {
 
       <Script src="https://counter.top.ge/counter.js" strategy="lazyOnload" />
 
-      <PolicyModal
-        isOpen={!!modalType}
-        onClose={() => setModalType(null)}
-        title={modalType ? policies[modalType].title : ""}
-        content={modalType ? policies[modalType].content : null}
-      />
+      <PolicyModal type={modalType} onClose={closeModal} />
     </footer>
   );
 };
