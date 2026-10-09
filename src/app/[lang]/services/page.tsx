@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { pageAlternates } from "@/i18n/config";
+import { pageMetadata } from "@/i18n/metadata";
 import { getDictionary, resolveLocale } from "@/i18n";
 import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
@@ -9,12 +9,7 @@ type Props = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = resolveLocale((await params).lang);
-  const page = getDictionary(locale).meta.pages.services;
-  return {
-    title: page.title,
-    description: page.description,
-    alternates: pageAlternates(locale, "/services"),
-  };
+  return pageMetadata(locale, "/services", getDictionary(locale).meta.pages.services);
 }
 
 export default function ServicesPage() {

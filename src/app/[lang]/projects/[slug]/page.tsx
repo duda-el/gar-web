@@ -4,7 +4,8 @@ import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import ProjectDetail from "@/components/Pages/ProjectDetail";
 import { getProjectBySlug, projects } from "@/constants/projects";
-import { locales, pageAlternates } from "@/i18n/config";
+import { locales } from "@/i18n/config";
+import { pageMetadata } from "@/i18n/metadata";
 import { getDictionary, resolveLocale } from "@/i18n";
 
 type Props = {
@@ -25,19 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const content = project.content[locale];
   const suffix = getDictionary(locale).meta.pages.project.titleSuffix;
-  const alternates = pageAlternates(locale, `/projects/${project.slug}`);
 
-  return {
+  return pageMetadata(locale, `/projects/${project.slug}`, {
     title: `${project.title} — ${suffix}`,
     description: content.description,
-    alternates,
-    openGraph: {
-      title: `${project.title} | Gargari`,
-      description: content.description,
-      url: alternates.canonical,
-      images: [{ url: project.images[0].src, alt: content.alt }],
-    },
-  };
+    image: { url: project.images[0].src, alt: content.alt },
+  });
 }
 
 export default async function ProjectPage({ params }: Props) {
