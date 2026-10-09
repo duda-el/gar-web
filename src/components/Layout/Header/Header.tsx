@@ -5,14 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gargariLogo from "@/Assets/images/gargari-logo-dark.png";
+import { useI18n } from "@/i18n/I18nProvider";
+import { stripLocale } from "@/i18n/config";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const navLinks = [
-  { label: "Home", href: "/", id: "top" },
-  { label: "Services", href: "/services" },
-  { label: "Projects", href: "/projects" },
-  { label: "About us", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+  { key: "home", href: "/", id: "top" },
+  { key: "services", href: "/services" },
+  { key: "projects", href: "/projects" },
+  { key: "about", href: "/about" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 function ArrowIcon({ stroke = "#0E0E0E" }: { stroke?: string }) {
   return (
@@ -30,12 +33,12 @@ function ArrowIcon({ stroke = "#0E0E0E" }: { stroke?: string }) {
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+  const { t, href } = useI18n();
+  // Compare against the path without the language prefix ("/en/services" -> "/services")
+  const path = stripLocale(usePathname());
+  const isHome = path === "/";
   const isActive = (link: (typeof navLinks)[number]) =>
-    link.id === "top"
-      ? isHome
-      : pathname === link.href || pathname.startsWith(`${link.href}/`);
+    "id" in link ? isHome : path === link.href || path.startsWith(`${link.href}/`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -65,7 +68,7 @@ export default function Header() {
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    id?: string
+    id?: string,
   ) => {
     if (id && isHome) {
       e.preventDefault();
@@ -85,10 +88,10 @@ export default function Header() {
     >
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 sm:gap-8 h-[76px] px-5 sm:px-9 lg:px-[72px]">
         <Link
-          href="/"
+          href={href("/")}
           onClick={(e) => handleNavClick(e, "top")}
           className="flex items-center shrink-0 cursor-pointer"
-          aria-label="GarGari home"
+          aria-label={t.nav.homeAria}
         >
           <Image
             src={gargariLogo}
@@ -99,7 +102,7 @@ export default function Header() {
         </Link>
 
         <nav
-          className="hidden lg:flex items-center gap-0.5 shrink-0 bg-white/55 backdrop-blur-xl border border-white/70 rounded-full p-1.5"
+          className="hidden xl:flex items-center gap-0.5 shrink-0 bg-white/55 backdrop-blur-xl border border-white/70 rounded-full p-1.5"
           style={{
             boxShadow:
               "0 1px 3px rgba(14,14,14,0.06), 0 0 0 0.5px rgba(14,14,14,0.05)",
@@ -110,57 +113,61 @@ export default function Header() {
             return (
               <Link
                 key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.id)}
+                href={href(link.href)}
+                onClick={(e) => handleNavClick(e, "id" in link ? link.id : undefined)}
                 aria-current={active ? "page" : undefined}
-                className={`relative font-outfit text-[14.5px] rounded-full px-4 py-2 whitespace-nowrap transition-[color,background-color,box-shadow] duration-300 cursor-pointer ${
+                className={`relative font-outfit text-[14.5px] rounded-full px-3.5 xl:px-4 py-2 whitespace-nowrap transition-[color,background-color,box-shadow] duration-300 cursor-pointer ${
                   active
                     ? "font-semibold text-[#0E0E0E] bg-[linear-gradient(180deg,rgba(120,120,128,0.20)_0%,rgba(120,120,128,0.10)_100%)] backdrop-blur-md backdrop-saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(14,14,14,0.06),0_0_0_0.5px_rgba(14,14,14,0.10),0_2px_8px_-2px_rgba(14,14,14,0.14)]"
                     : "font-medium text-[#6E6E73] hover:text-[#0E0E0E] hover:bg-white/70"
                 }`}
               >
-                {link.label}
+                {t.nav[link.key]}
               </Link>
             );
           })}
         </nav>
 
-        <Link
-          href="/contact"
-          onClick={(e) => handleNavClick(e)}
-          className="hidden lg:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
-        >
-          Start a project
-          <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
-            <ArrowIcon stroke="#FFFFFF" />
-          </span>
-        </Link>
+        <div className="flex items-center gap-3 shrink-0">
+          <LanguageSwitcher />
+          <Link
+            href={href("/contact")}
+            onClick={(e) => handleNavClick(e)}
+            className="hidden xl:inline-flex items-center gap-2.5 shrink-0 rounded-full pl-5 pr-1.5 py-1.5 bg-primary hover:bg-white font-outfit font-bold text-[14.5px] tracking-[-0.01em] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 shadow-[0_0_20px_rgba(241,144,53,0.35)]"
+          >
+            {t.nav.startProject}
+            <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
+              <ArrowIcon stroke="#FFFFFF" />
+            </span>
+          </Link>
 
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 shrink-0 cursor-pointer"
-          aria-label="Toggle Menu"
-        >
-          <span
-            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-              isOpen ? "rotate-45 translate-y-[7px]" : ""
-            }`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-              isOpen ? "opacity-0" : "opacity-100"
-            }`}
-          />
-          <span
-            className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-[7px]" : ""
-            }`}
-          />
-        </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="xl:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 shrink-0 cursor-pointer"
+            aria-label={t.nav.toggleMenu}
+            aria-expanded={isOpen}
+          >
+            <span
+              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-[7px]" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+                isOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       <div
-        className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out bg-white/90 backdrop-blur-2xl border-b border-[#E3E3E6] ${
+        className={`xl:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out bg-white/90 backdrop-blur-2xl border-b border-[#E3E3E6] ${
           isOpen ? "max-h-[420px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
@@ -170,24 +177,24 @@ export default function Header() {
             return (
               <Link
                 key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.id)}
+                href={href(link.href)}
+                onClick={(e) => handleNavClick(e, "id" in link ? link.id : undefined)}
                 aria-current={active ? "page" : undefined}
                 className={`flex items-center justify-between font-outfit text-[16px] text-left py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer ${
                   active ? "font-bold text-[#FF7A00]" : "font-medium text-[#0E0E0E]"
                 }`}
               >
-                {link.label}
+                {t.nav[link.key]}
                 {active && <span className="w-1.5 h-1.5 rounded-full bg-[#FF7A00]" />}
               </Link>
             );
           })}
           <Link
-            href="/contact"
+            href={href("/contact")}
             onClick={(e) => handleNavClick(e)}
             className="mt-4 mb-2 inline-flex items-center justify-center gap-2.5 rounded-full py-3 bg-primary hover:bg-white font-outfit font-bold text-[15px] text-[#0E0E0E] cursor-pointer transition-colors duration-200"
           >
-            Start a project
+            {t.nav.startProject}
             <span className="inline-flex items-center justify-center w-[24px] h-[24px] rounded-full bg-[#0E0E0E] shrink-0">
               <ArrowIcon stroke="#FFFFFF" />
             </span>
