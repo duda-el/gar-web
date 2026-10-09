@@ -71,13 +71,9 @@ export default function NotFoundView() {
       </header>
 
       <section className="flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-10">
-        <span className="inline-flex items-center rounded-full border border-[#E3DFDA] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#0E0E0E]">
-          {t.notFound.badge}
-        </span>
-
         <div
           aria-hidden="true"
-          className="mt-6 flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
+          className="flex items-center justify-center gap-[0.04em] font-outfit font-extrabold leading-none tracking-[-0.06em] text-[#0E0E0E] text-[clamp(110px,22vw,250px)] select-none"
         >
           <span>4</span>
           <span className="relative inline-flex items-center justify-center w-[0.72em] h-[0.72em] motion-safe:animate-[float-soft_6s_ease-in-out_infinite]">

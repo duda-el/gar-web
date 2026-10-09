@@ -466,7 +466,6 @@ const en = {
   },
 
   notFound: {
-    badge: "Error 404",
     title: "This page took a wrong turn",
     text: "The page you're looking for doesn't exist or has moved. Let's get you back on track.",
     home: "Back to home",
