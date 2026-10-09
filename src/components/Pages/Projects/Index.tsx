@@ -11,6 +11,7 @@ import ReagentImg from "@/Assets/images/reagent.jpg";
 
 interface WorkItem {
   index: string;
+  slug: string;
   name: string;
   category: string;
   image: StaticImageData;
@@ -23,6 +24,7 @@ interface WorkItem {
 const works: WorkItem[] = [
   {
     index: "01",
+    slug: "i-techno",
     name: "I-Techno",
     category: "E-Commerce",
     image: ItechnoImg,
@@ -36,6 +38,7 @@ const works: WorkItem[] = [
   },
   {
     index: "02",
+    slug: "zmna-ge",
     name: "Zmna.ge",
     category: "Media",
     image: ZmnaImg,
@@ -46,6 +49,7 @@ const works: WorkItem[] = [
   },
   {
     index: "03",
+    slug: "bizon-ge",
     name: "Bizon.ge",
     category: "Marketplace",
     image: BizonImg,
@@ -56,6 +60,7 @@ const works: WorkItem[] = [
   },
   {
     index: "04",
+    slug: "reagent-ge",
     name: "Reagent.ge",
     category: "Catalogue",
     image: ReagentImg,
@@ -125,9 +130,9 @@ export default function Projects() {
           }`}
         >
           {row.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href="#contact"
+              href={`/projects/${item.slug}`}
               className={`group block min-w-0 ${item.flexBasis} ${item.offsetClass} transition-transform duration-300 ease-out hover:-translate-y-1`}
             >
               <div
@@ -158,7 +163,7 @@ export default function Projects() {
                   {item.category}
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       ))}

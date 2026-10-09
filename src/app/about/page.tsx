@@ -3,7 +3,6 @@ import Header from "@/components/Layout/Header/Header";
 import Footer from "@/components/Layout/Footer";
 import AboutUs from "@/components/Pages/AboutUs";
 import Testimonials from "@/components/Pages/Testimonials";
-import CTA from "@/components/Pages/CTA";
 
 export const metadata: Metadata = {
   title: "About us",
@@ -21,7 +20,6 @@ export default function AboutPage() {
       <main>
         <AboutUs />
         <Testimonials />
-        <CTA />
       </main>
       <Footer />
     </div>

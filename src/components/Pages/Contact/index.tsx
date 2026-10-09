@@ -3,7 +3,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
+import { AlertCircle, Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
+import { toast } from "@/components/ui/toast";
+import {
+  ContactErrors,
+  ContactField,
+  ContactValues,
+  LIMITS,
+  validateAll,
+  validateField,
+} from "./validation";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -77,43 +86,126 @@ const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 // Anti-spam limits
 const MIN_FILL_TIME_MS = 3000;
 const SEND_COOLDOWN_MS = 60_000;
-const MAX_NAME_LENGTH = 100;
-const MAX_EMAIL_LENGTH = 254;
-const MAX_MESSAGE_LENGTH = 3000;
+const CONTACT_EMAIL = "gargariinfo@gmail.com";
+
+const emptyValues: ContactValues = {
+  from_name: "",
+  email: "",
+  service: "",
+  message: "",
+};
+
+const fieldOrder: ContactField[] = ["from_name", "email", "service", "message"];
+
+const labelClass =
+  "block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2";
+
+const inputClass = (invalid: boolean) =>
+  `w-full bg-white border rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none transition-[border-color,box-shadow] duration-200 ${
+    invalid
+      ? "border-[#B3261E] focus:shadow-[0_0_0_3px_rgba(179,38,30,0.12)]"
+      : "border-[#E3E3E6] focus:border-[#FF7A00]"
+  }`;
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} className="mt-1.5 flex items-start gap-1.5 text-[12.5px] leading-[1.4] text-[#B3261E]">
+      <AlertCircle size={14} className="mt-px shrink-0" aria-hidden="true" />
+      {message}
+    </p>
+  );
+}
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
+  const serviceBox = useRef<HTMLDivElement>(null);
   const mountedAt = useRef(0);
   const lastSentAt = useRef(0);
   const [isSending, setIsSending] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "success">("idle");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState("");
+  const [values, setValues] = useState<ContactValues>(emptyValues);
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [touched, setTouched] = useState<Partial<Record<ContactField, boolean>>>({});
 
   useEffect(() => {
     mountedAt.current = Date.now();
   }, []);
 
+  // Close the service list when clicking anywhere else
+  useEffect(() => {
+    if (!isOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (!serviceBox.current?.contains(e.target as Node)) setIsOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen]);
+
+  const setField = (field: ContactField, value: string) => {
+    setValues((prev) => ({ ...prev, [field]: value }));
+    // Re-check live once the field has been visited, so errors clear as soon as they're fixed
+    if (touched[field] || errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: validateField(field, value) }));
+    }
+  };
+
+  const touchField = (field: ContactField) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors((prev) => ({ ...prev, [field]: validateField(field, values[field]) }));
+  };
+
+  const errorProps = (field: ContactField) => ({
+    "aria-invalid": errors[field] ? true : undefined,
+    "aria-describedby": errors[field] ? `${field}-error` : undefined,
+  });
+
+  const resetForm = () => {
+    setValues(emptyValues);
+    setErrors({});
+    setTouched({});
+  };
+
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current || isSending) return;
 
-    const data = new FormData(form.current);
+    const honeypot = new FormData(form.current).get("website");
 
     // Bots fill the hidden honeypot field or submit instantly; silently drop them
-    if (
-      data.get("website") ||
-      Date.now() - mountedAt.current < MIN_FILL_TIME_MS
-    ) {
-      form.current.reset();
+    if (honeypot || Date.now() - mountedAt.current < MIN_FILL_TIME_MS) {
+      resetForm();
       setStatus("success");
       setTimeout(() => setStatus("idle"), 3000);
       return;
     }
 
-    if (Date.now() - lastSentAt.current < SEND_COOLDOWN_MS) {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 3000);
+    const nextErrors = validateAll(values);
+    setErrors(nextErrors);
+    setTouched({ from_name: true, email: true, service: true, message: true });
+    const firstInvalid = fieldOrder.find((field) => nextErrors[field]);
+    if (firstInvalid) {
+      const target =
+        firstInvalid === "service"
+          ? serviceBox.current?.querySelector("button")
+          : form.current.querySelector<HTMLElement>(`[name="${firstInvalid}"]`);
+      target?.focus();
+      return;
+    }
+
+    const wait = Math.ceil((SEND_COOLDOWN_MS - (Date.now() - lastSentAt.current)) / 1000);
+    if (wait > 0) {
+      toast.warning("Please wait a moment", {
+        description: `You can send another message in ${wait} seconds.`,
+      });
       return;
     }
 
@@ -124,49 +216,53 @@ const Contact = () => {
       !EMAILJS_PUBLIC_KEY
     ) {
       console.error("EmailJS environment variables are not configured");
-      setStatus("error");
+      toast.error("The form is unavailable right now", {
+        description: `Please email us directly at ${CONTACT_EMAIL}.`,
+      });
       return;
     }
 
+    const params = {
+      from_name: values.from_name.trim(),
+      email: values.email.trim(),
+      service: values.service,
+      message: values.message.trim(),
+    };
+
     setIsSending(true);
-    setStatus("idle");
 
     try {
       await Promise.all([
-        emailjs.sendForm(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          form.current,
-          { publicKey: EMAILJS_PUBLIC_KEY, limitRate: { throttle: SEND_COOLDOWN_MS } },
-        ),
-        emailjs.sendForm(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_CLIENT_TEMPLATE_ID,
-          form.current,
-          { publicKey: EMAILJS_PUBLIC_KEY },
-        ),
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, {
+          publicKey: EMAILJS_PUBLIC_KEY,
+          limitRate: { throttle: SEND_COOLDOWN_MS },
+        }),
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CLIENT_TEMPLATE_ID, params, {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }),
       ]);
 
       lastSentAt.current = Date.now();
       setStatus("success");
-      form.current.reset();
-      setSelectedService("");
+      resetForm();
+      toast.success("Message sent", {
+        description: `Thanks, ${params.from_name}! We'll reply to ${params.email} within a day.`,
+      });
+      setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
       console.error("EmailJS Error details:", error);
-      setStatus("error");
+      toast.error("Message not sent", {
+        description: `Something went wrong. Please try again, or email us at ${CONTACT_EMAIL}.`,
+      });
     } finally {
       setIsSending(false);
-      setTimeout(() => setStatus("idle"), 3000);
     }
   };
 
   return (
     <section
       id="contact"
-      className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] py-[56px] sm:py-20 lg:py-[104px]"
-      style={{
-        background: "linear-gradient(180deg,#FFFFFF 0%,#F5F5F7 100%)",
-      }}
+      className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-[56px] sm:pt-20 lg:pt-[104px] pb-20 sm:pb-28 lg:pb-[136px]"
     >
       <div className="mb-12 sm:mb-14 lg:mb-16">
         <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
@@ -207,7 +303,7 @@ const Contact = () => {
           transition={{ duration: 0.4 }}
           className="order-2 lg:order-1 rounded-xl border border-[#EDEAE6] bg-white p-5 sm:p-8"
         >
-          <form ref={form} onSubmit={sendEmail} className="space-y-5">
+          <form ref={form} onSubmit={sendEmail} noValidate className="space-y-5">
             {/* Honeypot: hidden from people, bots tend to fill it */}
             <input
               type="text"
@@ -219,52 +315,72 @@ const Contact = () => {
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
+                <label htmlFor="contact-name" className={labelClass}>
                   Name
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="from_name"
-                  required
-                  maxLength={MAX_NAME_LENGTH}
-                  className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
+                  autoComplete="name"
+                  maxLength={LIMITS.name.max}
+                  value={values.from_name}
+                  onChange={(e) => setField("from_name", e.target.value)}
+                  onBlur={() => touchField("from_name")}
+                  {...errorProps("from_name")}
+                  className={inputClass(!!errors.from_name)}
                   placeholder="Your name"
                 />
+                <FieldError id="from_name-error" message={errors.from_name} />
               </div>
               <div>
-                <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
+                <label htmlFor="contact-email" className={labelClass}>
                   Email
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
-                  required
-                  maxLength={MAX_EMAIL_LENGTH}
-                  className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors"
+                  autoComplete="email"
+                  inputMode="email"
+                  maxLength={LIMITS.email.max}
+                  value={values.email}
+                  onChange={(e) => setField("email", e.target.value)}
+                  onBlur={() => touchField("email")}
+                  {...errorProps("email")}
+                  className={inputClass(!!errors.email)}
                   placeholder="you@email.com"
                 />
+                <FieldError id="email-error" message={errors.email} />
               </div>
             </div>
 
-            <div className="relative">
-              <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
+            <div className="relative" ref={serviceBox}>
+              <span id="service-label" className={labelClass}>
                 Service
-              </label>
+              </span>
 
-              <input type="hidden" name="service" value={selectedService} />
-
-              <div
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
+                aria-labelledby="service-label"
+                {...errorProps("service")}
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full bg-white border rounded-lg px-4 py-3 text-sm cursor-pointer flex justify-between items-center transition-colors ${
-                  isOpen ? "border-[#FF7A00]" : "border-[#E3E3E6]"
+                className={`w-full bg-white border rounded-lg px-4 py-3 text-sm text-left flex justify-between items-center outline-none transition-colors ${
+                  errors.service
+                    ? "border-[#B3261E]"
+                    : isOpen
+                      ? "border-[#FF7A00]"
+                      : "border-[#E3E3E6] focus-visible:border-[#FF7A00]"
                 }`}
               >
                 <span
                   className={
-                    selectedService ? "text-[#0E0E0E]" : "text-[#9A9A9E]"
+                    values.service ? "text-[#0E0E0E]" : "text-[#9A9A9E]"
                   }
                 >
-                  {selectedService || "Select a service"}
+                  {values.service || "Select a service"}
                 </span>
                 <svg
                   className={`w-4 h-4 text-[#FF7A00] transition-transform duration-300 ${
@@ -273,6 +389,7 @@ const Contact = () => {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -281,54 +398,74 @@ const Contact = () => {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
-              </div>
+              </button>
 
               {isOpen && (
-                <motion.div
+                <motion.ul
+                  role="listbox"
+                  aria-labelledby="service-label"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   className="absolute z-50 w-full mt-2 bg-white border border-[#E3E3E6] rounded-lg overflow-hidden shadow-lg"
                 >
                   {services.map((service) => (
-                    <div
-                      key={service}
-                      onClick={() => {
-                        setSelectedService(service);
-                        setIsOpen(false);
-                      }}
-                      className="px-4 py-2.5 hover:bg-[#F5F5F7] cursor-pointer transition-colors text-[#0E0E0E] text-sm border-b border-[#E3E3E6] last:border-b-0"
-                    >
-                      {service}
-                    </div>
+                    <li key={service} role="option" aria-selected={values.service === service}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setField("service", service);
+                          setErrors((prev) => ({ ...prev, service: undefined }));
+                          setIsOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2.5 hover:bg-[#F5F5F7] transition-colors text-sm border-b border-[#E3E3E6] ${
+                          values.service === service ? "text-[#FF7A00] font-medium" : "text-[#0E0E0E]"
+                        }`}
+                      >
+                        {service}
+                      </button>
+                    </li>
                   ))}
-                </motion.div>
+                </motion.ul>
               )}
+              <FieldError id="service-error" message={errors.service} />
             </div>
 
             <div>
-              <label className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#5A5A5F] mb-2">
-                Message
-              </label>
+              <div className="flex items-baseline justify-between gap-3">
+                <label htmlFor="contact-message" className={labelClass}>
+                  Message
+                </label>
+                <span
+                  className={`text-[11px] tabular-nums ${
+                    values.message.length >= LIMITS.message.max ? "text-[#B3261E]" : "text-[#9A9A9E]"
+                  }`}
+                >
+                  {values.message.length} / {LIMITS.message.max}
+                </span>
+              </div>
               <textarea
+                id="contact-message"
                 name="message"
-                required
-                maxLength={MAX_MESSAGE_LENGTH}
+                maxLength={LIMITS.message.max}
                 rows={4}
-                className="w-full bg-white border border-[#E3E3E6] rounded-lg px-4 py-3 text-[#0E0E0E] placeholder-[#9A9A9E] text-sm outline-none focus:border-[#FF7A00] transition-colors resize-none"
+                value={values.message}
+                onChange={(e) => setField("message", e.target.value)}
+                onBlur={() => touchField("message")}
+                {...errorProps("message")}
+                className={`${inputClass(!!errors.message)} resize-none`}
                 placeholder="Tell us about your project..."
               ></textarea>
+              <FieldError id="message-error" message={errors.message} />
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
               disabled={isSending}
               type="submit"
-              className={`group relative w-full inline-flex items-center justify-center gap-2.5 rounded-full h-12 font-outfit font-bold text-[15px] text-[#0E0E0E] whitespace-nowrap cursor-pointer transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`group relative w-full inline-flex items-center justify-center gap-2.5 rounded-full h-12 font-outfit font-bold text-[15px] whitespace-nowrap cursor-pointer transition-[background-color,color,box-shadow] duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
                 status === "success"
                   ? "bg-[#1FA34A] text-white"
-                  : "bg-primary hover:bg-white"
+                  : "bg-primary text-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-white hover:shadow-[0_12px_28px_-12px_rgba(14,14,14,0.6)]"
               }`}
             >
               {isSending
@@ -337,17 +474,11 @@ const Contact = () => {
                   ? "Sent!"
                   : "Send message"}
               {status !== "success" && (
-                <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0">
+                <span className="inline-flex items-center justify-center w-[26px] h-[26px] rounded-full bg-[#0E0E0E] shrink-0 transition-[background-color,translate] duration-300 group-hover:bg-primary group-hover:translate-x-1">
                   <ArrowIcon />
                 </span>
               )}
             </motion.button>
-
-            {status === "error" && (
-              <p className="text-[#B3261E] text-xs text-center">
-                Something went wrong, please try again later.
-              </p>
-            )}
           </form>
         </motion.div>
 
@@ -366,9 +497,9 @@ const Contact = () => {
               rel={
                 card.href.startsWith("http") ? "noopener noreferrer" : undefined
               }
-              className="group flex items-center gap-3.5 rounded-xl border border-[#EDEAE6] bg-white p-4 transition-[border-color,transform] duration-[250ms] hover:border-[#FF7A00]/40 hover:-translate-y-1"
+              className="group flex items-center gap-3.5 rounded-xl border border-[#EDEAE6] bg-white p-4 transition-[border-color,background-color] duration-300 hover:border-[#FF7A00]/50 hover:bg-[#FFF8F1]"
             >
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-transform duration-200 group-hover:scale-105">
+              <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0 transition-colors duration-300 group-hover:bg-[#FF7A00] group-hover:text-white">
                 {card.icon}
               </div>
               <div className="min-w-0">

@@ -32,6 +32,10 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isActive = (link: (typeof navLinks)[number]) =>
+    link.id === "top"
+      ? isHome
+      : pathname === link.href || pathname.startsWith(`${link.href}/`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -102,18 +106,17 @@ export default function Header() {
           }}
         >
           {navLinks.map((link) => {
-            const active = link.id
-              ? link.id === "top" && isHome
-              : pathname === link.href;
+            const active = isActive(link);
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.id)}
-                className={`font-outfit text-[14.5px] font-medium rounded-full px-4 py-2 whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                aria-current={active ? "page" : undefined}
+                className={`relative font-outfit text-[14.5px] rounded-full px-4 py-2 whitespace-nowrap transition-[color,background-color,box-shadow] duration-300 cursor-pointer ${
                   active
-                    ? "text-[#0E0E0E] bg-white/90 shadow-[0_1px_3px_rgba(14,14,14,0.1),0_0_0_0.5px_rgba(14,14,14,0.04)]"
-                    : "text-[#4A4A4E] hover:text-[#0E0E0E] hover:bg-white/70"
+                    ? "font-semibold text-[#0E0E0E] bg-[linear-gradient(180deg,rgba(120,120,128,0.20)_0%,rgba(120,120,128,0.10)_100%)] backdrop-blur-md backdrop-saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(14,14,14,0.06),0_0_0_0.5px_rgba(14,14,14,0.10),0_2px_8px_-2px_rgba(14,14,14,0.14)]"
+                    : "font-medium text-[#6E6E73] hover:text-[#0E0E0E] hover:bg-white/70"
                 }`}
               >
                 {link.label}
@@ -162,16 +165,23 @@ export default function Header() {
         }`}
       >
         <nav className="flex flex-col px-5 sm:px-9 py-4 gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.id)}
-              className="font-outfit text-[16px] font-medium text-left text-[#0E0E0E] py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active = isActive(link);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.id)}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center justify-between font-outfit text-[16px] text-left py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer ${
+                  active ? "font-bold text-[#FF7A00]" : "font-medium text-[#0E0E0E]"
+                }`}
+              >
+                {link.label}
+                {active && <span className="w-1.5 h-1.5 rounded-full bg-[#FF7A00]" />}
+              </Link>
+            );
+          })}
           <Link
             href="/contact"
             onClick={(e) => handleNavClick(e)}

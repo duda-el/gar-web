@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { Users, Layers, Sparkles, MapPin, Clock } from "lucide-react";
 import heroIllustration from "@/Assets/images/about-hero-illustration.png";
@@ -53,32 +52,7 @@ const steps = [
   },
 ];
 
-const faqs = [
-  {
-    question: "How long does a project take?",
-    answer:
-      "Most landing pages ship in 2-3 weeks. Larger web apps and stores run 4-8 weeks depending on scope.",
-  },
-  {
-    question: "Do you work with clients outside Georgia?",
-    answer:
-      "Yes. Calls, a shared staging link and async updates cover the whole process, wherever you are.",
-  },
-  {
-    question: "What do you need from me to start?",
-    answer:
-      "A short brief, your content or help writing it, and any brand assets you already have.",
-  },
-  {
-    question: "Is there support after launch?",
-    answer:
-      "Every project includes a month of support after handover, plus ongoing maintenance if you need it.",
-  },
-];
-
 export default function AboutUs() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
-
   return (
     <>
       <section
@@ -184,68 +158,6 @@ export default function AboutUs() {
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="mt-16 sm:mt-20 lg:mt-24 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-16">
-          <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
-              FAQ
-            </span>
-            <h2 className="mt-3 max-w-[18ch] font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">
-              Answers before you ask
-            </h2>
-            <p className="mt-4 max-w-[42ch] text-[15px] leading-[1.6] text-[#4A4A4E]">
-              The questions that come up most before a project starts.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            {faqs.map((faq, i) => {
-              const isOpen = openFaq === i;
-              return (
-                <div
-                  key={faq.question}
-                  className="rounded-xl border border-[#EDEAE6] bg-white overflow-hidden"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer"
-                  >
-                    <span className="font-outfit font-bold text-[15.5px] text-[#0E0E0E]">
-                      {faq.question}
-                    </span>
-                    <svg
-                      className={`w-4 h-4 text-[#FF7A00] shrink-0 transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="px-5 pb-4 text-[14.5px] leading-[1.6] text-[#4A4A4E]">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

@@ -54,6 +54,17 @@ body {
   }
 }
 
+/* Gentle up-and-down drift for decorative shapes */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(6deg);
+  }
+}
+
 .animate-marquee {
   display: flex;
   width: max-content;
@@ -159,6 +170,20 @@ body {
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-georgian);
+  }
+  /* Tailwind v4 resets buttons to the default cursor; restore the pointer for clickable controls */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  select,
+  summary,
+  label[for],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="submit"] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
   }
 }
 
