@@ -6,7 +6,7 @@ import ProjectDetail from "@/components/Pages/ProjectDetail";
 import { getProjectBySlug, projects } from "@/constants/projects";
 import { locales } from "@/i18n/config";
 import { pageMetadata } from "@/i18n/metadata";
-import { getDictionary, resolveLocale } from "@/i18n";
+import { resolveLocale } from "@/i18n";
 
 type Props = {
   params: Promise<{ lang: string; slug: string }>;
@@ -25,10 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return {};
 
   const content = project.content[locale];
-  const suffix = getDictionary(locale).meta.pages.project.titleSuffix;
+  // e.g. "Zmna.ge — საინფორმაციო პორტალის ვებ გვერდი": project name plus what it is
+  const title = content.alt.replace(/\s+-\s+/, " — ");
 
   return pageMetadata(locale, `/projects/${project.slug}`, {
-    title: `${project.title} — ${suffix}`,
+    title,
     description: content.description,
     image: { url: project.images[0].src, alt: content.alt },
   });

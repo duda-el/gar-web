@@ -84,11 +84,14 @@ export default function Hero() {
         <FlowLines />
 
         <div className="relative z-[1] max-w-[1440px] overflow-x-hidden mx-auto flex flex-col items-center text-center">
-          <h1 className="m-0 max-w-[92%] sm:max-w-[85%] lg:max-w-[16ch] break-words font-outfit font-extrabold text-[#0E0E0E] leading-[1] tracking-[-0.04em] text-[clamp(34px,9vw,56px)] sm:text-[clamp(44px,7.2vw,72px)] lg:text-[clamp(56px,5.6vw,94px)]">
+          <h1 className="m-0 mb-4 sm:mb-5 text-[12.5px] sm:text-[13.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+            {t.hero.eyebrow}
+          </h1>
+          <p className="m-0 max-w-[92%] sm:max-w-[85%] lg:max-w-[16ch] break-words font-outfit font-extrabold text-[#0E0E0E] leading-[1] tracking-[-0.04em] text-[clamp(34px,9vw,56px)] sm:text-[clamp(44px,7.2vw,72px)] lg:text-[clamp(56px,5.6vw,94px)]">
             {t.hero.titleLine1}
             <br />
             {t.hero.titleLine2}
-          </h1>
+          </p>
 
           <p className="mt-5 sm:mt-7 lg:mt-[34px] max-w-[58ch] text-[#4A4A4E] leading-[1.56] text-[clamp(15.5px,1.2vw,18.5px)]">
             {t.hero.subtitle}

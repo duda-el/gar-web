@@ -1,6 +1,6 @@
 const en = {
   meta: {
-    defaultTitle: "Website Development, UI/UX and Graphic Design in Georgia | Gargari",
+    defaultTitle: "Website Development & Design in Tbilisi | Gargari",
     description:
       "Gargari offers professional services: website development, UI/UX design and branding. Let us help your business with its digital transformation.",
     ogTitle: "Gargari - Website Development and Web Design",
@@ -24,26 +24,25 @@ const en = {
     organization: "Website development, UI/UX design and branding in Georgia",
     pages: {
       services: {
-        title: "Services",
+        title: "Website Development Services & Prices",
         description:
           "Landing pages, web applications, e-commerce, branding and UI/UX design, fixed scope and real prices, built by the GarGari team.",
       },
       projects: {
-        title: "All Projects",
+        title: "Portfolio: Websites, Branding & UI/UX",
         description:
           "See all the projects built by Gargari: websites, e-commerce platforms, branding and UI/UX design.",
       },
       about: {
-        title: "About us",
+        title: "About Us: Web Design Studio in Tbilisi",
         description:
           "GarGari is a Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",
       },
       contact: {
-        title: "Contact",
+        title: "Contact Us: Start Your Website Project",
         description:
           "Get in touch with the Gargari team: tell us about your project and we'll get back to you within a day.",
       },
-      project: { titleSuffix: "Project" },
       notFound: { title: "Page not found" },
     },
   },
@@ -61,6 +60,7 @@ const en = {
   },
 
   hero: {
+    eyebrow: "Website development in Tbilisi",
     titleLine1: "Change the future",
     titleLine2: "with us",
     subtitle:
