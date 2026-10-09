@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian, Outfit } from "next/font/google";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import AppToaster from "@/components/ui/AppToaster";
 import { I18nProvider } from "@/i18n/I18nProvider";
@@ -134,7 +134,8 @@ export default async function RootLayout({ children, params }: Props) {
           }}
         />
       </head>
-      <GoogleTagManager gtmId="GTM-TXP9LKXZ" />
+      {/* GTM-TXP9LKXZ was removed: the container has no tags, it only added ~340 KB of JS.
+          Re-add <GoogleTagManager gtmId="GTM-TXP9LKXZ" /> if tags are configured there later. */}
       <body className="font-georgian antialiased" suppressHydrationWarning>
         <I18nProvider locale={locale} dictionary={dictionary}>
           {children}
