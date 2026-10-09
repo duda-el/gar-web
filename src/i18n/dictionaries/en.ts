@@ -336,7 +336,7 @@ const en = {
       "A Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",
     navigation: "Navigation",
     contact: "Contact",
-    address: "Rustaveli Ave, Tbilisi 0108",
+    address: "Tbilisi, Georgia",
     getInTouch: "Get in touch",
     getInTouchText: "Have an idea? Let's turn it into something real.",
     privacy: "Privacy Policy",
