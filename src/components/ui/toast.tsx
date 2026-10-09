@@ -11,7 +11,7 @@ import React, {
 } from "react"
 import { createPortal } from "react-dom"
 import { createRoot } from "react-dom/client"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

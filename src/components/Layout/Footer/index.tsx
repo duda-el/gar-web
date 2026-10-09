@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { Mail, Phone, Facebook, Instagram, MapPin } from "lucide-react";
+import { Mail, Facebook, Instagram, MapPin } from "lucide-react";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import PolicyModal from "../../ui/Modal/PolicyModal";
-import type { PolicyType } from "@/constants/policies";
+import { CONTACT_EMAIL, type PolicyType } from "@/constants/policies";
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 import { useI18n } from "@/i18n/I18nProvider";
 import { stripLocale } from "@/i18n/config";
@@ -139,18 +139,11 @@ const Footer = () => {
             </h3>
             <div className="flex flex-col gap-3.5">
               <a
-                href="mailto:hello@gargari.ge"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
               >
                 <Mail size={15} className="text-[#FF7A00] shrink-0" />
-                hello@gargari.ge
-              </a>
-              <a
-                href="tel:+995322000000"
-                className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
-              >
-                <Phone size={15} className="text-[#FF7A00] shrink-0" />
-                +995 32 2 00 00 00
+                {CONTACT_EMAIL}
               </a>
               <div className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3]">
                 <MapPin size={15} className="text-[#FF7A00] shrink-0" />

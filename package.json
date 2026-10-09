@@ -16,13 +16,11 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.25.0",
     "lucide-react": "^0.562.0",
-    "motion": "^13.2.0",
     "next": "^16.4.0",
     "radix-ui": "^1.6.7",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-icons": "^5.7.0",
-    "swiper": "^12.0.3",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

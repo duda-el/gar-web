@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_Georgian, Outfit, Instrument_Serif, DM_Sans } from "next/font/google";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
-import Script from "next/script";
+import { Noto_Sans_Georgian, Outfit } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import AppToaster from "@/components/ui/AppToaster";
+import JsonLd from "@/components/seo/JsonLd";
+import { siteGraph } from "@/lib/structuredData";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { locales, ogLocales, pageAlternates, SITE_URL } from "@/i18n/config";
 import { getDictionary, resolveLocale } from "@/i18n";
@@ -10,7 +11,8 @@ import "../globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
   subsets: ["georgian"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  // Only the weights the site uses (normal, medium, semibold, bold, extrabold)
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-noto-georgian",
   display: "swap",
 });
@@ -22,21 +24,6 @@ const outfit = Outfit({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--ff-instrument",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--ff-dmsans",
-  display: "swap",
-});
-
 type Props = {
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
@@ -45,6 +32,10 @@ type Props = {
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
+
+// Only "ka" and "en" are valid; anything else (e.g. "/robots.txt", "/foo.php") is a 404
+// instead of silently rendering the Georgian home page
+export const dynamicParams = false;
 
 export const viewport: Viewport = {
   themeColor: "#121212",
@@ -124,28 +115,13 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <html
       lang={locale}
-      className={`${notoGeorgian.variable} ${outfit.variable} ${instrumentSerif.variable} ${dmSans.variable}`}
+      className={`${notoGeorgian.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <Script
-          id="schema-org"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Gargari",
-              url: SITE_URL,
-              logo: `${SITE_URL}/gargari.png`,
-              description: dictionary.meta.organization,
-            }),
-          }}
-        />
-      </head>
-      <GoogleTagManager gtmId="GTM-TXP9LKXZ" />
+      {/* GTM-TXP9LKXZ was removed: the container has no tags, it only added ~340 KB of JS.
+          Re-add <GoogleTagManager gtmId="GTM-TXP9LKXZ" /> if tags are configured there later. */}
       <body className="font-georgian antialiased" suppressHydrationWarning>
+        <JsonLd data={siteGraph(locale, dictionary)} />
         <I18nProvider locale={locale} dictionary={dictionary}>
           {children}
           <AppToaster />
