@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian, Outfit, Instrument_Serif, DM_Sans } from "next/font/google";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import Script from "next/script";
+import AppToaster from "@/components/ui/AppToaster";
 import "./globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
@@ -180,6 +181,7 @@ export default function RootLayout({
       <GoogleTagManager gtmId="GTM-TXP9LKXZ" />
       <body className="font-georgian antialiased" suppressHydrationWarning>
         {children}
+        <AppToaster />
         <GoogleAnalytics gaId="G-TCBNN29N66" />
       </body>
     </html>

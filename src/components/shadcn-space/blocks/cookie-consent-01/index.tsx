@@ -17,6 +17,7 @@ const CookieConsent = () => {
   const dismiss = (accepted: boolean) => {
     setVisible(false);
     if (accepted) toast.success("Cookies accepted.");
+    else toast.info("Only essential cookies will be used.");
   };
 
   return (
