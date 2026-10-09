@@ -6,7 +6,9 @@ import ProjectDetail from "@/components/Pages/ProjectDetail";
 import { getProjectBySlug, projects } from "@/constants/projects";
 import { locales } from "@/i18n/config";
 import { pageMetadata } from "@/i18n/metadata";
-import { resolveLocale } from "@/i18n";
+import { getDictionary, resolveLocale } from "@/i18n";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbs, projectWork } from "@/lib/structuredData";
 
 type Props = {
   params: Promise<{ lang: string; slug: string }>;
@@ -36,12 +38,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProjectPage({ params }: Props) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const locale = resolveLocale(lang);
+  const t = getDictionary(locale);
   const project = getProjectBySlug(slug);
   if (!project) notFound();
+  const content = project.content[locale];
 
   return (
     <div className="min-h-screen bg-white">
+      <JsonLd
+        data={breadcrumbs(locale, t, [
+          { name: t.nav.projects, path: "/projects" },
+          { name: project.title, path: `/projects/${project.slug}` },
+        ])}
+      />
+      <JsonLd
+        data={projectWork(
+          locale,
+          { slug: project.slug, title: project.title, url: project.url, image: project.images[0].src },
+          content,
+        )}
+      />
       <Header />
       <main>
         <ProjectDetail project={project} />

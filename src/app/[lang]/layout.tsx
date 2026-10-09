@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian, Outfit } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 import AppToaster from "@/components/ui/AppToaster";
+import JsonLd from "@/components/seo/JsonLd";
+import { siteGraph } from "@/lib/structuredData";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { locales, ogLocales, pageAlternates, SITE_URL } from "@/i18n/config";
 import { getDictionary, resolveLocale } from "@/i18n";
@@ -117,26 +118,10 @@ export default async function RootLayout({ children, params }: Props) {
       className={`${notoGeorgian.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <Script
-          id="schema-org"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Gargari",
-              url: SITE_URL,
-              logo: `${SITE_URL}/gargari.png`,
-              description: dictionary.meta.organization,
-            }),
-          }}
-        />
-      </head>
       {/* GTM-TXP9LKXZ was removed: the container has no tags, it only added ~340 KB of JS.
           Re-add <GoogleTagManager gtmId="GTM-TXP9LKXZ" /> if tags are configured there later. */}
       <body className="font-georgian antialiased" suppressHydrationWarning>
+        <JsonLd data={siteGraph(locale, dictionary)} />
         <I18nProvider locale={locale} dictionary={dictionary}>
           {children}
           <AppToaster />
