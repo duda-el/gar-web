@@ -115,7 +115,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.navigation}
             </h2>
             <ul className="flex flex-col gap-3.5">
@@ -134,7 +134,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.contact}
             </h2>
             <div className="flex flex-col gap-3.5">
@@ -153,7 +153,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.getInTouch}
             </h2>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3]">
@@ -163,20 +163,20 @@ const Footer = () => {
         </div>
 
         <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-5">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-[#6E6E73]">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#9A9A9E]">
             © {currentYear} GarGari Studio
           </p>
 
           <div className="flex items-center gap-6 sm:gap-8">
             <button
               onClick={() => setModalType("privacy")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {t.footer.privacy}
             </button>
             <button
               onClick={() => setModalType("terms")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {t.footer.terms}
             </button>

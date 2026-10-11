@@ -9,7 +9,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { format } from "@/i18n/format";
 
 const statusColor: Record<Project["status"], string> = {
-  active: "#1FA34A",
+  active: "#15803D",
   completed: "#0E0E0E",
 };
 

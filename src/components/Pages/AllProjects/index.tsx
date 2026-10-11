@@ -10,7 +10,7 @@ import { format } from "@/i18n/format";
 const filters: (Project["type"] | "all")[] = ["all", "website", "design", "uiux"];
 
 const statusColor: Record<Project["status"], string> = {
-  active: "#1FA34A",
+  active: "#15803D",
   completed: "#0E0E0E",
 };
 

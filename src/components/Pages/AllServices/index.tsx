@@ -116,7 +116,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             </span>
             <span
               className={`font-outfit font-bold text-[13px] transition-colors duration-500 group-hover:text-[#FF7A00] ${
-                featured ? "text-white/40" : "text-[#B7B4AF]"
+                featured ? "text-white/60" : "text-[#6E6A65]"
               }`}
             >
               {service.number}

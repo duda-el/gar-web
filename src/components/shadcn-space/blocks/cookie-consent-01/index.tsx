@@ -55,7 +55,7 @@ const CookieConsent = () => {
               {t.cookies.reject}
             </Button>
             <Button
-              className="h-10 flex-1 sm:flex-none px-4 sm:px-6 rounded-full font-medium cursor-pointer hover:bg-primary/80 transition-colors duration-200"
+              className="h-10 flex-1 sm:flex-none px-4 sm:px-6 rounded-full font-medium cursor-pointer text-[#0E0E0E] hover:bg-primary/80 transition-colors duration-200"
               onClick={() => dismiss(true)}
             >
               {t.cookies.accept}

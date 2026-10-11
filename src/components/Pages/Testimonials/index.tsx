@@ -99,7 +99,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             <p className="font-outfit font-bold text-[14px] text-[#0E0E0E] leading-tight truncate">
               {testimonial.name}
             </p>
-            <p className="text-[12px] text-[#8A8A8E] truncate">
+            <p className="text-[12px] text-[#6E6E73] truncate">
               {testimonial.role}
             </p>
           </div>

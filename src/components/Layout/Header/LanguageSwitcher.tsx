@@ -26,7 +26,6 @@ export default function LanguageSwitcher({ className = "" }: { className?: strin
             href={localizePath(l, path)}
             hrefLang={l}
             lang={l}
-            aria-label={localeNames[l]}
             aria-current={active ? "true" : undefined}
             scroll={false}
             className={`inline-flex items-center justify-center min-w-[38px] h-8 px-2.5 rounded-full font-outfit text-[12.5px] transition-[color,background-color,box-shadow] duration-300 ${
@@ -36,6 +35,7 @@ export default function LanguageSwitcher({ className = "" }: { className?: strin
             }`}
           >
             {shortNames[l]}
+            <span className="sr-only"> ({localeNames[l]})</span>
           </Link>
         );
       })}
