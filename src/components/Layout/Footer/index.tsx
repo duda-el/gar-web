@@ -115,9 +115,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
               {t.footer.navigation}
-            </h3>
+            </h2>
             <ul className="flex flex-col gap-3.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -134,9 +134,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
               {t.footer.contact}
-            </h3>
+            </h2>
             <div className="flex flex-col gap-3.5">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
@@ -153,9 +153,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
               {t.footer.getInTouch}
-            </h3>
+            </h2>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3]">
               {t.footer.getInTouchText}
             </p>

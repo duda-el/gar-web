@@ -360,7 +360,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
       {/* Overview + details */}
       <div className="mt-14 sm:mt-20 lg:mt-24 grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 lg:gap-16 items-start">
         <div>
-          <span className="block text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+          <span className="block text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
             {t.projectDetail.overview}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(26px,3.2vw,42px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
@@ -383,7 +383,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                 key={item}
                 className="flex items-start gap-3 rounded-xl border border-[#EDEAE6] bg-white p-4"
               >
-                <span className="font-outfit font-bold text-[13px] text-[#FF7A00] leading-[1.6] shrink-0">
+                <span className="font-outfit font-bold text-[13px] text-[#B85300] leading-[1.6] shrink-0">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="text-[14px] leading-[1.6] text-[#0E0E0E]">{item}</span>
@@ -412,7 +412,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[15px] font-medium text-[#0E0E0E] hover:text-[#FF7A00] transition-colors duration-200"
+                    className="inline-flex items-center gap-1 text-[15px] font-medium text-[#0E0E0E] hover:text-[#B85300] transition-colors duration-200"
                   >
                     {project.url.replace(/^https?:\/\/(www\.)?/, "")}
                     <ArrowUpRight size={14} />

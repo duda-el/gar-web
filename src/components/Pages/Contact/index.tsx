@@ -264,7 +264,7 @@ const Contact = () => {
       className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-[56px] sm:pt-20 lg:pt-[104px] pb-20 sm:pb-28 lg:pb-[136px]"
     >
       <div className="mb-12 sm:mb-14 lg:mb-16">
-        <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+        <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
           {t.contact.eyebrow}
         </span>
         <h1 className="mt-3 max-w-[20ch] font-outfit font-extrabold text-[clamp(30px,4.5vw,58px)] leading-[1.05] tracking-[-0.03em] text-[#0E0E0E]">
@@ -416,7 +416,7 @@ const Contact = () => {
                           setIsOpen(false);
                         }}
                         className={`w-full text-left px-4 py-2.5 hover:bg-[#F5F5F7] transition-colors text-sm border-b border-[#E3E3E6] ${
-                          values.service === service ? "text-[#FF7A00] font-medium" : "text-[#0E0E0E]"
+                          values.service === service ? "text-[#B85300] font-medium" : "text-[#0E0E0E]"
                         }`}
                       >
                         {service}

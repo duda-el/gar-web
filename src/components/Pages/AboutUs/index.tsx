@@ -21,7 +21,7 @@ export default function AboutUs() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.85fr] gap-12 lg:gap-16 items-center">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
               {t.aboutUs.eyebrow}
             </span>
             <h1 className="mt-3 max-w-[16ch] font-outfit font-extrabold text-[clamp(30px,4vw,52px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
@@ -70,9 +70,9 @@ export default function AboutUs() {
                 <div className="inline-flex items-center justify-center w-11 h-11 rounded-full border-2 border-[#FF7A00] bg-white text-[#FF7A00] shrink-0">
                   <Icon size={19} />
                 </div>
-                <h3 className="mt-4 font-outfit font-bold text-[17px] text-[#0E0E0E]">
+                <h2 className="mt-4 font-outfit font-bold text-[17px] text-[#0E0E0E]">
                   {value.title}
-                </h3>
+                </h2>
                 <p className="mt-2 text-[14.5px] leading-[1.6] text-[#4A4A4E]">
                   {value.description}
                 </p>
@@ -85,7 +85,7 @@ export default function AboutUs() {
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-[56px] sm:pb-20 lg:pb-[104px]">
         <div className="flex flex-wrap items-end justify-between gap-5 mb-14 sm:mb-16 lg:mb-20">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
               {t.aboutUs.howEyebrow}
             </span>
             <h2 className="mt-3 max-w-[16ch] font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
@@ -103,7 +103,7 @@ export default function AboutUs() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
             {t.steps.map((step, i) => (
               <div key={step.title} className="flex flex-col gap-4">
-                <div className="relative z-[1] inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#FF7A00] bg-white font-outfit font-bold text-[13px] text-[#FF7A00]">
+                <div className="relative z-[1] inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#FF7A00] bg-white font-outfit font-bold text-[13px] text-[#B85300]">
                   {String(i + 1).padStart(2, "0")}
                 </div>
                 <h3 className="m-0 font-outfit font-bold text-[19px] text-[#0E0E0E]">

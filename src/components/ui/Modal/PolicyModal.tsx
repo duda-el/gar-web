@@ -72,7 +72,7 @@ function PolicyPanel({
           <Icon size={21} />
         </span>
         <div className="min-w-0 flex-1">
-          <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#FF7A00]">
+          <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#B85300]">
             {t.policyModal.legal}
           </span>
           <h2
@@ -112,7 +112,7 @@ function PolicyPanel({
         <ol className="mt-7 space-y-6">
           {policy.sections.map((section, i) => (
             <li key={section.heading} className="grid grid-cols-[auto_1fr] gap-x-4">
-              <span className="pt-[3px] font-outfit font-bold text-[13px] tabular-nums text-[#FF7A00]">
+              <span className="pt-[3px] font-outfit font-bold text-[13px] tabular-nums text-[#B85300]">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
