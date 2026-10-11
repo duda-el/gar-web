@@ -67,15 +67,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    icons: {
-      icon: [
-        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      ],
-      shortcut: "/gargari.png",
-      apple: "/apple-touch-icon.png",
-    },
     appleWebApp: {
       capable: true,
       title: "Gargari",
@@ -86,7 +77,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t.description,
       url: pageAlternates(locale, "/").canonical,
       siteName: "Gargari",
-      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Gargari" }],
       locale: ogLocales[locale],
       alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
       type: "website",
@@ -95,7 +85,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: t.ogTitle,
       description: t.description,
-      images: ["/og-image.jpg"],
     },
     verification: {
       google: "kpGAn4W0G3agna6Gu57vQYMSEblYqT7kCNbXmFe-2MA",
