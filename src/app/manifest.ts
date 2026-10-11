@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Gargari — ვებ საიტების დამზადება",
+    name: "Gargari",
     short_name: "Gargari",
     description: "ვებ საიტების დამზადება, UI/UX დიზაინი და ბრენდინგი თბილისში",
     start_url: "/",
