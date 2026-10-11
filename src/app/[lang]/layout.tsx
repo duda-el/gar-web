@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Georgian, Outfit } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import AppToaster from "@/components/ui/AppToaster";
+import Analytics from "@/components/Analytics";
+import CookieConsent from "@/components/shadcn-space/blocks/cookie-consent-01";
 import JsonLd from "@/components/seo/JsonLd";
 import { siteGraph } from "@/lib/structuredData";
 import { I18nProvider } from "@/i18n/I18nProvider";
@@ -114,8 +115,10 @@ export default async function RootLayout({ children, params }: Props) {
         <I18nProvider locale={locale} dictionary={dictionary}>
           {children}
           <AppToaster />
+          {/* Site-wide so the banner shows on whichever page a visitor lands on first */}
+          <CookieConsent />
+          <Analytics />
         </I18nProvider>
-        <GoogleAnalytics gaId="G-TCBNN29N66" />
       </body>
     </html>
   );

@@ -4,7 +4,6 @@ import Footer from "@/components/Layout/Footer";
 import Projects from "@/components/Pages/Projects/Index";
 import Services from "@/components/Services";
 import WhyUs from "@/components/Pages/WhyUs";
-import CookieConsent from "@/components/shadcn-space/blocks/cookie-consent-01";
 import ScrollHandler from "@/components/ScrollHandler";
 
 export default function Home() {
@@ -18,7 +17,6 @@ export default function Home() {
         <Projects />
         <WhyUs />
         <Footer />
-        <CookieConsent />
       </main>
     </div>
   );
