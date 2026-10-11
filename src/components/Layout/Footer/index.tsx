@@ -93,7 +93,7 @@ const Footer = () => {
               onClick={(e) => handleNavClick(e, "top")}
               className="flex items-center w-fit"
             >
-              <Image src={gargariLogo} alt="GarGari" className="h-9 w-auto" />
+              <Image src={gargariLogo} alt="GarGari" sizes="96px" className="h-9 w-auto" />
             </Link>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
               {t.footer.about}
@@ -115,9 +115,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.navigation}
-            </h3>
+            </h2>
             <ul className="flex flex-col gap-3.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -134,9 +134,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.contact}
-            </h3>
+            </h2>
             <div className="flex flex-col gap-3.5">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
@@ -153,9 +153,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6E6E73] mb-5">
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
               {t.footer.getInTouch}
-            </h3>
+            </h2>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3]">
               {t.footer.getInTouchText}
             </p>
@@ -163,27 +163,28 @@ const Footer = () => {
         </div>
 
         <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-5">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-[#6E6E73]">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#9A9A9E]">
             © {currentYear} GarGari Studio
           </p>
 
-          <div className="flex items-center gap-6 sm:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-8">
             <button
               onClick={() => setModalType("privacy")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {t.footer.privacy}
             </button>
             <button
               onClick={() => setModalType("terms")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#6E6E73] hover:text-white transition-colors duration-200 cursor-pointer"
+              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {t.footer.terms}
             </button>
             <div
               id="top-ge-counter-container"
               data-site-id="118478"
-              className="opacity-50 hover:opacity-100 transition-opacity"
+              // Reserve the counter's 88x31 box so the injected image doesn't shift layout
+              className="w-[88px] h-[31px] opacity-50 hover:opacity-100 transition-opacity [&_img]:w-[88px] [&_img]:h-[31px]"
             />
           </div>
         </div>

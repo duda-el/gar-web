@@ -264,7 +264,7 @@ const Contact = () => {
       className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-[56px] sm:pt-20 lg:pt-[104px] pb-20 sm:pb-28 lg:pb-[136px]"
     >
       <div className="mb-12 sm:mb-14 lg:mb-16">
-        <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+        <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
           {t.contact.eyebrow}
         </span>
         <h1 className="mt-3 max-w-[20ch] font-outfit font-extrabold text-[clamp(30px,4.5vw,58px)] leading-[1.05] tracking-[-0.03em] text-[#0E0E0E]">
@@ -416,7 +416,7 @@ const Contact = () => {
                           setIsOpen(false);
                         }}
                         className={`w-full text-left px-4 py-2.5 hover:bg-[#F5F5F7] transition-colors text-sm border-b border-[#E3E3E6] ${
-                          values.service === service ? "text-[#FF7A00] font-medium" : "text-[#0E0E0E]"
+                          values.service === service ? "text-[#B85300] font-medium" : "text-[#0E0E0E]"
                         }`}
                       >
                         {service}
@@ -511,6 +511,31 @@ const Contact = () => {
             </a>
           ))}
         </motion.div>
+      </div>
+
+      {/* What happens after someone writes to us */}
+      <div className="mt-16 sm:mt-20 lg:mt-24">
+        <h2 className="font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">
+          {t.contactNext.title}
+        </h2>
+        <p className="mt-3 max-w-[56ch] text-[15.5px] leading-[1.6] text-[#4A4A4E]">
+          {t.contactNext.intro}
+        </p>
+        <ol className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+          {t.contactNext.steps.map((step, i) => (
+            <li key={step.title} className="rounded-xl border border-[#EDEAE6] bg-white p-6">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#FF7A00] font-outfit font-bold text-[13px] text-[#B85300]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-4 font-outfit font-bold text-[18px] text-[#0E0E0E]">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-[14.5px] leading-[1.6] text-[#4A4A4E]">
+                {step.description}
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

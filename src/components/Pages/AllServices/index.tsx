@@ -94,9 +94,9 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
         <div className="relative flex-1 flex flex-col p-6 sm:p-7">
           <span className="h-1.5 w-1.5 rounded-full bg-[#FF7A00] transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-8" />
-          <h3 className="mt-4 font-outfit font-bold text-[20px] tracking-[-0.01em]">
+          <h2 className="mt-4 font-outfit font-bold text-[20px] tracking-[-0.01em]">
             {service.title}
-          </h3>
+          </h2>
           <p
             className={`mt-2.5 text-[14px] leading-[1.6] ${
               featured ? "text-white/65" : "text-[#4A4744]"
@@ -116,7 +116,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             </span>
             <span
               className={`font-outfit font-bold text-[13px] transition-colors duration-500 group-hover:text-[#FF7A00] ${
-                featured ? "text-white/40" : "text-[#B7B4AF]"
+                featured ? "text-white/60" : "text-[#6E6A65]"
               }`}
             >
               {service.number}
@@ -197,9 +197,9 @@ export default function AllServices() {
           style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}
         >
           <div>
-            <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
+            <h2 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
               {t.services.brandingTitle}
-            </h3>
+            </h2>
             <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
               {t.services.brandingText}
             </p>
@@ -220,7 +220,7 @@ export default function AllServices() {
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-[56px] sm:pb-20 lg:pb-[104px]">
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-16">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
               {t.allServices.faqEyebrow}
             </span>
             <h2 className="mt-3 max-w-[18ch] font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">

@@ -33,7 +33,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata(locale, `/projects/${project.slug}`, {
     title,
     description: content.description,
-    image: { url: project.images[0].src, alt: content.alt },
   });
 }
 

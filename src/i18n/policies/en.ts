@@ -34,7 +34,7 @@ const policies: Policies = {
       {
         heading: "Cookies",
         paragraphs: [
-          "We use cookies that the site needs to work, and analytics cookies that help us understand traffic. You can block or delete cookies in your browser settings at any time.",
+          "We use cookies that the site needs to work. Analytics cookies (Google Analytics), which help us understand traffic, are only set if you accept them in the cookie banner; if you reject them, analytics is not loaded at all. You can also block or delete cookies in your browser settings at any time.",
         ],
       },
       {

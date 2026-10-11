@@ -24,8 +24,8 @@ export function siteGraph(locale: Locale, t: Dictionary) {
         name: "Gargari",
         alternateName: "გარგარი",
         url: SITE_URL,
-        logo: `${SITE_URL}/gargari.png`,
-        image: `${SITE_URL}/og-image.jpg`,
+        logo: `${SITE_URL}/logo.png`,
+        image: `${SITE_URL}/logo.png`,
         description: t.meta.description,
         email: CONTACT_EMAIL,
         address: {

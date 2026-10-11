@@ -22,7 +22,7 @@ export default function Services() {
     >
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#FF7A00]">
+          <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
             {t.homeServices.eyebrow}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">

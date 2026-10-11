@@ -60,7 +60,6 @@ const en = {
   },
 
   hero: {
-    eyebrow: "Website development in Tbilisi",
     titleLine1: "Change the future",
     titleLine2: "with us",
     subtitle:
@@ -329,6 +328,28 @@ const en = {
       failedTitle: "Message not sent",
       failedText: "Something went wrong. Please try again, or email us at {email}.",
     },
+  },
+
+  contactNext: {
+    title: "What happens next",
+    intro: "No long forms or sales calls. Here is how a project starts after you write to us.",
+    steps: [
+      {
+        title: "We reply within a day",
+        description:
+          "We read your message and get back to you within one business day, with questions if anything needs clarifying.",
+      },
+      {
+        title: "A short call",
+        description:
+          "Together we map what the site has to do, which pages and features it needs, and your timeline.",
+      },
+      {
+        title: "A fixed quote",
+        description:
+          "Within two days you get a fixed price and schedule. Work starts only once you approve it.",
+      },
+    ],
   },
 
   footer: {

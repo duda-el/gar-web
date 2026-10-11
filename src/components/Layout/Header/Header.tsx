@@ -96,6 +96,7 @@ export default function Header() {
           <Image
             src={gargariLogo}
             alt="GarGari"
+            sizes="96px"
             className="h-9 sm:h-10 w-auto"
             priority
           />
@@ -181,7 +182,7 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, "id" in link ? link.id : undefined)}
                 aria-current={active ? "page" : undefined}
                 className={`flex items-center justify-between font-outfit text-[16px] text-left py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer ${
-                  active ? "font-bold text-[#FF7A00]" : "font-medium text-[#0E0E0E]"
+                  active ? "font-bold text-[#B85300]" : "font-medium text-[#0E0E0E]"
                 }`}
               >
                 {t.nav[link.key]}
