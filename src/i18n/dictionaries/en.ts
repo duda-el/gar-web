@@ -60,7 +60,6 @@ const en = {
   },
 
   hero: {
-    eyebrow: "Website development in Tbilisi",
     titleLine1: "Change the future",
     titleLine2: "with us",
     subtitle:

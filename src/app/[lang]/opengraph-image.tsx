@@ -9,7 +9,7 @@ export const contentType = OG_CONTENT_TYPE;
 export default async function HomeOgImage({ params }: { params: Promise<{ lang: string }> }) {
   const t = getDictionary(resolveLocale((await params).lang));
   return renderOgImage({
-    eyebrow: t.hero.eyebrow,
+    eyebrow: "Gargari",
     title: `${t.hero.titleLine1} ${t.hero.titleLine2}`,
     description: t.meta.description,
   });

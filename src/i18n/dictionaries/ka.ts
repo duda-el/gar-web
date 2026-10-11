@@ -66,7 +66,6 @@ const ka: Dictionary = {
   },
 
   hero: {
-    eyebrow: "ვებ საიტების დამზადება თბილისში",
     titleLine1: "შეცვალე მომავალი",
     titleLine2: "ჩვენთან ერთად",
     subtitle:
