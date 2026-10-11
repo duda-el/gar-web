@@ -96,6 +96,7 @@ export default function Header() {
           <Image
             src={gargariLogo}
             alt="GarGari"
+            sizes="96px"
             className="h-9 sm:h-10 w-auto"
             priority
           />

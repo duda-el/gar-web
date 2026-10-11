@@ -93,7 +93,7 @@ const Footer = () => {
               onClick={(e) => handleNavClick(e, "top")}
               className="flex items-center w-fit"
             >
-              <Image src={gargariLogo} alt="GarGari" className="h-9 w-auto" />
+              <Image src={gargariLogo} alt="GarGari" sizes="96px" className="h-9 w-auto" />
             </Link>
             <p className="text-[14.5px] leading-[1.6] text-[#B9B6B3] max-w-[34ch]">
               {t.footer.about}
@@ -183,7 +183,8 @@ const Footer = () => {
             <div
               id="top-ge-counter-container"
               data-site-id="118478"
-              className="opacity-50 hover:opacity-100 transition-opacity"
+              // Reserve the counter's 88x31 box so the injected image doesn't shift layout
+              className="w-[88px] h-[31px] opacity-50 hover:opacity-100 transition-opacity [&_img]:w-[88px] [&_img]:h-[31px]"
             />
           </div>
         </div>

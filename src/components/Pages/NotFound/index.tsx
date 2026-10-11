@@ -66,7 +66,7 @@ export default function NotFoundView() {
 
       <header className="w-full max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] h-[76px] flex items-center">
         <Link href={href("/")} aria-label={t.nav.homeAria} className="inline-flex">
-          <Image src={gargariLogo} alt="GarGari" className="h-9 sm:h-10 w-auto" priority />
+          <Image src={gargariLogo} alt="GarGari" sizes="96px" className="h-9 sm:h-10 w-auto" priority />
         </Link>
       </header>
 
