@@ -167,7 +167,7 @@ const Footer = () => {
             © {currentYear} GarGari Studio
           </p>
 
-          <div className="flex items-center gap-6 sm:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-8">
             <button
               onClick={() => setModalType("privacy")}
               className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
