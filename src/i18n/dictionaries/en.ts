@@ -331,6 +331,28 @@ const en = {
     },
   },
 
+  contactNext: {
+    title: "What happens next",
+    intro: "No long forms or sales calls. Here is how a project starts after you write to us.",
+    steps: [
+      {
+        title: "We reply within a day",
+        description:
+          "We read your message and get back to you within one business day, with questions if anything needs clarifying.",
+      },
+      {
+        title: "A short call",
+        description:
+          "Together we map what the site has to do, which pages and features it needs, and your timeline.",
+      },
+      {
+        title: "A fixed quote",
+        description:
+          "Within two days you get a fixed price and schedule. Work starts only once you approve it.",
+      },
+    ],
+  },
+
   footer: {
     about:
       "A Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",

@@ -512,6 +512,31 @@ const Contact = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* What happens after someone writes to us */}
+      <div className="mt-16 sm:mt-20 lg:mt-24">
+        <h2 className="font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">
+          {t.contactNext.title}
+        </h2>
+        <p className="mt-3 max-w-[56ch] text-[15.5px] leading-[1.6] text-[#4A4A4E]">
+          {t.contactNext.intro}
+        </p>
+        <ol className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+          {t.contactNext.steps.map((step, i) => (
+            <li key={step.title} className="rounded-xl border border-[#EDEAE6] bg-white p-6">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#FF7A00] font-outfit font-bold text-[13px] text-[#B85300]">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-4 font-outfit font-bold text-[18px] text-[#0E0E0E]">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-[14.5px] leading-[1.6] text-[#4A4A4E]">
+                {step.description}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 };
