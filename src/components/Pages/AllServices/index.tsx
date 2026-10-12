@@ -167,10 +167,11 @@ export default function AllServices() {
               href={href("/contact")}
               className="group relative inline-flex items-center gap-3 h-[52px] rounded-full ps-6 pe-1.5 bg-white border border-[#E3DFDA] font-outfit font-semibold text-[14.5px] text-[#0E0E0E] overflow-hidden isolate transition-[border-color,box-shadow,scale] duration-500 hover:border-[#FF7A00] hover:shadow-[0_14px_34px_-12px_rgba(255,122,0,0.6)] active:scale-[0.98]"
             >
-              {/* Orange fill grows out of the arrow circle */}
+              {/* Orange fill grows out of the arrow circle (centre 26px from the right edge).
+                  A clip-path sized in % covers the whole button however long the label is. */}
               <span
                 aria-hidden="true"
-                className="absolute right-1.5 top-1/2 -z-10 w-10 h-10 -translate-y-1/2 rounded-full bg-[#FF7A00] scale-0 transition-[scale] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[14]"
+                className="absolute inset-0 -z-10 bg-[#FF7A00] [clip-path:circle(0px_at_calc(100%-26px)_50%)] transition-[clip-path] duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[clip-path:circle(150%_at_calc(100%-26px)_50%)]"
               />
               <span className="relative whitespace-nowrap">
                 <span className="sm:hidden">{t.allServices.ctaShort}</span>

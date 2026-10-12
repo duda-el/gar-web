@@ -142,6 +142,12 @@ function getSnapshot() {
   return toastState
 }
 
+// Must return the same array every time, otherwise React warns about an infinite loop
+const EMPTY_TOASTS: ToastData[] = []
+function getServerSnapshot() {
+  return EMPTY_TOASTS
+}
+
 function ensureMount() {
   if (typeof document === "undefined") return
   if (registeredToasters > 0 || autoMounted) return
@@ -715,7 +721,7 @@ function Toaster({
   const toasts = useSyncExternalStore(
     subscribe,
     getSnapshot,
-    () => []
+    getServerSnapshot
   )
 
   useEffect(() => {
