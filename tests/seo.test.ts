@@ -6,7 +6,7 @@ import { projects } from "@/constants/projects";
 import { SITE_URL } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import { breadcrumbs, faqPage, projectWork, siteGraph } from "@/lib/structuredData";
-import { pageMetadata } from "@/i18n/metadata";
+import { OG_IMAGE, pageMetadata } from "@/i18n/metadata";
 
 describe("robots.txt", () => {
   const r = robots();
@@ -76,6 +76,13 @@ describe("page metadata", () => {
     const meta = pageMetadata("en", "/services", { title: "Services", description: "d" });
     expect(meta.alternates?.canonical).toBe(`${SITE_URL}/en/services`);
     expect(meta.openGraph).toMatchObject({ url: `${SITE_URL}/en/services`, locale: "en_US" });
+  });
+
+  it("uses the shared logo image for social previews", () => {
+    const meta = pageMetadata("ka", "/about", { title: "t", description: "d" });
+    expect(meta.openGraph?.images).toEqual([OG_IMAGE]);
+    expect(meta.twitter?.images).toEqual([OG_IMAGE.url]);
+    expect(OG_IMAGE).toMatchObject({ url: "/og-image.png", width: 1200, height: 630 });
   });
 });
 

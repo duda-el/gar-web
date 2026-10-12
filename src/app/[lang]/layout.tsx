@@ -8,6 +8,7 @@ import { siteGraph } from "@/lib/structuredData";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { locales, ogLocales, pageAlternates, SITE_URL } from "@/i18n/config";
 import { getDictionary, resolveLocale } from "@/i18n";
+import { OG_IMAGE } from "@/i18n/metadata";
 import "../globals.css";
 
 const notoGeorgian = Noto_Sans_Georgian({
@@ -81,11 +82,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: ogLocales[locale],
       alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
       type: "website",
+      images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: t.ogTitle,
       description: t.description,
+      images: [OG_IMAGE.url],
     },
     verification: {
       google: "kpGAn4W0G3agna6Gu57vQYMSEblYqT7kCNbXmFe-2MA",
