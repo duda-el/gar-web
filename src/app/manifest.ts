@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Gargari",
     short_name: "Gargari",
-    description: "ვებ საიტების დამზადება, UI/UX დიზაინი და ბრენდინგი თბილისში",
+    description: "ვებ საიტების დამზადება, UI/UX დიზაინი და ბრენდინგი",
     start_url: "/",
     scope: "/",
     display: "standalone",
