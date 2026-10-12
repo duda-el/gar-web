@@ -449,7 +449,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
           role="dialog"
           aria-modal="true"
           aria-label={format(t.projectDetail.galleryLabel, { title: project.title })}
-          className="fixed inset-0 z-[200] bg-[#0E0E0E]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-10"
+          className="fixed inset-0 z-[200] bg-[#0E0E0E]/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-10 cursor-zoom-out"
           onClick={() => setLightbox(null)}
         >
           <button
@@ -487,7 +487,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             </>
           )}
           <div
-            className="relative w-full max-w-[1200px] h-[78vh]"
+            className="relative w-full max-w-[1200px] h-[78vh] cursor-default"
             onClick={(e) => e.stopPropagation()}
           >
             <Image

@@ -407,7 +407,7 @@ const Contact = () => {
                   className="absolute z-50 w-full mt-2 bg-white border border-[#E3E3E6] rounded-lg overflow-hidden shadow-lg"
                 >
                   {t.contact.services.map((service) => (
-                    <li key={service} role="option" aria-selected={values.service === service}>
+                    <li key={service} role="option" aria-selected={values.service === service} className="cursor-pointer">
                       <button
                         type="button"
                         onClick={() => {
