@@ -5,9 +5,6 @@ import { defaultLocale, locales } from "@/i18n/config";
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
-  // Generated social images are referenced by their internal /ka/... URL; serve them directly
-  if (pathname.endsWith("/opengraph-image")) return NextResponse.next();
-
   // Explicit /ka URLs redirect to the clean root version so each page has one address
   if (pathname === `/${defaultLocale}` || pathname.startsWith(`/${defaultLocale}/`)) {
     const url = request.nextUrl.clone();

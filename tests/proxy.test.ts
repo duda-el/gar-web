@@ -25,10 +25,6 @@ describe("language proxy", () => {
     expect(run("/ka").headers.get("location")).toBe("https://www.gargari.ge/");
   });
 
-  it("serves generated social images directly", () => {
-    expect(run("/ka/opengraph-image").headers.get("x-middleware-next")).toBe("1");
-  });
-
   it("does not run for static files and Next internals", () => {
     const matcher = new RegExp(`^${config.matcher[0]}$`);
     expect(matcher.test("/services")).toBe(true);
