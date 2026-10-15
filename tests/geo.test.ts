@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import robots, { AI_CRAWLERS } from "@/app/robots";
 import { projects } from "@/constants/projects";
 import { CONTACT_EMAIL } from "@/constants/policies";
+import { FACEBOOK_URL, FOUNDING_YEAR, PHONE_DISPLAY, PHONE_TEL, TEAM_SIZE } from "@/constants/site";
 import { SITE_URL } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 import { buildLlmsFullTxt, buildLlmsTxt } from "@/lib/llms";
@@ -17,8 +18,10 @@ describe("llms.txt", () => {
   });
 
   it("states the key facts", () => {
-    expect(txt).toContain("Tbilisi, Georgia");
+    expect(txt).toContain("Tbilisi 0162, Georgia");
     expect(txt).toContain(CONTACT_EMAIL);
+    expect(txt).toContain(PHONE_DISPLAY);
+    expect(txt).toContain(`Founded: ${FOUNDING_YEAR}; team of ${TEAM_SIZE} people`);
     expect(txt).toContain("from ₾2,500");
   });
 
@@ -81,6 +84,13 @@ describe("Organization data for AI answers", () => {
       priceCurrency: "GEL",
     });
     expect(org.knowsAbout).toContain("Next.js");
+    expect(org).toMatchObject({
+      telephone: PHONE_TEL,
+      foundingDate: String(FOUNDING_YEAR),
+      numberOfEmployees: { value: TEAM_SIZE },
+      address: { postalCode: "0162", addressCountry: "GE" },
+    });
+    expect(org.sameAs).toContain(FACEBOOK_URL);
     expect(org.contactPoint).toMatchObject({ email: CONTACT_EMAIL, availableLanguage: ["Georgian", "English"] });
   });
 });

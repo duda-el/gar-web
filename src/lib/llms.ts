@@ -3,7 +3,15 @@
 // so it stays in sync with the pages.
 import { CONTACT_EMAIL } from "@/constants/policies";
 import { localizeProject, projects } from "@/constants/projects";
-import { SOCIAL_PROFILES, TECHNOLOGIES } from "@/constants/site";
+import {
+  FACEBOOK_REVIEWS,
+  FOUNDING_YEAR,
+  PHONE_DISPLAY,
+  POSTAL_CODE,
+  SOCIAL_PROFILES,
+  TEAM_SIZE,
+  TECHNOLOGIES,
+} from "@/constants/site";
 import { localizePath, SITE_URL, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
 
@@ -19,9 +27,11 @@ function header() {
 
 > Gargari (გარგარი, also written GarGari) is a web design and development studio in Tbilisi, Georgia. It designs and builds landing pages, web applications and online stores, plus branding and UI/UX design, for clients in Georgia and abroad. The site is available in Georgian (default) and English.
 
-- Location: Tbilisi, Georgia; works remotely with clients anywhere
+- Location: Tbilisi ${POSTAL_CODE}, Georgia; works remotely with clients anywhere
+- Founded: ${FOUNDING_YEAR}; team of ${TEAM_SIZE} people
 - Languages: Georgian and English
-- Contact: ${CONTACT_EMAIL} or ${url("en", "/contact")}; replies within one business day
+- Contact: ${CONTACT_EMAIL}, phone ${PHONE_DISPLAY}, or ${url("en", "/contact")}; replies within one business day
+- Reviews: ${FACEBOOK_REVIEWS.recommendPercent}% recommend on Facebook (${FACEBOOK_REVIEWS.count} reviews)
 - Pricing: landing pages ${en.services.landing.price}; web applications and online stores are ${en.services.webApps.price}
 - Track record: ${stats}
 - Technologies: ${TECHNOLOGIES.join(", ")}
@@ -143,6 +153,7 @@ ${projectList}
 ## ${t.nav.contact}
 
 - Email: ${CONTACT_EMAIL}
+- Phone: ${PHONE_DISPLAY}
 - ${url(locale, "/contact")}
 `;
   });

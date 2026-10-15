@@ -1,5 +1,13 @@
 import { CONTACT_EMAIL } from "@/constants/policies";
-import { SOCIAL_PROFILES, STARTING_PRICE_GEL, TECHNOLOGIES } from "@/constants/site";
+import {
+  FOUNDING_YEAR,
+  PHONE_TEL,
+  POSTAL_CODE,
+  SOCIAL_PROFILES,
+  STARTING_PRICE_GEL,
+  TEAM_SIZE,
+  TECHNOLOGIES,
+} from "@/constants/site";
 import { localizePath, SITE_URL, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 
@@ -61,9 +69,13 @@ export function siteGraph(locale: Locale, t: Dictionary) {
         image: `${SITE_URL}/logo.png`,
         description: t.meta.description,
         email: CONTACT_EMAIL,
+        telephone: PHONE_TEL,
+        foundingDate: String(FOUNDING_YEAR),
+        numberOfEmployees: { "@type": "QuantitativeValue", value: TEAM_SIZE },
         address: {
           "@type": "PostalAddress",
           addressLocality: locale === "ka" ? "თბილისი" : "Tbilisi",
+          postalCode: POSTAL_CODE,
           addressCountry: "GE",
         },
         areaServed: { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" },
@@ -83,6 +95,7 @@ export function siteGraph(locale: Locale, t: Dictionary) {
           "@type": "ContactPoint",
           contactType: "customer service",
           email: CONTACT_EMAIL,
+          telephone: PHONE_TEL,
           url: url(locale, "/contact"),
           availableLanguage: ["Georgian", "English"],
           areaServed: "GE",
