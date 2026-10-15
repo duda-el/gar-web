@@ -74,10 +74,12 @@ const expect = async (path, status, test = () => true, label = "") => {
 };
 await expect("/robots.txt", 200, async (r) => {
   const t = await r.text();
-  return t.includes("Sitemap: https://www.gargari.ge/sitemap.xml") && !t.includes("Disallow: /_next");
-}, " with sitemap and no /_next block");
+  return t.includes("Sitemap: https://www.gargari.ge/sitemap.xml") && !t.includes("Disallow: /_next") && t.includes("GPTBot");
+}, " with sitemap, AI crawlers and no /_next block");
 await expect("/sitemap.xml", 200, async (r) => (await r.text()).split("<url>").length - 1 === PAGES.length * 2, " with every page");
 await expect("/manifest.webmanifest", 200);
+await expect("/llms.txt", 200, async (r) => (await r.text()).startsWith("# Gargari"), " starting with # Gargari");
+await expect("/llms-full.txt", 200, async (r) => (await r.text()).includes("## "), " with sections");
 await expect("/favicon.ico", 200);
 await expect("/icon.png", 200);
 await expect("/apple-icon.png", 200);
