@@ -1,17 +1,50 @@
 import { CONTACT_EMAIL } from "@/constants/policies";
+import { SOCIAL_PROFILES, STARTING_PRICE_GEL, TECHNOLOGIES } from "@/constants/site";
 import { localizePath, SITE_URL, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
-const SOCIAL_PROFILES = [
-  "https://www.facebook.com/profile.php?id=61559932766757",
-  "https://www.instagram.com/_gargari/",
-  "https://www.tiktok.com/@gargari_",
-];
-
 const url = (locale: Locale, path: string) => `${SITE_URL}${localizePath(locale, path)}`;
+
+/** Services with prices, so search and AI answers can quote what Gargari offers */
+function offerCatalog(locale: Locale, t: Dictionary) {
+  const area = { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" };
+  const service = (s: Dictionary["services"]["landing"]) => ({
+    "@type": "Service",
+    name: s.title,
+    description: s.description,
+    areaServed: area,
+    url: url(locale, "/services"),
+  });
+  return {
+    "@type": "OfferCatalog",
+    name: t.nav.services,
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: service(t.services.landing),
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          minPrice: STARTING_PRICE_GEL,
+          priceCurrency: "GEL",
+        },
+      },
+      { "@type": "Offer", itemOffered: service(t.services.webApps) },
+      { "@type": "Offer", itemOffered: service(t.services.ecommerce) },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: t.services.brandingTitle,
+          description: t.services.brandingText,
+          areaServed: area,
+        },
+      },
+    ],
+  };
+}
 
 /** The studio and the website, shown on every page */
 export function siteGraph(locale: Locale, t: Dictionary) {
@@ -35,6 +68,26 @@ export function siteGraph(locale: Locale, t: Dictionary) {
         },
         areaServed: { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" },
         knowsLanguage: ["ka", "en"],
+        priceRange: t.services.landing.price,
+        slogan: `${t.hero.titleLine1} ${t.hero.titleLine2}`,
+        knowsAbout: [
+          t.services.landing.title,
+          t.services.webApps.title,
+          t.services.ecommerce.title,
+          t.services.brandingTitle,
+          ...t.services.brandingTags,
+          ...TECHNOLOGIES,
+          "SEO",
+        ],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          email: CONTACT_EMAIL,
+          url: url(locale, "/contact"),
+          availableLanguage: ["Georgian", "English"],
+          areaServed: "GE",
+        },
+        hasOfferCatalog: offerCatalog(locale, t),
         sameAs: SOCIAL_PROFILES,
       },
       {
