@@ -175,9 +175,11 @@ const en = {
   aboutUs: {
     eyebrow: "About us",
     title: "A small studio that builds the whole thing",
-    text: "GarGari is a Tbilisi studio designing and building landing pages, web applications and online stores. We stay small on purpose, the same two or three hands stay on your project from brief to launch, no handoffs, no lost context.",
+    text: "GarGari is a Tbilisi studio designing and building landing pages, web applications and online stores. We stay small on purpose: a team of five, and the same people stay on your project from brief to launch, no handoffs, no lost context.",
     location: "Tbilisi, Georgia, remote friendly",
     replies: "Replies within a day",
+    team: "A team of {count}",
+    since: "Since {year}",
     illustrationAlt: "GarGari, web design and development",
     values: [
       {
@@ -293,7 +295,7 @@ const en = {
     location: "Tbilisi, Georgia, remote friendly",
     replies: "Replies within a day",
     open: "Open for new projects",
-    cards: { email: "Email us", tiktok: "TikTok", facebook: "Facebook", instagram: "Instagram" },
+    cards: { email: "Email us", phone: "Call us", tiktok: "TikTok", facebook: "Facebook", instagram: "Instagram" },
     labels: { name: "Name", email: "Email", service: "Service", message: "Message" },
     placeholders: {
       name: "Your name",
@@ -357,7 +359,7 @@ const en = {
       "A Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",
     navigation: "Navigation",
     contact: "Contact",
-    address: "Tbilisi, Georgia",
+    address: "Tbilisi 0162, Georgia",
     getInTouch: "Get in touch",
     getInTouchText: "Have an idea? Let's turn it into something real.",
     privacy: "Privacy Policy",

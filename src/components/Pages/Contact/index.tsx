@@ -3,11 +3,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { AlertCircle, Facebook, Instagram, Mail, MapPin, Clock } from "lucide-react";
+import { AlertCircle, Facebook, Instagram, Mail, MapPin, Clock, Phone } from "lucide-react";
 import { toast } from "@/components/ui/toast";
 import { useI18n } from "@/i18n/I18nProvider";
 import { format } from "@/i18n/format";
 import { CONTACT_EMAIL } from "@/constants/policies";
+import { FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, PHONE_TEL, TIKTOK_URL } from "@/constants/site";
 import {
   ContactErrors,
   ContactField,
@@ -36,26 +37,32 @@ const contactCards = [
   {
     icon: <Mail size={18} />,
     key: "email",
-    value: "gargariinfo@gmail.com",
-    href: "mailto:gargariinfo@gmail.com",
+    value: CONTACT_EMAIL,
+    href: `mailto:${CONTACT_EMAIL}`,
+  },
+  {
+    icon: <Phone size={18} />,
+    key: "phone",
+    value: PHONE_DISPLAY,
+    href: `tel:${PHONE_TEL}`,
   },
   {
     icon: <TikTokIcon size={18} />,
     key: "tiktok",
     value: "Gargari_",
-    href: "https://www.tiktok.com/@gargari_",
+    href: TIKTOK_URL,
   },
   {
     icon: <Facebook size={18} />,
     key: "facebook",
     value: "GarGari",
-    href: "https://www.facebook.com/profile.php?id=61559932766757",
+    href: FACEBOOK_URL,
   },
   {
     icon: <Instagram size={18} />,
     key: "instagram",
     value: "_gargari",
-    href: "https://www.instagram.com/_gargari/",
+    href: INSTAGRAM_URL,
   },
 ] as const;
 
