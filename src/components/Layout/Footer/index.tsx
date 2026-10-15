@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useCallback, useState } from "react";
-import { Mail, Facebook, Instagram, MapPin } from "lucide-react";
+import { Mail, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import PolicyModal from "../../ui/Modal/PolicyModal";
 import { CONTACT_EMAIL, type PolicyType } from "@/constants/policies";
+import { FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, PHONE_TEL, TIKTOK_URL } from "@/constants/site";
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 import { useI18n } from "@/i18n/I18nProvider";
 import { stripLocale } from "@/i18n/config";
@@ -38,17 +39,17 @@ const navLinks = [
 const socials = [
   {
     icon: <Facebook size={17} />,
-    href: "https://www.facebook.com/profile.php?id=61559932766757",
+    href: FACEBOOK_URL,
     label: "Facebook",
   },
   {
     icon: <Instagram size={17} />,
-    href: "https://www.instagram.com/_gargari/",
+    href: INSTAGRAM_URL,
     label: "Instagram",
   },
   {
     icon: <TikTokIcon size={17} />,
-    href: "https://www.tiktok.com/@gargari_",
+    href: TIKTOK_URL,
     label: "TikTok",
   },
 ];
@@ -144,6 +145,13 @@ const Footer = () => {
               >
                 <Mail size={15} className="text-[#FF7A00] shrink-0" />
                 {CONTACT_EMAIL}
+              </a>
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
+              >
+                <Phone size={15} className="text-[#FF7A00] shrink-0" />
+                {PHONE_DISPLAY}
               </a>
               <div className="flex items-center gap-2.5 text-[14.5px] text-[#B9B6B3]">
                 <MapPin size={15} className="text-[#FF7A00] shrink-0" />

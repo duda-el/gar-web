@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { Users, Layers, Sparkles, MapPin, Clock } from "lucide-react";
+import { Users, Layers, Sparkles, MapPin, Clock, CalendarDays } from "lucide-react";
 import heroIllustration from "@/Assets/images/about-hero-illustration.png";
 import { useI18n } from "@/i18n/I18nProvider";
+import { format } from "@/i18n/format";
+import { FOUNDING_YEAR, TEAM_SIZE } from "@/constants/site";
 
 const valueIcons = [Users, Layers, Sparkles];
 
@@ -39,6 +41,14 @@ export default function AboutUs() {
               <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
                 <Clock size={14} className="text-[#FF7A00] shrink-0" />
                 {t.aboutUs.replies}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
+                <Users size={14} className="text-[#FF7A00] shrink-0" />
+                {format(t.aboutUs.team, { count: TEAM_SIZE })}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#E3DFDA] bg-white px-3.5 py-2 text-[13px] text-[#0E0E0E]">
+                <CalendarDays size={14} className="text-[#FF7A00] shrink-0" />
+                {format(t.aboutUs.since, { year: FOUNDING_YEAR })}
               </span>
             </div>
           </div>
