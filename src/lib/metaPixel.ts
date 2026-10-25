@@ -43,3 +43,8 @@ export function loadMetaPixel() {
 export function trackPageView() {
   window.fbq?.("track", "PageView");
 }
+
+/** Standard events; does nothing until the pixel is loaded (i.e. without cookie consent) */
+export function trackEvent(name: "Lead" | "Contact", params?: Record<string, string>) {
+  window.fbq?.("track", name, params);
+}

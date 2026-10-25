@@ -8,6 +8,7 @@ import { toast } from "@/components/ui/toast";
 import { useI18n } from "@/i18n/I18nProvider";
 import { format } from "@/i18n/format";
 import { CONTACT_EMAIL } from "@/constants/policies";
+import { trackEvent } from "@/lib/metaPixel";
 import { FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, PHONE_TEL, TIKTOK_URL } from "@/constants/site";
 import {
   ContactErrors,
@@ -246,6 +247,7 @@ const Contact = () => {
       ]);
 
       lastSentAt.current = Date.now();
+      trackEvent("Lead", { content_category: params.service });
       setStatus("success");
       resetForm();
       toast.success(t.contact.toasts.sentTitle, {
