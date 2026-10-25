@@ -13,7 +13,7 @@ const policies: Policies = {
         paragraphs: ["We only collect what you choose to share with us, plus basic anonymous usage data:"],
         list: [
           "Contact form details: your name, email address, the service you're interested in and your message.",
-          "Usage data: pages visited, device and browser type, and approximate location, collected through Google Analytics and the top.ge counter.",
+          "Usage data: pages visited, device and browser type, and approximate location, collected through Google Analytics, the Meta Pixel and the top.ge counter.",
         ],
       },
       {
@@ -28,13 +28,13 @@ const policies: Policies = {
       {
         heading: "Services we rely on",
         paragraphs: [
-          "Contact form messages are delivered by EmailJS. Analytics are provided by Google Analytics and Google Tag Manager, and visit statistics by top.ge. Each of these providers processes data under its own privacy policy.",
+          "Contact form messages are delivered by EmailJS. Analytics are provided by Google Analytics and Google Tag Manager, ad measurement by the Meta Pixel (Meta Platforms), and visit statistics by top.ge. Each of these providers processes data under its own privacy policy.",
         ],
       },
       {
         heading: "Cookies",
         paragraphs: [
-          "We use cookies that the site needs to work. Analytics cookies (Google Analytics), which help us understand traffic, are only set if you accept them in the cookie banner; if you reject them, analytics is not loaded at all. You can also block or delete cookies in your browser settings at any time.",
+          "We use cookies that the site needs to work. Analytics and advertising cookies (Google Analytics and the Meta Pixel), which help us understand traffic and measure our ads, are only set if you accept them in the cookie banner; if you reject them, neither is loaded at all. You can also block or delete cookies in your browser settings at any time.",
         ],
       },
       {
