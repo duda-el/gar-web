@@ -84,6 +84,7 @@ await expect("/favicon.ico", 200);
 await expect("/icon.png", 200);
 await expect("/apple-icon.png", 200);
 await expect("/logo.png", 200);
+await expect("/", 200, (r) => r.headers.get("content-security-policy")?.includes("form-action 'self' https://www.facebook.com/tr/"), " with a CSP that lets the Meta Pixel send events");
 await expect("/ka/services", 308, (r) => r.headers.get("location")?.endsWith("/services"));
 await expect("/missing-page", 404);
 await expect("/en/missing-page", 404);
