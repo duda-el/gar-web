@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useI18n } from "@/i18n/I18nProvider";
+import { servicePath } from "@/constants/serviceSlugs";
 
 function ServiceIcon() {
   return (
@@ -12,8 +14,12 @@ function ServiceIcon() {
 }
 
 export default function Services() {
-  const { t } = useI18n();
-  const services = [t.services.landing, t.services.webApps, t.services.ecommerce];
+  const { t, href } = useI18n();
+  const services = [
+    { ...t.services.landing, path: servicePath("landing") },
+    { ...t.services.webApps, path: servicePath("webApps") },
+    { ...t.services.ecommerce, path: servicePath("ecommerce") },
+  ];
 
   return (
     <section
@@ -22,7 +28,7 @@ export default function Services() {
     >
       <div className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+          <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
             {t.homeServices.eyebrow}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
@@ -41,17 +47,24 @@ export default function Services() {
         {services.map((service) => (
           <div
             key={service.title}
-            className="flex flex-col gap-3.5 rounded-xl border border-[#EDEAE6] p-7 transition-[border-color,transform] duration-[250ms] hover:border-[#FF7A00]/40 hover:-translate-y-1"
+            className="relative flex flex-col gap-3.5 rounded-xl border border-[#EDEAE6] bg-white p-7 transition-[border-color,translate,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[#FF7A00]/40 hover:-translate-y-1 hover:shadow-[0_18px_40px_-24px_rgba(14,14,14,0.25)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
             <ServiceIcon />
             <h3 className="mt-1.5 font-outfit font-bold text-[21px] text-[#0E0E0E]">
-              {service.title}
+              {/* The link covers the whole card (after:inset-0) */}
+              <Link href={href(service.path)} className="after:absolute after:inset-0 after:rounded-xl">
+                {service.title}
+              </Link>
             </h3>
             <p className="m-0 text-[15.5px] leading-[1.6] text-[#4A4744]">
               {service.description}
             </p>
-            <div className="mt-auto pt-3.5 border-t border-[#F1EEEA] font-outfit font-bold text-[17px] text-[#0E0E0E]">
-              {service.price}
+            {/* Price and link stay on one line; on very narrow cards the link wraps below as a whole */}
+            <div className="mt-auto pt-3.5 border-t border-[#F1EEEA] flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 font-outfit font-bold text-[16px] text-[#0E0E0E]">
+              <span className="whitespace-nowrap">{service.price}</span>
+              <span className="whitespace-nowrap text-[13.5px] font-semibold text-primary">
+                {t.homeServices.more} →
+              </span>
             </div>
           </div>
         ))}
@@ -63,7 +76,9 @@ export default function Services() {
       >
         <div>
           <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
-            {t.services.brandingTitle}
+            <Link href={href(servicePath("branding"))} className="hover:text-primary transition-colors">
+              {t.services.brandingTitle} →
+            </Link>
           </h3>
           <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
             {t.services.brandingText}

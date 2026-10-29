@@ -78,7 +78,7 @@ const policies: Policies = {
       {
         heading: "Prices and quotes",
         paragraphs: [
-          "Prices on the site, such as \"from ₾2,500\", are indicative starting points. The final scope, price and timeline of a project are agreed in a written quote or contract before any work begins.",
+          "Prices on the site, such as \"from ₾1,000\", are indicative starting points. The final scope, price and timeline of a project are agreed in a written quote or contract before any work begins.",
         ],
       },
       {

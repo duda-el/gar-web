@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { locales, ogLocales, pageAlternates, type Locale } from "./config";
+import { brandNames, locales, ogLocales, pageAlternates, type Locale } from "./config";
 
 /** Social preview shared by every page: the Gar Gari logo on a dark background */
 export const OG_IMAGE = { url: "/og-image.png", width: 1200, height: 630, alt: "Gargari" };
@@ -18,7 +18,7 @@ export function pageMetadata(
   },
 ): Metadata {
   const alternates = pageAlternates(locale, path);
-  const socialTitle = `${page.title} | Gargari`;
+  const socialTitle = `${page.title} | ${brandNames[locale]}`;
 
   return {
     title: page.title,
@@ -28,7 +28,7 @@ export function pageMetadata(
       title: socialTitle,
       description: page.description,
       url: alternates.canonical,
-      siteName: "Gargari",
+      siteName: brandNames[locale],
       locale: ogLocales[locale],
       alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
       type: "website",

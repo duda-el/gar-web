@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/constants/projects";
+import { servicePages } from "@/constants/servicePages";
 import { defaultLocale, locales, localizePath, SITE_URL } from "@/i18n/config";
 
 /**
  * Date the site content last changed. Update it when pages change, so lastmod stays
  * meaningful (a new date on every build would teach Google to ignore it).
  */
-export const CONTENT_UPDATED = "2026-10-11";
+export const CONTENT_UPDATED = "2026-10-29";
 
 type Page = {
   path: string;
@@ -18,6 +19,11 @@ type Page = {
 const pages: Page[] = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
   { path: "/services", priority: 0.9, changeFrequency: "monthly" },
+  ...servicePages.map((page) => ({
+    path: `/services/${page.slug}`,
+    priority: 0.9,
+    changeFrequency: "monthly" as const,
+  })),
   { path: "/projects", priority: 0.9, changeFrequency: "weekly" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },

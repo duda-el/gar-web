@@ -23,7 +23,7 @@ export default function AboutUs() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.85fr] gap-12 lg:gap-16 items-center">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+            <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
               {t.aboutUs.eyebrow}
             </span>
             <h1 className="mt-3 max-w-[16ch] font-outfit font-extrabold text-[clamp(30px,4vw,52px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
@@ -95,7 +95,7 @@ export default function AboutUs() {
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-[56px] sm:pb-20 lg:pb-[104px]">
         <div className="flex flex-wrap items-end justify-between gap-5 mb-14 sm:mb-16 lg:mb-20">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+            <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
               {t.aboutUs.howEyebrow}
             </span>
             <h2 className="mt-3 max-w-[16ch] font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">

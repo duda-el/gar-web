@@ -360,7 +360,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
       {/* Overview + details */}
       <div className="mt-14 sm:mt-20 lg:mt-24 grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-10 lg:gap-16 items-start">
         <div>
-          <span className="block text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+          <span className="block text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
             {t.projectDetail.overview}
           </span>
           <h2 className="mt-3 font-outfit font-extrabold text-[clamp(26px,3.2vw,42px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">

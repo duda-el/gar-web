@@ -12,6 +12,7 @@ import { FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, PHONE_TEL, TIKTOK_URL } fro
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 import { useI18n } from "@/i18n/I18nProvider";
 import { stripLocale } from "@/i18n/config";
+import { servicePath } from "@/constants/serviceSlugs";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -86,7 +87,7 @@ const Footer = () => {
   return (
     <footer className="relative bg-[#0E0E0E] text-white">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-9 lg:px-[72px] pt-16 sm:pt-20 lg:pt-24 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-12 lg:gap-8 pb-14 sm:pb-16 lg:pb-20 border-b border-white/10">
           <div className="flex flex-col gap-5">
             <Link
               href={href("/")}
@@ -128,6 +129,31 @@ const Footer = () => {
                     className="text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200 cursor-pointer"
                   >
                     {t.nav[link.key]}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#9A9A9E] mb-5">
+              {t.footer.services}
+            </h2>
+            <ul className="flex flex-col gap-3.5">
+              {(
+                [
+                  ["landing", t.services.landing.title],
+                  ["ecommerce", t.services.ecommerce.title],
+                  ["webApps", t.services.webApps.title],
+                  ["branding", t.services.brandingTitle],
+                ] as const
+              ).map(([key, label]) => (
+                <li key={key}>
+                  <Link
+                    href={href(servicePath(key))}
+                    className="text-[14.5px] text-[#B9B6B3] hover:text-white transition-colors duration-200"
+                  >
+                    {label}
                   </Link>
                 </li>
               ))}

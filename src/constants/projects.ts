@@ -15,6 +15,7 @@ import CoffeeonImg1 from "@/Assets/images/coffeeon-Mockup.jpg";
 import CoffeeonImg2 from "@/Assets/images/coffeeon-page1.jpg";
 import CoffeeonImg3 from "@/Assets/images/coffeon-juice.jpeg";
 import CoffeeonImg4 from "@/Assets/images/coffeeon-Untitled-22.jpg";
+import CoffeeonBrandbook from "@/Assets/images/coffeeon-brandbook.jpg";
 import UnistatImg1 from "@/Assets/images/unistat1.jpg";
 import UnistatImg2 from "@/Assets/images/unistat2.jpg";
 import UnistatImg from "@/Assets/images/unistat.jpg";
@@ -485,7 +486,7 @@ export const projects: Project[] = [
     title: "COFFEEON",
     status: "completed",
     type: "design",
-    images: [CoffeeonImg4, CoffeeonImg, CoffeeonImg1, CoffeeonImg2, CoffeeonImg3],
+    images: [CoffeeonBrandbook, CoffeeonImg4, CoffeeonImg, CoffeeonImg1, CoffeeonImg2, CoffeeonImg3],
     services: ["brandIdentity", "logo", "packaging", "socialAssets"],
     content: {
       en: {

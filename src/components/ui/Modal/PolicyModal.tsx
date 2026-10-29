@@ -72,7 +72,7 @@ function PolicyPanel({
           <Icon size={21} />
         </span>
         <div className="min-w-0 flex-1">
-          <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#B85300]">
+          <span className="text-[12.5px] font-semibold uppercase text-primary">
             {t.policyModal.legal}
           </span>
           <h2

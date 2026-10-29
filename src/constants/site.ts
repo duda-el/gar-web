@@ -31,4 +31,4 @@ export const TECHNOLOGIES = [
 ];
 
 /** Landing pages start at this price; other services are quoted on scope */
-export const STARTING_PRICE_GEL = 2500;
+export const STARTING_PRICE_GEL = 1000;

@@ -8,15 +8,11 @@ export default function WhyUs() {
   return (
     <section
       id="why"
-      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]"
-      style={{
-        background:
-          "linear-gradient(180deg, #fbfbfb 0% 0%, #fefefe 55%, #ffffff 100%)",
-      }}
+      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px] bg-white"
     >
       <div className="flex flex-wrap items-end justify-between gap-5 mb-14 sm:mb-16 lg:mb-20">
         <div>
-          <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+          <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
             {t.whyUs.eyebrow}
           </span>
           <h2 className="mt-3 max-w-[16ch] font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">

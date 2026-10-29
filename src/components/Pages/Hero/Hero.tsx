@@ -85,6 +85,9 @@ export default function Hero() {
 
         <div className="relative z-[1] max-w-[1440px] overflow-x-hidden mx-auto flex flex-col items-center text-center">
           <h1 className="m-0 max-w-[92%] sm:max-w-[85%] lg:max-w-[16ch] break-words font-outfit font-extrabold text-[#0E0E0E] leading-[1] tracking-[-0.04em] text-[clamp(34px,9vw,56px)] sm:text-[clamp(44px,7.2vw,72px)] lg:text-[clamp(56px,5.6vw,94px)]">
+            <span className="block mb-4 sm:mb-5 font-georgian font-semibold text-[15px] sm:text-[17px] lg:text-[19px] leading-[1.3] tracking-normal text-primary">
+              {t.hero.keyword}
+            </span>
             {t.hero.titleLine1}
             <br />
             {t.hero.titleLine2}
@@ -170,7 +173,7 @@ export default function Hero() {
         </div>
       </section>
 
-      <div className="relative z-[1] max-w-[1440px] mx-auto flex flex-wrap gap-px bg-[#E3E3E6] border-y border-[#E3E3E6]">
+      <div className="relative z-[1] max-w-[1440px] mx-auto grid grid-cols-2 lg:flex lg:flex-wrap gap-px bg-[#E3E3E6] border-y border-[#E3E3E6]">
         {stats.map((stat, i) => (
           <div
             key={stat.label}
@@ -197,8 +200,8 @@ export default function Hero() {
             <div
               className={`font-outfit font-extrabold leading-none tracking-[-0.04em] text-[#0E0E0E] ${
                 i === 0 || i === 2
-                  ? "text-[clamp(30px,3.2vw,48px)]"
-                  : "text-[clamp(26px,2.5vw,35px)]"
+                  ? "text-[28px] sm:text-[32px] lg:text-[clamp(30px,3.2vw,48px)]"
+                  : "text-[28px] sm:text-[32px] lg:text-[clamp(26px,2.5vw,35px)]"
               }`}
             >
               {stat.value}

@@ -9,6 +9,8 @@ import {
   TECHNOLOGIES,
 } from "@/constants/site";
 import { localizePath, SITE_URL, type Locale } from "@/i18n/config";
+import { servicePath } from "@/constants/serviceSlugs";
+import type { ServicePage } from "@/constants/servicePages";
 import type { Dictionary } from "@/i18n/dictionaries/en";
 
 const ORG_ID = `${SITE_URL}/#organization`;
@@ -19,12 +21,12 @@ const url = (locale: Locale, path: string) => `${SITE_URL}${localizePath(locale,
 /** Services with prices, so search and AI answers can quote what Gargari offers */
 function offerCatalog(locale: Locale, t: Dictionary) {
   const area = { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" };
-  const service = (s: Dictionary["services"]["landing"]) => ({
+  const service = (s: Dictionary["services"]["landing"], path: string) => ({
     "@type": "Service",
     name: s.title,
     description: s.description,
     areaServed: area,
-    url: url(locale, "/services"),
+    url: url(locale, path),
   });
   return {
     "@type": "OfferCatalog",
@@ -32,15 +34,15 @@ function offerCatalog(locale: Locale, t: Dictionary) {
     itemListElement: [
       {
         "@type": "Offer",
-        itemOffered: service(t.services.landing),
+        itemOffered: service(t.services.landing, servicePath("landing")),
         priceSpecification: {
           "@type": "PriceSpecification",
           minPrice: STARTING_PRICE_GEL,
           priceCurrency: "GEL",
         },
       },
-      { "@type": "Offer", itemOffered: service(t.services.webApps) },
-      { "@type": "Offer", itemOffered: service(t.services.ecommerce) },
+      { "@type": "Offer", itemOffered: service(t.services.webApps, servicePath("webApps")) },
+      { "@type": "Offer", itemOffered: service(t.services.ecommerce, servicePath("ecommerce")) },
       {
         "@type": "Offer",
         itemOffered: {
@@ -48,6 +50,7 @@ function offerCatalog(locale: Locale, t: Dictionary) {
           name: t.services.brandingTitle,
           description: t.services.brandingText,
           areaServed: area,
+          url: url(locale, servicePath("branding")),
         },
       },
     ],
@@ -63,7 +66,7 @@ export function siteGraph(locale: Locale, t: Dictionary) {
         "@type": "ProfessionalService",
         "@id": ORG_ID,
         name: "Gargari",
-        alternateName: "გარგარი",
+        alternateName: ["გარგარი", "GarGari", "Gargari Agency", "გარგარი ვებ სააგენტო"],
         url: SITE_URL,
         logo: `${SITE_URL}/logo.png`,
         image: `${SITE_URL}/logo.png`,
@@ -106,7 +109,9 @@ export function siteGraph(locale: Locale, t: Dictionary) {
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
+        // Google shows this as the site name in results; alternateName covers the Georgian spelling
         name: "Gargari",
+        alternateName: ["გარგარი", "GarGari", "gargari.ge"],
         url: SITE_URL,
         inLanguage: locale,
         publisher: { "@id": ORG_ID },
@@ -142,8 +147,42 @@ export function faqPage(faqs: { question: string; answer: string }[]) {
   };
 }
 
+/** A service page: the service, its price and who provides it */
+export function serviceDetail(locale: Locale, page: ServicePage) {
+  const c = page.content[locale];
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: c.title,
+    serviceType: page.serviceType,
+    description: c.metaDescription,
+    url: url(locale, `/services/${page.slug}`),
+    inLanguage: locale,
+    provider: { "@id": ORG_ID },
+    areaServed: { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" },
+    ...(page.minPrice
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: url(locale, `/services/${page.slug}`),
+            priceCurrency: "GEL",
+            priceSpecification: {
+              "@type": "PriceSpecification",
+              minPrice: page.minPrice,
+              priceCurrency: "GEL",
+            },
+          },
+        }
+      : {}),
+  };
+}
+
 export function servicesList(locale: Locale, t: Dictionary) {
-  const services = [t.services.landing, t.services.webApps, t.services.ecommerce];
+  const services = [
+    { ...t.services.landing, path: servicePath("landing") },
+    { ...t.services.webApps, path: servicePath("webApps") },
+    { ...t.services.ecommerce, path: servicePath("ecommerce") },
+  ];
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -156,7 +195,7 @@ export function servicesList(locale: Locale, t: Dictionary) {
         description: service.description,
         provider: { "@id": ORG_ID },
         areaServed: { "@type": "Country", name: locale === "ka" ? "საქართველო" : "Georgia" },
-        url: url(locale, "/services"),
+        url: url(locale, service.path),
       },
     })),
   };

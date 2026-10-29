@@ -7,6 +7,7 @@ import { Globe, LayoutDashboard, ShoppingBag, ArrowUpRight } from "lucide-react"
 import { DashboardMockup, LandingMockup, ShopMockup } from "./ServiceMockups";
 import { useI18n } from "@/i18n/I18nProvider";
 import type { Dictionary } from "@/i18n/dictionaries/en";
+import { servicePath } from "@/constants/serviceSlugs";
 
 // Visuals per service; the texts come from the dictionary (t.services)
 const serviceVisuals = [
@@ -29,6 +30,7 @@ const cardMotion = {
 type Service = (typeof serviceVisuals)[number] & Dictionary["services"]["landing"];
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const { href } = useI18n();
   const featured = service.number === "02";
 
   return (
@@ -95,7 +97,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <div className="relative flex-1 flex flex-col p-6 sm:p-7">
           <span className="h-1.5 w-1.5 rounded-full bg-[#FF7A00] transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-8" />
           <h2 className="mt-4 font-outfit font-bold text-[20px] tracking-[-0.01em]">
-            {service.title}
+            {/* The link covers the whole card (after:inset-0) */}
+            <Link href={href(servicePath(service.key))} className="after:absolute after:inset-0 after:rounded-2xl after:z-[1]">
+              {service.title}
+            </Link>
           </h2>
           <p
             className={`mt-2.5 text-[14px] leading-[1.6] ${
@@ -199,7 +204,9 @@ export default function AllServices() {
         >
           <div>
             <h2 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
-              {t.services.brandingTitle}
+              <Link href={href(servicePath("branding"))} className="hover:text-primary transition-colors">
+                {t.services.brandingTitle} →
+              </Link>
             </h2>
             <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
               {t.services.brandingText}
@@ -221,7 +228,7 @@ export default function AllServices() {
       <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pb-[56px] sm:pb-20 lg:pb-[104px]">
         <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-16">
           <div>
-            <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+            <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
               {t.allServices.faqEyebrow}
             </span>
             <h2 className="mt-3 max-w-[18ch] font-outfit font-extrabold text-[clamp(24px,2.8vw,36px)] leading-[1.1] tracking-[-0.03em] text-[#0E0E0E]">

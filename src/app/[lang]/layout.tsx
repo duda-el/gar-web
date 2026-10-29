@@ -6,7 +6,7 @@ import CookieConsent from "@/components/shadcn-space/blocks/cookie-consent-01";
 import JsonLd from "@/components/seo/JsonLd";
 import { siteGraph } from "@/lib/structuredData";
 import { I18nProvider } from "@/i18n/I18nProvider";
-import { locales, ogLocales, pageAlternates, SITE_URL } from "@/i18n/config";
+import { brandNames, locales, ogLocales, pageAlternates, SITE_URL } from "@/i18n/config";
 import { getDictionary, resolveLocale } from "@/i18n";
 import { OG_IMAGE } from "@/i18n/metadata";
 import "../globals.css";
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title: {
       default: t.defaultTitle,
-      template: "%s | Gargari",
+      template: `%s | ${brandNames[locale]}`,
     },
     description: t.description,
     keywords: t.keywords,
@@ -71,14 +71,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     appleWebApp: {
       capable: true,
-      title: "Gargari",
+      title: brandNames[locale],
       statusBarStyle: "black-translucent",
     },
     openGraph: {
       title: t.ogTitle,
       description: t.description,
       url: pageAlternates(locale, "/").canonical,
-      siteName: "Gargari",
+      siteName: brandNames[locale],
       locale: ogLocales[locale],
       alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
       type: "website",

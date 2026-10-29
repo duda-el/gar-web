@@ -13,6 +13,7 @@ import {
   TECHNOLOGIES,
 } from "@/constants/site";
 import { localizePath, SITE_URL, type Locale } from "@/i18n/config";
+import { servicePages } from "@/constants/servicePages";
 import { getDictionary } from "@/i18n";
 
 const url = (locale: Locale, path: string) => `${SITE_URL}${localizePath(locale, path)}`;
@@ -71,6 +72,16 @@ export function buildLlmsTxt(): string {
 ## Services
 
 ${servicesSection("en")}
+
+## Service pages
+
+${servicePages
+  .map((p) => {
+    const en = p.content.en;
+    const ka = p.content.ka;
+    return `- [${en.title}](${url("en", `/services/${p.slug}`)}) / [${ka.title}](${url("ka", `/services/${p.slug}`)}): ${en.metaDescription}`;
+  })
+  .join("\n")}
 
 ## Main pages (English)
 

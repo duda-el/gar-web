@@ -162,7 +162,7 @@ export default function Testimonials() {
   return (
     <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]">
       <div className="flex flex-col items-center text-center gap-4">
-        <span className="text-[12.5px] font-semibold tracking-[0.14em] uppercase text-[#B85300]">
+        <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
           {t.testimonials.eyebrow}
         </span>
         <h2 className="max-w-[20ch] font-outfit font-extrabold text-[clamp(28px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">

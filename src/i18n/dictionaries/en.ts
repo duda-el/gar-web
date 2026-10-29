@@ -1,10 +1,15 @@
 const en = {
   meta: {
-    defaultTitle: "Website Development & Design in Tbilisi | Gargari",
+    defaultTitle: "Website Development in Tbilisi from ₾1,000 | Gargari",
     description:
-      "Gargari offers professional services: website development, UI/UX design and branding. Let us help your business with its digital transformation.",
-    ogTitle: "Gargari - Website Development and Web Design",
+      "Website development in Tbilisi, Georgia: business and corporate websites, landing pages, online stores and web apps. Fast, SEO-ready websites from ₾1,000, launched in 2–3 weeks.",
+    ogTitle: "Gargari (გარგარი): Website Development and Web Design",
     keywords: [
+      "website development Georgia",
+      "website development Tbilisi",
+      "web agency Tbilisi",
+      "business website development",
+      "logo design Georgia",
       "website development",
       "website design",
       "web development Georgia",
@@ -26,22 +31,22 @@ const en = {
       services: {
         title: "Website Development Services & Prices",
         description:
-          "Landing pages, web applications, e-commerce, branding and UI/UX design, fixed scope and real prices, built by the GarGari team.",
+          "Landing pages and business websites from ₾1,000, online stores, web applications, branding and UI/UX design. Clear scope and a fixed price from Gargari.",
       },
       projects: {
-        title: "Portfolio: Websites, Branding & UI/UX",
+        title: "Portfolio: Websites We Have Built",
         description:
-          "See all the projects built by Gargari: websites, e-commerce platforms, branding and UI/UX design.",
+          "See Gargari's projects: websites we built, online stores, branding and UI/UX design.",
       },
       about: {
-        title: "About Us: Web Design Studio in Tbilisi",
+        title: "About Us: Gargari Web Agency in Tbilisi",
         description:
-          "GarGari is a Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",
+          "GarGari is a digital agency designing and building landing pages, web applications and online stores, hand-built work, clear timelines.",
       },
       contact: {
-        title: "Contact Us: Start Your Website Project",
+        title: "Contact Us: Order a Website",
         description:
-          "Get in touch with the Gargari team: tell us about your project and we'll get back to you within a day.",
+          "Order a website from Gargari: tell us about your project and we'll reply within a day with a price and timeline. Phone: +995 592 50 57 50.",
       },
       notFound: { title: "Page not found" },
     },
@@ -60,6 +65,7 @@ const en = {
   },
 
   hero: {
+    keyword: "Website design and development",
     titleLine1: "Change the future",
     titleLine2: "with us",
     subtitle:
@@ -69,7 +75,7 @@ const en = {
     stats: [
       { value: "10+", label: "sites shipped" },
       { value: "3 weeks", label: "average delivery" },
-      { value: "₾2,500", label: "starting price" },
+      { value: "₾1,000", label: "starting price" },
       { value: "98", suffix: "/100", label: "median PageSpeed" },
     ],
   },
@@ -79,7 +85,7 @@ const en = {
       title: "Landing & static pages",
       description:
         "One-page and multi-page sites for launches, services and campaigns, mobile-first and quick to load.",
-      price: "from ₾2,500",
+      price: "from ₾1,000",
     },
     webApps: {
       title: "Web applications",
@@ -100,6 +106,7 @@ const en = {
   },
 
   homeServices: {
+    more: "Learn more",
     eyebrow: "Services",
     title: "What we build",
     intro: "Three ways to work with us, plus the design work that sits in front of the build.",
@@ -175,7 +182,7 @@ const en = {
   aboutUs: {
     eyebrow: "About us",
     title: "A small studio that builds the whole thing",
-    text: "GarGari is a Tbilisi studio designing and building landing pages, web applications and online stores. We stay small on purpose: a team of five, and the same people stay on your project from brief to launch, no handoffs, no lost context.",
+    text: "GarGari is a digital agency designing and building landing pages, web applications and online stores. We stay small on purpose: a team of five, and the same people stay on your project from brief to launch, no handoffs, no lost context.",
     location: "Tbilisi, Georgia, remote friendly",
     replies: "Replies within a day",
     team: "A team of {count}",
@@ -354,9 +361,69 @@ const en = {
     ],
   },
 
+  homeSeo: {
+    eyebrow: "Website development",
+    title: "Website development that brings you customers",
+    paragraphs: [
+      "Gargari (გარგარი) builds websites in Tbilisi and across Georgia: business and corporate websites, landing pages, online stores and web applications. Every site is built from scratch, with no templates, around your business and your customers.",
+      "A good website is more than a nice design. It has to load fast, work well on phones and be found on Google, so new customers can find you on their own. That is why every project includes SEO foundations, analytics and speed optimisation from the start.",
+      "Websites start from ₾1,000, and a landing page typically launches in 2–3 weeks. You get a fixed price within two days of the brief and a staging link from the first week.",
+    ],
+    linksTitle: "Choose the website you need",
+    faqEyebrow: "Questions",
+    faqTitle: "Common questions about website development",
+    faqIntro: "Answers to what people ask us most before ordering a website.",
+    faqs: [
+      {
+        question: "How much does a website cost?",
+        answer:
+          "Landing pages and business websites start from ₾1,000. Online stores and web applications are priced on scope: after the first call we send you the exact price in writing.",
+      },
+      {
+        question: "How long does it take to build a website?",
+        answer:
+          "Landing pages and business websites typically launch in 2–3 weeks; online stores and web applications take 4–8 weeks depending on scope.",
+      },
+      {
+        question: "Is SEO included?",
+        answer:
+          "Yes, every site ships with core SEO: proper titles and descriptions, a sitemap, structured data, speed optimisation and Google Search Console setup.",
+      },
+      {
+        question: "Do you handle the domain and hosting?",
+        answer:
+          "Yes, we set up the domain, hosting, SSL certificate and email, or work with your existing setup.",
+      },
+      {
+        question: "What happens after launch?",
+        answer:
+          "For one month we fix anything that's needed for free. After that we offer a maintenance and support plan.",
+      },
+      {
+        question: "Do you work with clients outside Tbilisi?",
+        answer:
+          "Yes, we work with clients across Georgia and abroad: calls, a shared staging link and regular updates cover the whole process.",
+      },
+    ],
+  },
+
+  serviceDetail: {
+    breadcrumbLabel: "Breadcrumb",
+    price: "Price",
+    timeline: "Timeline",
+    support: "Support",
+    supportValue: "1 month free",
+    examples: "Related projects",
+    faqEyebrow: "Questions",
+    faqTitle: "Frequently asked questions",
+    cta: "Get a price",
+    otherServices: "Other services",
+  },
+
   footer: {
+    services: "Services",
     about:
-      "A Tbilisi studio designing and building landing pages, web applications and online stores, small team, hand-built work, clear timelines.",
+      "A digital agency designing and building landing pages, web applications and online stores, hand-built work, clear timelines.",
     navigation: "Navigation",
     contact: "Contact",
     address: "Tbilisi 0162, Georgia",

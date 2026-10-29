@@ -86,11 +86,11 @@ export default function Header() {
           : "border-b border-transparent"
       }`}
     >
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 sm:gap-8 h-[76px] px-5 sm:px-9 lg:px-[72px]">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between xl:grid xl:grid-cols-[1fr_auto_1fr] gap-4 sm:gap-8 h-[76px] px-5 sm:px-9 lg:px-[72px]">
         <Link
           href={href("/")}
           onClick={(e) => handleNavClick(e, "top")}
-          className="flex items-center shrink-0 cursor-pointer"
+          className="flex items-center shrink-0 cursor-pointer xl:justify-self-start"
           aria-label={t.nav.homeAria}
         >
           <Image
@@ -129,7 +129,7 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-3 shrink-0 xl:justify-self-end">
           <LanguageSwitcher />
           <Link
             href={href("/contact")}
@@ -144,25 +144,27 @@ export default function Header() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="xl:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8 shrink-0 cursor-pointer"
+            className="xl:hidden relative flex items-center justify-center w-8 h-8 shrink-0 cursor-pointer"
             aria-label={t.nav.toggleMenu}
             aria-expanded={isOpen}
           >
-            <span
-              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-[7px]" : ""
-              }`}
-            />
-            <span
-              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`block w-5 h-[1.5px] bg-[#0E0E0E] transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-[7px]" : ""
-              }`}
-            />
+            <span className="relative block w-[18px] h-[12px]" aria-hidden="true">
+              <span
+                className={`absolute left-0 top-0 h-[2px] w-full rounded-full bg-[#0E0E0E] transition-all duration-300 ease-out ${
+                  isOpen ? "translate-y-[5px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`absolute right-0 top-[5px] h-[2px] w-[11px] rounded-full bg-primary origin-right transition-all duration-300 ease-out ${
+                  isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-[10px] h-[2px] w-full rounded-full bg-[#0E0E0E] transition-all duration-300 ease-out ${
+                  isOpen ? "-translate-y-[5px] -rotate-45" : ""
+                }`}
+              />
+            </span>
           </button>
         </div>
       </div>
@@ -182,11 +184,10 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, "id" in link ? link.id : undefined)}
                 aria-current={active ? "page" : undefined}
                 className={`flex items-center justify-between font-outfit text-[16px] text-left py-3 border-b border-[#E3E3E6] last:border-b-0 cursor-pointer ${
-                  active ? "font-bold text-[#B85300]" : "font-medium text-[#0E0E0E]"
+                  active ? "font-bold text-primary" : "font-medium text-[#0E0E0E]"
                 }`}
               >
                 {t.nav[link.key]}
-                {active && <span className="w-1.5 h-1.5 rounded-full bg-[#FF7A00]" />}
               </Link>
             );
           })}

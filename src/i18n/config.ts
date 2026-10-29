@@ -11,6 +11,12 @@ export const localeNames: Record<Locale, string> = {
   en: "English",
 };
 
+/** Brand name used in page titles: Georgians search for "გარგარი", everyone else "Gargari" */
+export const brandNames: Record<Locale, string> = {
+  ka: "გარგარი",
+  en: "Gargari",
+};
+
 export const ogLocales: Record<Locale, string> = {
   ka: "ka_GE",
   en: "en_US",

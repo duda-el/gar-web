@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import manifest from "@/app/manifest";
-import { projects } from "@/constants/projects";
+import { getProjectBySlug, projects } from "@/constants/projects";
+import { servicePages } from "@/constants/servicePages";
 import { SITE_URL } from "@/i18n/config";
 import { getDictionary } from "@/i18n";
-import { breadcrumbs, faqPage, projectWork, siteGraph } from "@/lib/structuredData";
+import { breadcrumbs, faqPage, projectWork, serviceDetail, siteGraph } from "@/lib/structuredData";
 import { OG_IMAGE, pageMetadata } from "@/i18n/metadata";
 
 describe("robots.txt", () => {
@@ -25,7 +26,7 @@ describe("robots.txt", () => {
 
 describe("sitemap.xml", () => {
   const entries = sitemap();
-  const pageCount = 5 + projects.length;
+  const pageCount = 5 + servicePages.length + projects.length;
 
   it("lists every page in both languages", () => {
     expect(entries).toHaveLength(pageCount * 2);
@@ -35,6 +36,8 @@ describe("sitemap.xml", () => {
     expect(urls).toContain(`${SITE_URL}/en`);
     expect(urls).toContain(`${SITE_URL}/projects/gms-turbo`);
     expect(urls).toContain(`${SITE_URL}/en/projects/gms-turbo`);
+    expect(urls).toContain(`${SITE_URL}/services/landing-page`);
+    expect(urls).toContain(`${SITE_URL}/en/services/online-shop`);
   });
 
   it("links language versions and uses absolute URLs", () => {
@@ -116,5 +119,27 @@ describe("structured data", () => {
 
   it("never contains a closing script tag", () => {
     expect(JSON.stringify(siteGraph("en", getDictionary("en")))).not.toMatch(/<\/script/i);
+  });
+});
+
+describe("service pages", () => {
+  it("have unique slugs, both languages and existing example projects", () => {
+    const slugs = servicePages.map((p) => p.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
+    for (const page of servicePages) {
+      for (const c of Object.values(page.content)) {
+        expect(c.title.trim()).not.toBe("");
+        expect(c.metaDescription.length).toBeLessThanOrEqual(200);
+        expect(c.faqs.length).toBeGreaterThan(0);
+      }
+      for (const slug of page.projects) expect(getProjectBySlug(slug)).toBeDefined();
+    }
+  });
+
+  it("describe the service with its provider and starting price", () => {
+    const landing = servicePages.find((p) => p.slug === "landing-page")!;
+    const schema = serviceDetail("ka", landing);
+    expect(schema).toMatchObject({ "@type": "Service", url: `${SITE_URL}/services/landing-page` });
+    expect(schema.offers?.priceSpecification.minPrice).toBe(landing.minPrice);
   });
 });
