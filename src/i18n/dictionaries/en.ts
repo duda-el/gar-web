@@ -181,8 +181,8 @@ const en = {
 
   aboutUs: {
     eyebrow: "About us",
-    title: "A small studio that builds the whole thing",
-    text: "GarGari is a digital agency designing and building landing pages, web applications and online stores. We stay small on purpose: a team of five, and the same people stay on your project from brief to launch, no handoffs, no lost context.",
+    title: "A team that builds the whole thing in-house",
+    text: "GarGari is a digital agency designing and building landing pages, web applications and online stores. The same people stay on your project from brief to launch, no handoffs, no lost context.",
     location: "Tbilisi, Georgia, remote friendly",
     replies: "Replies within a day",
     team: "A team of {count}",

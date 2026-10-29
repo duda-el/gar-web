@@ -4,6 +4,7 @@ import Footer from "@/components/Layout/Footer";
 import Projects from "@/components/Pages/Projects/Index";
 import Services from "@/components/Services";
 import WhyUs from "@/components/Pages/WhyUs";
+import Testimonials from "@/components/Pages/Testimonials";
 import ScrollHandler from "@/components/ScrollHandler";
 import HomeSeo from "@/components/Pages/HomeSeo";
 import JsonLd from "@/components/seo/JsonLd";
@@ -25,6 +26,7 @@ export default async function Home({ params }: Props) {
         <Hero />
         <Services />
         <Projects />
+        <Testimonials align="left" />
         <WhyUs />
         <HomeSeo locale={locale} t={t} />
         <Footer />

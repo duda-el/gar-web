@@ -25,7 +25,7 @@ export default async function AboutPage({ params }: Props) {
       <Header />
       <main>
         <AboutUs />
-        <Testimonials />
+        <Testimonials align="left" />
       </main>
       <Footer />
     </div>

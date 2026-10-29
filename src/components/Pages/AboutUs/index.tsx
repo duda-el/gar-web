@@ -15,11 +15,7 @@ export default function AboutUs() {
     <>
       <section
         id="about"
-        className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-[48px] sm:pt-16 lg:pt-[88px] pb-[56px] sm:pb-20 lg:pb-[104px]"
-        style={{
-          background:
-            "linear-gradient(180deg, #fbfbfb 0% 0%, #fefefe 55%, #ffffff 100%)",
-        }}
+        className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-[48px] sm:pt-16 lg:pt-[88px] pb-[56px] sm:pb-20 lg:pb-[104px] bg-white"
       >
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.85fr] gap-12 lg:gap-16 items-center">
           <div>

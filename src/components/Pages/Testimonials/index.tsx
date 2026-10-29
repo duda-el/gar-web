@@ -147,7 +147,8 @@ function TestimonialColumn({
   );
 }
 
-export default function Testimonials() {
+/** align="left" matches the other home page sections; the About page keeps it centered */
+export default function Testimonials({ align = "center" }: { align?: "left" | "center" }) {
   const { t } = useI18n();
   const testimonials: Testimonial[] = t.testimonials.items.map((item) => ({
     ...item,
@@ -161,17 +162,34 @@ export default function Testimonials() {
 
   return (
     <section className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 py-[56px] sm:py-20 lg:py-[104px]">
-      <div className="flex flex-col items-center text-center gap-4">
-        <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
-          {t.testimonials.eyebrow}
-        </span>
-        <h2 className="max-w-[20ch] font-outfit font-extrabold text-[clamp(28px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
-          {t.testimonials.title}
-        </h2>
-        <p className="max-w-[46ch] text-[16px] leading-[1.6] text-[#4A4A4E]">
-          {t.testimonials.intro}
-        </p>
-      </div>
+      {align === "left" ? (
+        // Same header layout as Services and WhyUs: title on the left, intro on the right
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
+              {t.testimonials.eyebrow}
+            </span>
+            <h2 className="mt-3 max-w-[20ch] font-outfit font-extrabold text-[clamp(28px,3.4vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
+              {t.testimonials.title}
+            </h2>
+          </div>
+          <p className="m-0 max-w-[38ch] text-[16px] leading-[1.6] text-[#4A4A4E]">
+            {t.testimonials.intro}
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center text-center gap-4">
+          <span className="text-[14px] sm:text-[15px] font-semibold uppercase text-primary">
+            {t.testimonials.eyebrow}
+          </span>
+          <h2 className="max-w-[20ch] font-outfit font-extrabold text-[clamp(28px,3.6vw,46px)] leading-[1.08] tracking-[-0.03em] text-[#0E0E0E]">
+            {t.testimonials.title}
+          </h2>
+          <p className="max-w-[46ch] text-[16px] leading-[1.6] text-[#4A4A4E]">
+            {t.testimonials.intro}
+          </p>
+        </div>
+      )}
 
       <div
         className="relative mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 h-[560px] sm:h-[600px]"
