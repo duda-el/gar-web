@@ -63,7 +63,7 @@ export default function Services() {
             <div className="mt-auto pt-3.5 border-t border-[#F1EEEA] flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 font-outfit font-bold text-[16px] text-[#0E0E0E]">
               <span className="whitespace-nowrap">{service.price}</span>
               <span className="whitespace-nowrap text-[13.5px] font-semibold text-primary">
-                {t.homeServices.more} →
+                {t.homeServices.more}
               </span>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function Services() {
         <div>
           <h3 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
             <Link href={href(servicePath("branding"))} className="hover:text-primary transition-colors">
-              {t.services.brandingTitle} →
+              {t.services.brandingTitle}
             </Link>
           </h3>
           <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">

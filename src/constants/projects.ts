@@ -27,6 +27,10 @@ import ZmnaImg from "@/Assets/images/zmna.jpg";
 import ZmnaImg2 from "@/Assets/images/zmna.png";
 import ItechnoImg from "@/Assets/images/ITechno.jpg";
 import MechanxImg from "@/Assets/images/MechanX.jpg";
+import PinesMockup from "@/Assets/images/pines-mockup.jpg";
+import PinesImg from "@/Assets/images/pines.jpg";
+import PinesImg1 from "@/Assets/images/pines1.jpg";
+import PinesImg2 from "@/Assets/images/pines2.jpg";
 
 /** Service tags shown on project cards and pages, translated once here */
 const serviceLabels = {
@@ -88,6 +92,54 @@ export function localizeProject(project: Project, locale: Locale) {
 }
 
 export const projects: Project[] = [
+  {
+    id: 13,
+    slug: "mnc-group-pines",
+    title: "MNC Group: ფიჭვები",
+    url: "https://mncgroup.ge",
+    status: "completed",
+    type: "website",
+    images: [PinesMockup, PinesImg, PinesImg1, PinesImg2],
+    services: ["uiux", "fullstack", "cms", "seo"],
+    content: {
+      en: {
+        category: "Real Estate",
+        industry: "Construction & Development",
+        alt: "MNC Group - Pines residential project in Manglisi",
+        description:
+          "A real estate website for MNC Group's Pines project in Manglisi that helps buyers find an apartment easily and helps the developer present the project clearly.",
+        overview: [
+          "Pines is MNC Group's multifunctional residential project in the Manglisi resort, combining modern architecture with local tradition, together with an on-site restaurant.",
+          "We designed and built a bilingual website with an apartment catalog, smart search and table booking for the restaurant, plus an admin panel where the client manages content and apartment availability on their own.",
+        ],
+        highlights: [
+          "Apartment catalog with area, photos and floor plan for every unit",
+          "Smart search by area and number of bedrooms",
+          "Online table booking for the restaurant",
+          "Admin panel for content and apartment status",
+          "Fast on every device, SEO-ready, in Georgian and English",
+        ],
+      },
+      ka: {
+        category: "უძრავი ქონება",
+        industry: "მშენებლობა და დეველოპმენტი",
+        alt: "MNC Group - საცხოვრებელი პროექტი ფიჭვები მანგლისში",
+        description:
+          "უძრავი ქონების ვებსაიტი MNC Group-ის პროექტისთვის „ფიჭვები“ მანგლისში: მომხმარებელს ბინის მარტივად პოვნაში ეხმარება, დეველოპერს კი პროექტის ეფექტურად წარდგენაში.",
+        overview: [
+          "„ფიჭვები“ MNC Group-ის მრავალფუნქციური საცხოვრებელი პროექტია კურორტ მანგლისში, რომელიც თანამედროვე არქიტექტურასა და ტრადიციებს აერთიანებს და საკუთარ რესტორანსაც მოიცავს.",
+          "დავაპროექტეთ და ავაწყეთ ორენოვანი ვებსაიტი ბინების კატალოგით, ჭკვიანი ძებნითა და რესტორანში მაგიდის ონლაინ ჯავშნით, ასევე ადმინ პანელი, სადაც კლიენტი კონტენტსა და ბინების სტატუსს თავად მართავს.",
+        ],
+        highlights: [
+          "ბინების კატალოგი: ფართი, ფოტოები და გეგმა ყველა ბინაზე",
+          "ჭკვიანი ძებნა ფართითა და საძინებლების რაოდენობით",
+          "რესტორანში მაგიდის ონლაინ ჯავშანი",
+          "ადმინ პანელი კონტენტისა და ბინების სტატუსის სამართავად",
+          "სწრაფი ყველა მოწყობილობაზე, SEO-სთვის მზა, ქართულ და ინგლისურ ენებზე",
+        ],
+      },
+    },
+  },
   {
     id: 1,
     slug: "gms-turbo",

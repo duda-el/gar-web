@@ -205,7 +205,7 @@ export default function AllServices() {
           <div>
             <h2 className="m-0 font-outfit font-bold text-[21px] text-[#0E0E0E]">
               <Link href={href(servicePath("branding"))} className="hover:text-primary transition-colors">
-                {t.services.brandingTitle} →
+                {t.services.brandingTitle}
               </Link>
             </h2>
             <p className="mt-2.5 max-w-[46ch] text-[15.5px] leading-[1.6] text-[#4A4744]">
