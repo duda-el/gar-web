@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { useI18n } from "@/i18n/I18nProvider";
 import { localeNames, locales, localizePath, stripLocale } from "@/i18n/config";
 
-const shortNames = { ka: "ქარ", en: "EN" } as const;
+// Georgian shows as "ქარ" on Georgian pages and "KA" on English ones
+const shortNames = { ka: { ka: "ქარ", en: "KA" }, en: { ka: "EN", en: "EN" } } as const;
 
 // Links to the same page in the other language
 export default function LanguageSwitcher({ className = "" }: { className?: string }) {
@@ -34,7 +35,7 @@ export default function LanguageSwitcher({ className = "" }: { className?: strin
                 : "font-medium text-[#6E6E73] hover:text-[#0E0E0E] hover:bg-white/80"
             }`}
           >
-            {shortNames[l]}
+            {shortNames[l][locale]}
             <span className="sr-only"> ({localeNames[l]})</span>
           </Link>
         );

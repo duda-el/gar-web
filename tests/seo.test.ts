@@ -40,10 +40,11 @@ describe("sitemap.xml", () => {
     expect(urls).toContain(`${SITE_URL}/en/services/online-shop`);
   });
 
-  it("links language versions and uses absolute URLs", () => {
+  it("uses absolute URLs and plain entries (hreflang lives in each page's head)", () => {
     for (const entry of entries) {
       expect(entry.url.startsWith(SITE_URL)).toBe(true);
-      expect(Object.keys(entry.alternates?.languages ?? {}).sort()).toEqual(["en", "ka", "x-default"]);
+      expect(entry.alternates).toBeUndefined();
+      expect(entry.images).toBeUndefined();
     }
   });
 
@@ -52,16 +53,7 @@ describe("sitemap.xml", () => {
     expect(dates.size).toBe(1);
     expect([...dates][0]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
-
-  it("includes project images", () => {
-    const project = entries.find((e) => e.url === `${SITE_URL}/projects/zmna-ge`);
-    expect(project?.images?.length).toBe(getProjectImages("zmna-ge"));
-  });
 });
-
-function getProjectImages(slug: string) {
-  return projects.find((p) => p.slug === slug)!.images.length;
-}
 
 describe("manifest", () => {
   it("has the app name and installable icons", () => {
