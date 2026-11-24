@@ -7,7 +7,7 @@ import { defaultLocale, locales, localizePath, SITE_URL } from "@/i18n/config";
  * Date the site content last changed. Update it when pages change, so lastmod stays
  * meaningful (a new date on every build would teach Google to ignore it).
  */
-export const CONTENT_UPDATED = "2026-11-23";
+export const CONTENT_UPDATED = "2026-11-24";
 
 type Page = {
   path: string;
@@ -26,6 +26,9 @@ const pages: Page[] = [
   { path: "/projects", priority: 0.9, changeFrequency: "weekly" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/privacy", priority: 0.3, changeFrequency: "monthly" },
+  { path: "/cookies", priority: 0.3, changeFrequency: "monthly" },
+  { path: "/terms", priority: 0.3, changeFrequency: "monthly" },
   ...projects.map((project) => ({
     path: `/projects/${project.slug}`,
     priority: 0.6,

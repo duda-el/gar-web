@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Mail, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import PolicyModal from "../../ui/Modal/PolicyModal";
-import { CONTACT_EMAIL, type PolicyType } from "@/constants/policies";
+import { CONTACT_EMAIL } from "@/constants/policies";
 import { FACEBOOK_URL, INSTAGRAM_URL, PHONE_DISPLAY, PHONE_TEL, TIKTOK_URL } from "@/constants/site";
 import gargariLogo from "@/Assets/images/gargari-logo-white.png";
 import { useI18n } from "@/i18n/I18nProvider";
 import { stripLocale } from "@/i18n/config";
 import { servicePath } from "@/constants/serviceSlugs";
+import { useConsent } from "@/lib/consent";
 
 const TikTokIcon = ({ size = 18 }: { size?: number }) => (
   <svg
@@ -57,9 +57,10 @@ const socials = [
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [modalType, setModalType] = useState<PolicyType | null>(null);
   const { t, href } = useI18n();
   const isHome = stripLocale(usePathname()) === "/";
+  // The top.ge counter sets cookies, so it only loads once the visitor accepts
+  const consent = useConsent();
 
   const scrollToSection = (id: string) => {
     if (id === "top") {
@@ -81,8 +82,6 @@ const Footer = () => {
       scrollToSection(id);
     }
   };
-
-  const closeModal = useCallback(() => setModalType(null), []);
 
   return (
     <footer className="relative bg-[#0E0E0E] text-white">
@@ -202,31 +201,36 @@ const Footer = () => {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-8">
-            <button
-              onClick={() => setModalType("privacy")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
-            >
-              {t.footer.privacy}
-            </button>
-            <button
-              onClick={() => setModalType("terms")}
-              className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200 cursor-pointer"
-            >
-              {t.footer.terms}
-            </button>
-            <div
-              id="top-ge-counter-container"
-              data-site-id="118478"
-              // Reserve the counter's 88x31 box so the injected image doesn't shift layout
-              className="w-[88px] h-[31px] opacity-50 hover:opacity-100 transition-opacity [&_img]:w-[88px] [&_img]:h-[31px]"
-            />
+            {(
+              [
+                ["/privacy", t.footer.privacy],
+                ["/cookies", t.footer.cookies],
+                ["/terms", t.footer.terms],
+              ] as const
+            ).map(([path, label]) => (
+              <Link
+                key={path}
+                href={href(path)}
+                className="text-[11px] uppercase tracking-[0.14em] text-[#9A9A9E] hover:text-white transition-colors duration-200"
+              >
+                {label}
+              </Link>
+            ))}
+            {consent === "accepted" && (
+              <div
+                id="top-ge-counter-container"
+                data-site-id="118478"
+                // Reserve the counter's 88x31 box so the injected image doesn't shift layout
+                className="w-[88px] h-[31px] opacity-50 hover:opacity-100 transition-opacity [&_img]:w-[88px] [&_img]:h-[31px]"
+              />
+            )}
           </div>
         </div>
       </div>
 
-      <Script src="https://counter.top.ge/counter.js" strategy="lazyOnload" />
-
-      <PolicyModal type={modalType} onClose={closeModal} />
+      {consent === "accepted" && (
+        <Script src="https://counter.top.ge/counter.js" strategy="lazyOnload" />
+      )}
     </footer>
   );
 };

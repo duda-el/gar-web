@@ -1,6 +1,6 @@
 import type { Policies } from "./types";
 
-// Loaded on demand when a policy modal opens, so it isn't sent with every page
+// Legal texts, rendered on the /privacy, /cookies and /terms pages
 const policies: Policies = {
   privacy: {
     title: "Privacy Policy",
@@ -53,6 +53,58 @@ const policies: Policies = {
         heading: "Changes to this policy",
         paragraphs: [
           "We may update this policy from time to time. The date at the top always shows when it was last changed.",
+        ],
+      },
+    ],
+  },
+  cookies: {
+    title: "Cookie Policy",
+    updated: "November 24, 2026",
+    intro:
+      "This policy explains which cookies and similar technologies gargari.ge uses, why we use them and how you can control them.",
+    sections: [
+      {
+        heading: "What cookies are",
+        paragraphs: [
+          "Cookies are small files a website stores in your browser. Some are needed for the site to work, others help us understand traffic and measure our advertising.",
+        ],
+      },
+      {
+        heading: "Strictly necessary",
+        paragraphs: [
+          "These need no consent. We store your cookie choice in your browser's local storage under the name gargari-cookie-consent so we don't ask you again on every visit. It never leaves your device.",
+        ],
+      },
+      {
+        heading: "Analytics: Google Analytics",
+        paragraphs: [
+          "Set only after you accept. Google Analytics helps us see which pages are visited and how people find the site.",
+        ],
+        list: [
+          "_ga and _ga_TCBNN29N66: tell visitors apart and keep session state. Kept for up to 2 years.",
+        ],
+      },
+      {
+        heading: "Advertising: Meta Pixel",
+        paragraphs: [
+          "Set only after you accept. The Meta Pixel (Meta Platforms) lets us measure how our ads perform and which actions follow, such as a contact request.",
+        ],
+        list: [
+          "_fbp: identifies the browser for ad measurement. Kept for up to 90 days.",
+          "fr: set by Meta for ad delivery and measurement. Kept for up to 90 days.",
+        ],
+      },
+      {
+        heading: "Visit statistics: top.ge",
+        paragraphs: [
+          "The top.ge visit counter in the footer is loaded only after you accept. It may set its own cookies to count unique visitors, under the top.ge privacy policy.",
+        ],
+      },
+      {
+        heading: "Managing your choice",
+        paragraphs: [
+          "If you reject, none of the services above are loaded. To change your mind, clear this site's data in your browser (which removes the stored choice) and the banner will appear again. You can also block or delete cookies in your browser settings at any time.",
+          "Read how we handle personal data in our Privacy Policy, or write to us at {email}.",
         ],
       },
     ],

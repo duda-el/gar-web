@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/I18nProvider";
 import { saveConsent, useConsent } from "@/lib/consent";
 
 const CookieConsent = () => {
-  const { t } = useI18n();
+  const { t, href } = useI18n();
   const consent = useConsent();
   const [ready, setReady] = useState(false);
   // Only visitors who haven't chosen yet see the banner (slides in after a second)
@@ -26,14 +27,15 @@ const CookieConsent = () => {
     else toast.info(t.cookies.rejected);
   };
 
-  // Not rendered at all once a choice exists, so it can't be tabbed into
-  if (consent !== null) return null;
+  // Present in the server HTML (hidden) so crawlers and scanners can see it; removed once a choice exists
+  if (consent !== null && consent !== "unknown") return null;
 
   return (
     <div
       role="region"
       aria-label={t.cookies.settings}
       aria-hidden={!visible}
+      inert={!visible}
       className={cn(
         "fixed inset-x-0 bottom-0 z-50 pb-4 lg:px-4 px-4 transition-all duration-500",
         visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none",
@@ -45,7 +47,12 @@ const CookieConsent = () => {
             <div className="flex h-9 items-center px-2.5 rounded-full bg-secondary shrink-0">
               <Cookie className="w-4 h-4 text-secondary-foreground" />
             </div>
-            <p className="text-muted-foreground md:text-base text-sm">{t.cookies.text}</p>
+            <p className="text-muted-foreground md:text-base text-sm">
+              {t.cookies.text}{" "}
+              <Link href={href("/cookies")} className="underline underline-offset-2 hover:text-foreground">
+                {t.cookies.learnMore}
+              </Link>
+            </p>
           </div>
           <div className="flex w-full sm:w-auto items-center gap-2 sm:shrink-0">
             <Button

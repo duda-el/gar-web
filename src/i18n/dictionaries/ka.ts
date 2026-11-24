@@ -452,14 +452,13 @@ const ka: Dictionary = {
     getInTouchText: "გაქვთ იდეა? მოდი, რეალობად ვაქციოთ.",
     privacy: "კონფიდენციალურობა",
     terms: "მომსახურების პირობები",
+    cookies: "ქუქი-ფაილების პოლიტიკა",
   },
 
   policyModal: {
     legal: "სამართლებრივი",
     lastUpdated: "ბოლო განახლება: {date}",
     questions: "კითხვები?",
-    gotIt: "გასაგებია",
-    close: "დახურვა",
   },
 
   notFound: {
@@ -483,6 +482,7 @@ const ka: Dictionary = {
     accept: "თანხმობა",
     accepted: "ქუქი-ფაილები მიღებულია.",
     rejected: "გამოყენებული იქნება მხოლოდ აუცილებელი ქუქი-ფაილები.",
+    learnMore: "ქუქი-ფაილების პოლიტიკა",
   },
 };
 

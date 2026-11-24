@@ -431,14 +431,13 @@ const en = {
     getInTouchText: "Have an idea? Let's turn it into something real.",
     privacy: "Privacy Policy",
     terms: "Terms of Service",
+    cookies: "Cookie Policy",
   },
 
   policyModal: {
     legal: "Legal",
     lastUpdated: "Last updated {date}",
     questions: "Questions?",
-    gotIt: "Got it",
-    close: "Close",
   },
 
   notFound: {
@@ -462,6 +461,7 @@ const en = {
     accept: "Accept",
     accepted: "Cookies accepted.",
     rejected: "Only essential cookies will be used.",
+    learnMore: "Cookie Policy",
   },
 };
 

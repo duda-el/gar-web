@@ -26,7 +26,7 @@ describe("robots.txt", () => {
 
 describe("sitemap.xml", () => {
   const entries = sitemap();
-  const pageCount = 5 + servicePages.length + projects.length;
+  const pageCount = 8 + servicePages.length + projects.length;
 
   it("lists every page in both languages", () => {
     expect(entries).toHaveLength(pageCount * 2);
